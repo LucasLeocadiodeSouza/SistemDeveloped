@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="380.0" prefWidth="620.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Button layoutX="568.0" layoutY="14.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="38.0" />
+      <Button layoutX="522.0" layoutY="14.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="38.0" />
+      <Button layoutX="476.0" layoutY="14.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="38.0" />
+      <TableView layoutX="13.0" layoutY="174.0" prefHeight="192.0" prefWidth="593.0">
+        <columns>
+          <TableColumn prefWidth="75.0" text="Codigo " />
+          <TableColumn prefWidth="236.79993438720703" text="Nome do produto" />
+            <TableColumn prefWidth="69.5999755859375" text="Qtd." />
+            <TableColumn prefWidth="101.5999755859375" text="Validade" />
+            <TableColumn prefWidth="118.39996948242185" text="Tipo" />
+        </columns>
+      </TableView>
+      <TextField layoutX="105.0" layoutY="30.0" />
+      <TextField layoutX="105.0" layoutY="128.0" prefHeight="26.0" prefWidth="227.0" />
+      <DatePicker layoutX="105.0" layoutY="64.0" prefHeight="26.0" prefWidth="150.0" />
+      <Label layoutX="56.0" layoutY="33.0" text="Ajuste:">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="65.0" layoutY="67.0" text="Data:">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="65.0" layoutY="99.0" text="Setor:">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <ComboBox layoutX="105.0" layoutY="96.0" prefWidth="150.0" />
+      <Label layoutX="41.0" layoutY="131.0" text="Descrição:   ">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <ComboBox layoutX="379.0" layoutY="64.0" prefWidth="150.0" />
+      <Label layoutX="343.0" layoutY="67.0" text=" Tipo:">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <Line endX="531.0" endY="63.3076171875" fill="#3058f7" layoutX="83.0" layoutY="-62.0" startX="-82.19241333007812" startY="62.8076171875" stroke="#303fe7" strokeWidth="13.0" />
+      <Line endX="626.9999389648438" endY="53.307621002197266" fill="#3058f7" layoutX="-7.0" layoutY="-46.0" startX="626.9999389648438" startY="425.9999694824219" stroke="#303fe7" strokeWidth="12.0" />
+      <Line endX="-17.999998092651367" endY="340.0000305175781" fill="#3058f7" layoutX="18.0" layoutY="40.0" startX="-18.000001907348633" startY="-29.499984741210938" stroke="#303fe7" strokeWidth="13.0" />
+      <Line endX="503.99993896484375" endY="-118.00003051757812" fill="#3058f7" layoutX="116.0" layoutY="498.0" startX="-116.00001525878906" startY="-118.00003051757812" stroke="#303fe7" strokeWidth="13.0" />
+   </children>
+</AnchorPane>

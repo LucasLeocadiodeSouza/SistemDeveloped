@@ -16,15 +16,16 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import medicamentos.classificacao;
 import medicamentos.lote;
 import medicamentos.marca;
 import medicamentos.medicamentos;
 
 public class frameEstoqueMed implements Initializable{
-	
+
     @FXML
-    private TableColumn<classificacao, String> classificacaoTC;
+    private TableColumn<medicamentos, String> classificacaoTC;
     @FXML
     private TableColumn<medicamentos, Integer> codigoTC;
     @FXML
@@ -32,22 +33,21 @@ public class frameEstoqueMed implements Initializable{
     @FXML
     private TableView<medicamentos> tableMedEstTV;
     @FXML
-    private TableColumn<lote, String> loteTC;
+    private TableColumn<medicamentos, String> loteTC;
     @FXML
     private TableColumn<medicamentos, Date> validadeTC;
     @FXML
-    private TableColumn<marca, String> marcaTC;
-
+    private TableColumn<medicamentos, String> marcaTC;
     
+    Connection conn = null;
+    PreparedStatement st = null;
+    ResultSet rs = null;
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		
-		ObservableList<medicamentos> listOfMed = FXCollections.observableArrayList();
-	    
-	    Connection conn = null;
-	    PreparedStatement st = null;
-	    ResultSet rs = null;
-	    
+
+	    ObservableList<medicamentos> listOfMed = FXCollections.observableArrayList();
+
 	    try{
 	    	conn = DB.getConnection();
 	    	
@@ -60,19 +60,19 @@ public class frameEstoqueMed implements Initializable{
 	    			+ "on med.IDMEDICAMENTO = c.ID_MEDICAMENTO\r\n"
 	    			+ "inner join marca mar\r\n"
 	    			+ "on med.IDMEDICAMENTO = mar.ID_MEDICAMENTO;";
-	    	
+
 	    	st = conn.prepareStatement(query);
 	    	rs = st.executeQuery();
-	    	
+
 	    	while(rs.next()) {
 	    		Integer idMedQuery = rs.getInt("idmedicamento");
 	    		String nomeMedQuery = rs.getString("nome");
 	    		Date validadeMedQuery = rs.getDate("validade");
 	    		String loteMedQuery = rs.getString("lote");
 	    		String classifMedQuery = rs.getString("classif");
-	    		String nomemarcaMedQuery = rs.getString("nomemarca");
+	    		String nomeMarcaMedQuery = rs.getString("nomemarca");
 	    		
-	    		medicamentos med = new medicamentos(idMedQuery, nomeMedQuery, validadeMedQuery, classifMedQuery, loteMedQuery, nomemarcaMedQuery);
+	    		medicamentos med = new medicamentos(idMedQuery, nomeMedQuery, validadeMedQuery, classifMedQuery, loteMedQuery, nomeMarcaMedQuery);
 	    		
 	    		listOfMed.add(med);
 	    		
@@ -82,7 +82,6 @@ public class frameEstoqueMed implements Initializable{
 	    		classificacaoTC.setCellValueFactory(new PropertyValueFactory<medicamentos, String>("nomeClassificacao"));
 	    		loteTC.setCellValueFactory(new PropertyValueFactory<medicamentos, String>("codLote"));
 	    		marcaTC.setCellValueFactory(new PropertyValueFactory<medicamentos, String>("nomeMarca"));
-	    		
 	    	}
 	    	
 	    	tableMedEstTV.setItems(listOfMed);
@@ -98,7 +97,7 @@ public class frameEstoqueMed implements Initializable{
 		        DB.closeConnection();
 		    }
 		}
-		
+	    
 	}
     
 }

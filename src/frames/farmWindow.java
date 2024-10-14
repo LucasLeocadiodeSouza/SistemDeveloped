@@ -38,6 +38,7 @@ public class farmWindow {
 		stage = (Stage) frameAnchorPane.getScene().getWindow();
 		stage.setMaximized(true);
 		
+		stage.setTitle("Sistem Enterpreise - Farmacia");
 		
 		//ajustando a barraIcon e barraDeMenu para tamanho total da tela e a posicao do LogOut
 		Rectangle2D screenSize = Screen.getPrimary().getVisualBounds();

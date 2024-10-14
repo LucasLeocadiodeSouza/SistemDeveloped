@@ -4,24 +4,55 @@ import java.sql.Date;
 
 public class medicamentos {
 	
-	private int idMed;
+	private Integer idMed;
 	private String nomeMed;
+	private Integer quantidade;
 	private Date validade;
     private classificacao classificacao;
     private lote lote;
     private marca marca;
 	
-	public medicamentos(int idMed, String nomeMed, Date validade, String nomeClassificacao, String codLote, String nomeMarca) {
+	public medicamentos(Integer idMed, String nomeMed, Date validade, String nomeClassificacao, String codLote, String nomeMarca) {
+
 		this.idMed = idMed;
 		this.nomeMed = nomeMed;
 		this.validade = validade;
-		classificacao classificacao = new classificacao();
-		classificacao.setNomeClassificacao(nomeClassificacao);
-		lote lote = new lote();
-		lote.setCodLote(codLote);
-		marca marca = new marca();
-		marca.setNomeMarca(nomeMarca);
+		
+	    this.classificacao = new classificacao();
+	    this.classificacao.setNomeClassificacao(nomeClassificacao);
+	    
+	    this.lote = new lote();
+	    this.lote.setCodLote(codLote);
+	    
+	    this.marca = new marca();
+	    this.marca.setNomeMarca(nomeMarca);
 	}
+	public medicamentos(Integer idMed, String nomeMed, Integer quantidade, Date validade, String nomeClassificacao, String codLote) {
+
+		this.idMed = idMed;
+		this.nomeMed = nomeMed;
+		this.quantidade = quantidade;
+		this.validade = validade;
+		
+	    this.classificacao = new classificacao();
+	    this.classificacao.setNomeClassificacao(nomeClassificacao);
+	    
+	    this.lote = new lote();
+	    this.lote.setCodLote(codLote);
+	}
+	public medicamentos(Integer idMed,  Integer quantidade, Date validade, String nomeClassificacao, String codLote) {
+
+		this.idMed = idMed;
+		this.quantidade = quantidade;
+		this.validade = validade;
+		
+	    this.classificacao = new classificacao();
+	    this.classificacao.setNomeClassificacao(nomeClassificacao);
+	    
+	    this.lote = new lote();
+	    this.lote.setCodLote(codLote);
+	}
+	
 	
     public String getCodLote() {
         return lote.getCodLote();
@@ -41,18 +72,27 @@ public class medicamentos {
 	public void setNomeMed(String nomeMed) {
 		this.nomeMed = nomeMed;
 	}
+	public Integer getQuantidade() {
+		return quantidade;
+	}
+	public void setQuantidade(Integer quantidade) {
+		this.quantidade = quantidade;
+	}
 	public Date getValidade() {
 		return validade;
 	}
 	public void setValidade(Date validade) {
 		this.validade = validade;
 	}
-
-	public int getIdmed() {
+	public void setLote(String codLote) {
+		this.lote = new lote();
+	    this.lote.setCodLote(codLote);
+	}
+	public Integer getIdMed() {
 		return idMed;
 	}
 
-	public void setIdmed(int idmed) {
-		this.idMed = idmed;
+	public void setIdMed(Integer idMed) {
+		this.idMed = idMed;
 	}
 }

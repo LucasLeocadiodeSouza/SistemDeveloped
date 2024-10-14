@@ -27,58 +27,52 @@
          </font>
       </Label>
       <TextField fx:id="dataSistem" layoutX="104.0" layoutY="75.0" prefHeight="26.0" prefWidth="121.0" />
-      <Label layoutX="18.0" layoutY="150.0" text="Lote:">
+      <Label layoutX="177.0" layoutY="204.0" prefHeight="15.0" prefWidth="30.0" text="Lote:">
          <font>
             <Font name="Arial Bold" size="12.0" />
          </font>
       </Label>
-      <TextField fx:id="loteTF" layoutX="49.0" layoutY="145.0" prefHeight="26.0" prefWidth="93.0" />
-      <Label layoutX="14.0" layoutY="198.0" text="Nome:">
+      <TextField fx:id="loteTF" layoutX="208.0" layoutY="199.0" prefHeight="26.0" prefWidth="93.0" />
+      <Label layoutX="315.0" layoutY="204.0" text="Quantidade: ">
          <font>
             <Font name="Arial Bold" size="12.0" />
          </font>
       </Label>
-      <TextField fx:id="nomeTF" layoutX="60.0" layoutY="193.0" prefHeight="26.0" prefWidth="122.0" />
-      <Label layoutX="199.0" layoutY="198.0" text="Quantidade: ">
+      <TextField fx:id="quantidadeTF" layoutX="389.0" layoutY="199.0" prefHeight="26.0" prefWidth="49.0" />
+      <Label layoutX="20.0" layoutY="203.0" text="Validade:">
          <font>
             <Font name="Arial Bold" size="12.0" />
          </font>
       </Label>
-      <TextField fx:id="quantidadeTF" layoutX="273.0" layoutY="193.0" prefHeight="26.0" prefWidth="49.0" />
-      <Label layoutX="149.0" layoutY="148.0" text="Validade:">
+      <TextField fx:id="validadeTF" layoutX="78.0" layoutY="198.0" prefHeight="26.0" prefWidth="82.0" />
+      <Label layoutX="255.0" layoutY="148.0" text="Marca: ">
          <font>
             <Font name="Arial Bold" size="12.0" />
          </font>
       </Label>
-      <TextField fx:id="validadeTF" layoutX="207.0" layoutY="143.0" prefHeight="26.0" prefWidth="82.0" />
-      <Label layoutX="298.0" layoutY="150.0" text="Marca: ">
-         <font>
-            <Font name="Arial Bold" size="12.0" />
-         </font>
-      </Label>
-      <TextField fx:id="marcaTF" layoutX="340.0" layoutY="143.0" prefHeight="26.0" prefWidth="135.0">
+      <TextField fx:id="marcaTF" layoutX="302.0" layoutY="143.0" prefHeight="0.0" prefWidth="135.0">
          <font>
             <Font size="14.0" />
          </font>
       </TextField>
-      <Label layoutX="488.0" layoutY="80.0" text="Tipo:">
+      <Label layoutX="485.0" layoutY="93.0" text="Tipo:">
          <font>
             <Font name="Arial Bold" size="12.0" />
          </font>
       </Label>
-      <ChoiceBox fx:id="tipoCB" layoutX="526.0" layoutY="75.0" prefWidth="150.0" />
-      <Label layoutX="483.0" layoutY="150.0" text="Class: ">
+      <ChoiceBox fx:id="tipoCB" layoutX="523.0" layoutY="88.0" prefWidth="150.0" />
+      <Label layoutX="481.0" layoutY="148.0" text="Class: ">
          <font>
             <Font name="Arial Bold" size="12.0" />
          </font>
       </Label>
-      <ChoiceBox fx:id="classCB" layoutX="523.0" layoutY="145.0" prefWidth="150.0" />
-      <Label layoutX="359.0" layoutY="198.0" text="Fornecedor: ">
+      <ChoiceBox fx:id="classCB" layoutX="521.0" layoutY="143.0" prefWidth="150.0" />
+      <Label layoutX="448.0" layoutY="204.0" text="Fornecedor: ">
          <font>
             <Font name="Arial Bold" size="12.0" />
          </font>
       </Label>
-      <ChoiceBox fx:id="fornCB" layoutX="436.0" layoutY="193.0" prefWidth="150.0" />
+      <ChoiceBox fx:id="fornCB" layoutX="525.0" layoutY="199.0" prefWidth="150.0" />
       <Label layoutX="18.0" layoutY="258.0" text="Observação:">
          <font>
             <Font name="Arial Bold" size="12.0" />
@@ -98,5 +92,11 @@
       <Line endX="688.0228881835938" endY="-0.9999946355819702" fill="#3058f7" layoutX="17.0" layoutY="9.0" startX="688.02294921875" startY="460.98480224609375" stroke="#303fe7" strokeWidth="12.0" />
       <Line endX="-7.99998664855957" endY="450.0000305175781" fill="#3058f7" layoutX="8.0" layoutY="30.0" startX="-8.000012397766113" startY="-29.99999237060547" stroke="#303fe7" strokeWidth="13.0" />
       <Line endX="599.02294921875" endY="-9.529876708984375" fill="#3058f7" layoutX="106.0" layoutY="488.0" startX="-105.99998474121094" startY="-7.999969482421875" stroke="#303fe7" strokeWidth="13.0" />
+      <Label layoutX="30.0" layoutY="149.0" prefHeight="15.0" prefWidth="50.0" text="Nome:">
+         <font>
+            <Font name="Arial Bold" size="12.0" />
+         </font>
+      </Label>
+      <TextField fx:id="nomeTF" layoutX="72.0" layoutY="143.0" prefHeight="26.0" prefWidth="159.0" />
    </children>
 </AnchorPane>

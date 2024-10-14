@@ -50,11 +50,15 @@ public class frameMedCadas implements Initializable{
 	private String[] vFornCB = {"Droga raia", "Drogaria Sao Paulo", "Hosp. Bom Samaritano", "Hosp. Rede Cross", "Hosp. Santa Rita"};
 	
 	private Stage stage;
-	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	
+	Connection conn = null;
+	PreparedStatement st = null;
+	ResultSet rs = null;
+	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	
 	@Override
 	public void initialize(java.net.URL arg0, ResourceBundle arg1) {
+	
 		classCB.getItems().addAll(vClassCB);
 		tipoCB.getItems().addAll(vTipoCB);
 		fornCB.getItems().addAll(vFornCB);
@@ -62,10 +66,8 @@ public class frameMedCadas implements Initializable{
 	
 	@FXML
 	public void save(ActionEvent event) {
-		//conection DB
-		Connection conn = null;
-		PreparedStatement st = null;
-		ResultSet rs = null;
+		stage = (Stage) frameAnchorPane.getScene().getWindow();
+		
 		try {
 			cadasMedQuery cmQuery = new cadasMedQuery();
 			cmQuery.insertCadasQuery(conn, st, rs, nomeTF, quantidadeTF, validadeTF, loteTF, classCB, fornCB, marcaTF);
@@ -77,8 +79,8 @@ public class frameMedCadas implements Initializable{
 		        DB.closeConnection();
 		    }
 		}
+		stage.close();
 	}
-	
 	
 	@FXML
 	public void logOut(ActionEvent event) {

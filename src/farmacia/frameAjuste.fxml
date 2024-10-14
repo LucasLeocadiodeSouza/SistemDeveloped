@@ -9,15 +9,15 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="390.0" prefWidth="610.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="390.0" prefWidth="610.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="farmacia.frameAjuste">
    <children>
-      <Button layoutX="554.0" layoutY="14.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="41.0" />
-      <Button layoutX="505.0" layoutY="14.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="41.0" />
-      <TableView layoutX="18.0" layoutY="165.0" prefHeight="216.0" prefWidth="577.0">
+      <Button fx:id="fecharB" layoutX="554.0" layoutY="14.0" mnemonicParsing="false" onAction="#fechar" prefHeight="34.0" prefWidth="41.0" text="fechar" />
+      <Button fx:id="incluirB" layoutX="505.0" layoutY="14.0" mnemonicParsing="false" onAction="#save" prefHeight="34.0" prefWidth="41.0" text="incluir" />
+      <TableView fx:id="tableAjusteTV" layoutX="18.0" layoutY="165.0" prefHeight="216.0" prefWidth="577.0">
         <columns>
-          <TableColumn prefWidth="80.80005168914795" text="N. de Ajuste" />
-          <TableColumn prefWidth="368.0000457763672" text="Descrição" />
-            <TableColumn prefWidth="136.00001831054692" text="Tipo" />
+          <TableColumn fx:id="codAjusteTC" prefWidth="80.80005168914795" text="N. de Ajuste" />
+          <TableColumn fx:id="descTC" prefWidth="368.0000457763672" text="Descrição" />
+            <TableColumn fx:id="acaoTC" prefWidth="136.00001831054692" text="Ação" />
         </columns>
       </TableView>
       <TextField layoutX="21.0" layoutY="118.0" prefHeight="26.0" prefWidth="193.0" />

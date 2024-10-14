@@ -11,23 +11,24 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="380.0" prefWidth="620.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="380.0" prefWidth="620.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="farmacia.frameAjusteWindow">
    <children>
       <Button layoutX="568.0" layoutY="14.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="38.0" />
       <Button layoutX="522.0" layoutY="14.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="38.0" />
-      <Button layoutX="476.0" layoutY="14.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="38.0" />
-      <TableView layoutX="13.0" layoutY="174.0" prefHeight="192.0" prefWidth="593.0">
+      <Button fx:id="saveButton" layoutX="476.0" layoutY="14.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="38.0" text="save" textAlignment="CENTER" />
+      <TableView fx:id="tableAjusteWindowTV" layoutX="13.0" layoutY="174.0" prefHeight="192.0" prefWidth="593.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="Codigo " />
-          <TableColumn prefWidth="236.79993438720703" text="Nome do produto" />
-            <TableColumn prefWidth="69.5999755859375" text="Qtd." />
-            <TableColumn prefWidth="101.5999755859375" text="Validade" />
-            <TableColumn prefWidth="118.39996948242185" text="Tipo" />
+          <TableColumn fx:id="codigoTC" prefWidth="75.0" text="Codigo " />
+          <TableColumn fx:id="nomeTC" onEditCommit="#onEditChargedName" prefWidth="200.00005340576172" text="Nome do produto" />
+            <TableColumn fx:id="quantTC" onEditCommit="#onEditChargedQtd" prefWidth="47.99993896484375" text="Qtd." />
+            <TableColumn fx:id="validadeTC" prefWidth="80.800048828125" text="Validade" />
+            <TableColumn fx:id="loteTC" onEditCommit="#onEditChargedLote" prefWidth="82.39996337890625" text="Lote" />
+            <TableColumn fx:id="classificacaoTC" prefWidth="108.00003051757812" text="Classificacao" />
         </columns>
       </TableView>
-      <TextField layoutX="105.0" layoutY="30.0" />
+      <TextField fx:id="nAjuste" layoutX="105.0" layoutY="30.0" />
       <TextField layoutX="105.0" layoutY="128.0" prefHeight="26.0" prefWidth="227.0" />
-      <DatePicker layoutX="105.0" layoutY="64.0" prefHeight="26.0" prefWidth="150.0" />
+      <DatePicker fx:id="hrAdd" layoutX="105.0" layoutY="64.0" prefHeight="26.0" prefWidth="150.0" />
       <Label layoutX="56.0" layoutY="33.0" text="Ajuste:">
          <font>
             <Font size="13.0" />
@@ -43,14 +44,14 @@
             <Font size="13.0" />
          </font>
       </Label>
-      <ComboBox layoutX="105.0" layoutY="96.0" prefWidth="150.0" />
+      <ComboBox fx:id="setor" layoutX="105.0" layoutY="96.0" prefWidth="150.0" />
       <Label layoutX="41.0" layoutY="131.0" text="Descrição:   ">
          <font>
             <Font size="13.0" />
          </font>
       </Label>
-      <ComboBox layoutX="379.0" layoutY="64.0" prefWidth="150.0" />
-      <Label layoutX="343.0" layoutY="67.0" text=" Tipo:">
+      <ComboBox fx:id="acaoFeita" layoutX="379.0" layoutY="64.0" prefWidth="150.0" />
+      <Label layoutX="343.0" layoutY="67.0" text="Ação:">
          <font>
             <Font size="13.0" />
          </font>

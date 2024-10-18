@@ -60,5 +60,6 @@
       <Line endX="626.9999389648438" endY="53.307621002197266" fill="#3058f7" layoutX="-7.0" layoutY="-46.0" startX="626.9999389648438" startY="425.9999694824219" stroke="#303fe7" strokeWidth="12.0" />
       <Line endX="-17.999998092651367" endY="340.0000305175781" fill="#3058f7" layoutX="18.0" layoutY="40.0" startX="-18.000001907348633" startY="-29.499984741210938" stroke="#303fe7" strokeWidth="13.0" />
       <Line endX="503.99993896484375" endY="-118.00003051757812" fill="#3058f7" layoutX="116.0" layoutY="498.0" startX="-116.00001525878906" startY="-118.00003051757812" stroke="#303fe7" strokeWidth="13.0" />
+      <Button fx:id="incluirButton" layoutX="475.0" layoutY="129.0" mnemonicParsing="false" onAction="#incluirLine" prefHeight="26.0" prefWidth="110.0" text="Incluir Ajuste" textAlignment="CENTER" />
    </children>
 </AnchorPane>

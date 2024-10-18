@@ -10,10 +10,10 @@ import java.util.ResourceBundle;
 import connectSQL.DB;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableCell;
@@ -53,6 +53,8 @@ public class frameAjusteWindow implements Initializable{
     private TableColumn<medicamentos, String> classificacaoTC;   
     @FXML
     private Button saveButton;
+    @FXML
+    private Button incluirButton;
     
     
     Connection conn = null;
@@ -61,65 +63,10 @@ public class frameAjusteWindow implements Initializable{
     
    ObservableList<medicamentos> listOfMed = FXCollections.observableArrayList();
    private int numeric = 0;
-    
+   medicamentos medVazio = new medicamentos((Integer)null, "", (Integer)null, null, "", "");
+   
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		
-		medicamentos medVazio = new medicamentos((Integer)null, "", (Integer)null, null, "", "");
-		if(numeric == 0) {
-			listOfMed.add(medVazio);
-			tableAjusteWindowTV.setItems(listOfMed);
-		}
-		
-		
-		/* 
-		 	try{
-	    	conn = DB.getConnection();
-	    	
-	    	//id, nome, qtd, validade, lote, tipo
-	    	String query = "select med.idmedicamento, med.nome, med.quantidade, med.validade, l.lote, c.classif\r\n"
-	    			+ "from medicamento med \r\n"
-	    			+ "inner join lote l\r\n"
-	    			+ "on med.IDMEDICAMENTO = l.ID_MEDICAMENTO\r\n"
-	    			+ "inner join classificacao c\r\n"
-	    			+ "on med.IDMEDICAMENTO = c.ID_MEDICAMENTO;";
-
-	    	st = conn.prepareStatement(query);
-	    	rs = st.executeQuery();
-
-	    	while(rs.next()) {
-	    		Integer idMedQuery = rs.getInt("idmedicamento");
-	    		String nomeMedQuery = rs.getString("nome");
-	    		Integer quantidadeMedQuery = rs.getInt("quantidade");
-	    		Date validadeMedQuery = rs.getDate("validade");
-	    		String loteMedQuery = rs.getString("lote");
-	    		String classifMedQuery = rs.getString("classif");
-	    		
-	    		medicamentos med = new medicamentos(idMedQuery, nomeMedQuery, quantidadeMedQuery, validadeMedQuery, classifMedQuery, loteMedQuery);
-	    		
-	    		listOfMed.add(med);
-	    		
-	    		codigoTC.setCellValueFactory(new PropertyValueFactory<medicamentos, Integer>("idMed"));
-	    		nomeTC.setCellValueFactory(new PropertyValueFactory<>("nomeMed"));
-	    		quantTC.setCellValueFactory(new PropertyValueFactory<medicamentos, Integer>("quantidade"));
-	    		validadeTC.setCellValueFactory(new PropertyValueFactory<medicamentos, Date>("validade"));
-	    		loteTC.setCellValueFactory(new PropertyValueFactory<medicamentos, String>("codLote"));
-	    		classificacaoTC.setCellValueFactory(new PropertyValueFactory<medicamentos, String>("nomeClassificacao"));
-	    	}
-	    	
-	    	tableAjusteWindowTV.setItems(listOfMed);
-	    	
-		} catch (SQLException e2) {
-			e2.printStackTrace();
-		}finally {
-		    if (st != null) {
-		        DB.closeStatement(st);
-		    }
-		    if (conn != null) {
-		        DB.closeConnection();
-		    }
-		}
-		*/
 		
 		tableAjusteWindowTV.setItems(listOfMed);
 		tableAjusteWindowTV.setEditable(true);
@@ -146,7 +93,6 @@ public class frameAjusteWindow implements Initializable{
 					
 					updateLine(nomeTCValueCB, med, numeric);
 					numeric ++;
-					listOfMed.add(medVazio);
 					});
 					
 				}
@@ -160,17 +106,13 @@ public class frameAjusteWindow implements Initializable{
 		
 		try{
 	    	conn = DB.getConnection();
-	    	
 	    	//id, nome, qtd, validade, lote, tipo
 	    	String query = "select nome from medicamento;";
-
 	    	st = conn.prepareStatement(query);
 	    	rs = st.executeQuery();
-
 	    	while(rs.next()) {
 	    		comboBox.getItems().add(rs.getString("nome"));	
 	    	}//end while
-			
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 		}finally {
@@ -181,8 +123,6 @@ public class frameAjusteWindow implements Initializable{
 		        DB.closeConnection();
 		    }
 		}
-	    	
-	    
 	} //end initialize
 	
 	public void updateLine(String nomeProd, medicamentos med, int numeric) {
@@ -218,10 +158,7 @@ public class frameAjusteWindow implements Initializable{
     		classificacaoTC.setCellValueFactory(new PropertyValueFactory<medicamentos, String>("nomeClassificacao"));
 			
 			tableAjusteWindowTV.refresh();
-    	}
-    	
-    	
-		}catch (SQLException e2) {
+    	}}catch (SQLException e2) {
 			e2.printStackTrace();
 		}finally {
 		    if (st != null) {
@@ -234,7 +171,11 @@ public class frameAjusteWindow implements Initializable{
 	}
 	
 	
-	
+	public void incluirLine(ActionEvent event) {
+		listOfMed.add(medVazio);
+		tableAjusteWindowTV.setItems(listOfMed);
+	}
+
 	/* public void save(ActionEvent event) {
 		
 		vai pegar get de todas as observableList e alterar no banco de dados com as quantidades e lotes alterados

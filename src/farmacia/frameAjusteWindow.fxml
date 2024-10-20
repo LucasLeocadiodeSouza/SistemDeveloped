@@ -19,7 +19,7 @@
       <TableView fx:id="tableAjusteWindowTV" layoutX="13.0" layoutY="174.0" prefHeight="192.0" prefWidth="593.0">
         <columns>
           <TableColumn fx:id="codigoTC" prefWidth="75.0" text="Codigo " />
-          <TableColumn fx:id="nomeTC" onEditCommit="#onEditChargedName" prefWidth="200.00005340576172" text="Nome do produto" />
+          <TableColumn fx:id="nomeTC" prefWidth="200.00005340576172" text="Nome do produto" />
             <TableColumn fx:id="quantTC" onEditCommit="#onEditChargedQtd" prefWidth="47.99993896484375" text="Qtd." />
             <TableColumn fx:id="validadeTC" prefWidth="80.800048828125" text="Validade" />
             <TableColumn fx:id="loteTC" onEditCommit="#onEditChargedLote" prefWidth="82.39996337890625" text="Lote" />

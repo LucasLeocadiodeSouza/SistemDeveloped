@@ -22,6 +22,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
 import medicamentos.medicamentos;
 
@@ -56,6 +57,8 @@ public class frameAjusteWindow implements Initializable{
     @FXML
     private Button incluirButton;
     
+    private Stage stage;
+    
     
     Connection conn = null;
     PreparedStatement st = null;
@@ -64,7 +67,7 @@ public class frameAjusteWindow implements Initializable{
    ObservableList<medicamentos> listOfMed = FXCollections.observableArrayList();
    private int numeric = 0;
    medicamentos medVazio = new medicamentos((Integer)null, "", (Integer)null, null, "", "");
-   
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
@@ -100,8 +103,9 @@ public class frameAjusteWindow implements Initializable{
 		});
 		quantTC.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
 		loteTC.setCellFactory(TextFieldTableCell.forTableColumn());
-	}
-		
+
+	}//end initialize
+
 	public void carregarNomesComboBox(ComboBox<String> comboBox) {
 		
 		try{
@@ -123,7 +127,7 @@ public class frameAjusteWindow implements Initializable{
 		        DB.closeConnection();
 		    }
 		}
-	} //end initialize
+	} 
 	
 	public void updateLine(String nomeProd, medicamentos med, int numeric) {
 		try {
@@ -176,23 +180,88 @@ public class frameAjusteWindow implements Initializable{
 		tableAjusteWindowTV.setItems(listOfMed);
 	}
 
-	/* public void save(ActionEvent event) {
-		
-		vai pegar get de todas as observableList e alterar no banco de dados com as quantidades e lotes alterados
-		dai faz por id para garantir a alteracao do item certo
-		
-	} */
+	public void autorizarUpDel() throws SQLException {
+
+			String query = "SET SQL_SAFE_UPDATES = 0;";
+			
+			st = conn.prepareStatement(query);
+			int rowsAffected = st.executeUpdate();
+	    	
+	}
 	
-    public void onEditChargedName(TableColumn.CellEditEvent<medicamentos, String> medStringCellEditEvent) {
+	public void updateQuantity(medicamentos med, int id, Integer newQuantity) {
+		try {
+			conn = DB.getConnection();
+			
+			String query = "UPDATE medicamento\r\n"
+						+ "set QUANTIDADE = ? where IDMEDICAMENTO = ?;";
+			
+			autorizarUpDel();
+			st = conn.prepareStatement(query);
+	    	st.setInt(1, newQuantity);
+	    	st.setInt(2, id);
+	    	int rowsAffected = st.executeUpdate();
+	    	
+			
+		}catch (SQLException e2) {
+			e2.printStackTrace();
+		}finally {
+		    if (st != null) {
+		        DB.closeStatement(st);
+		    }
+		    if (conn != null) {
+		        DB.closeConnection();
+		    }
+		}
+	}
+	
+	public void updateLote(medicamentos med, int id, String newLote) {
+		try {
+			conn = DB.getConnection();
+			
+			String query = "UPDATE LOTE\r\n"
+					+ "set LOTE = ? where IDLOTE = ?;";
+			
+			autorizarUpDel();
+			st = conn.prepareStatement(query);
+	    	st.setString(1, newLote);
+	    	st.setInt(2, id);
+	    	int rowsAffected = st.executeUpdate();
+	    	
+			
+		}catch (SQLException e2) {
+			e2.printStackTrace();
+		}finally {
+		    if (st != null) {
+		        DB.closeStatement(st);
+		    }
+		    if (conn != null) {
+		        DB.closeConnection();
+		    }
+		}
+	}
+	
+	public void save(ActionEvent event) {
+		stage = (Stage) tableAjusteWindowTV.getScene().getWindow();
+		quantTC.setOnEditCommit(this::onEditChargedQtd);
+		loteTC.setOnEditCommit(this::onEditChargedLote);
+		stage.close();
+	}
+	
+	@FXML
+	protected void onEditChargedQtd(TableColumn.CellEditEvent<medicamentos, Integer> medIntegerCellEditEvent) {
     	medicamentos med = tableAjusteWindowTV.getSelectionModel().getSelectedItem();
-    	med.setNomeMed(medStringCellEditEvent.getNewValue());
-    }
-    public void onEditChargedQtd(TableColumn.CellEditEvent<medicamentos, Integer> medIntegerCellEditEvent) {
-    	medicamentos med = tableAjusteWindowTV.getSelectionModel().getSelectedItem();
+    	Integer codIdLine = med.getIdMed();
     	med.setQuantidade(medIntegerCellEditEvent.getNewValue());
+    	updateQuantity(med, codIdLine, medIntegerCellEditEvent.getNewValue());
+    	tableAjusteWindowTV.refresh();
     }
+	@FXML
     public void onEditChargedLote(TableColumn.CellEditEvent<medicamentos, String> medStringCellEditEvent) {
-    	medicamentos med = tableAjusteWindowTV.getSelectionModel().getSelectedItem();
+		medicamentos med = tableAjusteWindowTV.getSelectionModel().getSelectedItem();
+    	Integer codIdLine = med.getIdMed();
     	med.setLote(medStringCellEditEvent.getNewValue());
+    	updateLote(med, codIdLine, medStringCellEditEvent.getNewValue());
+    	tableAjusteWindowTV.refresh();
     }
 }

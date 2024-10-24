@@ -52,7 +52,17 @@ public class medicamentos {
 	    this.lote = new lote();
 	    this.lote.setCodLote(codLote);
 	}
-	
+	public medicamentos(Integer idMed, Date validade, String nomeClassificacao, String codLote) {
+
+		this.idMed = idMed;
+		this.validade = validade;
+		
+	    this.classificacao = new classificacao();
+	    this.classificacao.setNomeClassificacao(nomeClassificacao);
+	    
+	    this.lote = new lote();
+	    this.lote.setCodLote(codLote);
+	}
 	
     public String getCodLote() {
         return lote.getCodLote();

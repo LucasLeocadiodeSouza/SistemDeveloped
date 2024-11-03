@@ -4,6 +4,7 @@ import java.sql.Date;
 
 public class medicamentos {
 	
+	private Integer id;
 	private Integer idMed;
 	private String nomeMed;
 	private Integer quantidade;
@@ -64,7 +65,13 @@ public class medicamentos {
 	    this.lote.setCodLote(codLote);
 	}
 	
-    public String getCodLote() {
+    public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	public String getCodLote() {
         return lote.getCodLote();
     }
 

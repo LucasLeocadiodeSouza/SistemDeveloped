@@ -6,27 +6,30 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import connectSQL.DB;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
 import medicamentos.medicamentos;
@@ -62,11 +65,16 @@ public class frameAjusteWindow implements Initializable{
     @FXML
     private Button saveButton;
     @FXML
-    private Button incluirButton;
+    private Button delButton;
+    @FXML
+    private Button exitButton;
+    @FXML
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     private Stage stage;
     LocalDateTime dataHoraAtual;
     String descricao;
+    ArrayList<medicamentos> ajusteMed;
+    int idKey = 0;
     
     Connection conn = null;
     PreparedStatement st = null;
@@ -75,10 +83,21 @@ public class frameAjusteWindow implements Initializable{
    ObservableList<medicamentos> listOfMed = FXCollections.observableArrayList();
    private int numeric = 0;
    medicamentos medVazio = new medicamentos((Integer)null, "", (Integer)null, null, "", "");
+   medicamentos med;
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
+		acaoFeita.setFocusTraversable(false);
+		hrAdd.setFocusTraversable(false);
+		nAjuste.setFocusTraversable(false);
+		descricaoTF.setFocusTraversable(false);
+		setor.setFocusTraversable(false);
+		saveButton.setFocusTraversable(false);
+		delButton.setFocusTraversable(false);
+		exitButton.setFocusTraversable(false);
+		
+		ajusteMed = new ArrayList<medicamentos>();
 		acaoFeita.getItems().addAll(vAcaoFeita);
 		setor.getItems().addAll(vSetor);
 		
@@ -89,32 +108,41 @@ public class frameAjusteWindow implements Initializable{
 		nomeTC.setCellFactory(column -> new TableCell<medicamentos, String>(){
 			private final ComboBox<String> comboBox = new ComboBox<>();
 			
-			@Override
-			protected void updateItem(String item, boolean empty) {
-				super.updateItem(item, empty);
-				if(empty) {
-					setGraphic(null);
-				}else {
-					comboBox.getItems().clear();
-					carregarNomesComboBox(comboBox);
-					comboBox.setValue(item);
-					setGraphic(comboBox);
-					
-					comboBox.setOnAction(event -> {
-					String nomeTCValueCB = comboBox.getValue();
-					medicamentos med = getTableView().getItems().get(getIndex());
-					med.setNomeMed(nomeTCValueCB);
-					updateLine(nomeTCValueCB, med, numeric);
-					numeric ++;
-					}); //end comboBox
-				}					
-			}			
+			 @Override
+			    protected void updateItem(String item, boolean empty) {
+			        super.updateItem(item, empty);
+			        if (empty) {
+			            setGraphic(null);
+			        } else {
+			        	comboBox.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+			            comboBox.setEditable(true);
+			            comboBox.setMaxWidth(Double.MAX_VALUE);
+			            comboBox.setPrefWidth(Double.MAX_VALUE);
+			            
+			            comboBox.getItems().clear();
+			            carregarNomesComboBox(comboBox);
+			            comboBox.setValue(item);
+			            setGraphic(comboBox);
+
+			            comboBox.setOnAction(event -> {
+			                String nomeTCValueCB = comboBox.getValue();
+			                med = getTableView().getItems().get(getIndex());
+			                med.setNomeMed(nomeTCValueCB);
+			                updateLine(nomeTCValueCB, med, numeric);
+			                numeric++;
+			            });
+			        }
+			    }			
 		});
 		quantTC.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
 		loteTC.setCellFactory(TextFieldTableCell.forTableColumn());
+		
+		listOfMed.add(medVazio);
+		tableAjusteWindowTV.setItems(listOfMed);//um incluir de primeiro pra nao nvolver o arraylist
 
 	}//end initialize
 
+	
 	public void carregarNomesComboBox(ComboBox<String> comboBox) {
 		try{
 	    	conn = DB.getConnection();
@@ -135,12 +163,12 @@ public class frameAjusteWindow implements Initializable{
 		        DB.closeConnection();
 		    }
 		}
-	} 
+	}
 	
 	public void updateLine(String nomeProd, medicamentos med, int numeric) {
 		try {
 		conn = DB.getConnection();
-		String query = "select med.idmedicamento, med.nome, med.validade, l.lote, c.classif\r\n"
+		String query = "select med.idmedicamento, med.quantidade, med.nome, med.validade, l.lote, c.classif\r\n"
     			+ "from medicamento med \r\n"
     			+ "inner join lote l\r\n"
     			+ "on med.IDMEDICAMENTO = l.ID_MEDICAMENTO\r\n"
@@ -154,11 +182,12 @@ public class frameAjusteWindow implements Initializable{
     	
     	if(rs.next()) {
     		Integer idMedQuery = rs.getInt("idmedicamento");
+    		Integer quantityQuery = rs.getInt("quantidade");
 			Date validadeMedQuery = rs.getDate("validade");
 			String loteMedQuery = rs.getString("lote");
 			String classifMedQuery = rs.getString("classif");
 			
-			med = new medicamentos(idMedQuery, validadeMedQuery, classifMedQuery, loteMedQuery);//o erro que esta tendo é que tem que adiconar o query para o medicamento e mudar a quantidade pela classe medicamentos e depois puxar q quantidade no medicamento pro banco
+			med = new medicamentos(idMedQuery, quantityQuery, validadeMedQuery, classifMedQuery, loteMedQuery);
 			
 			listOfMed.set(numeric, med);
 			
@@ -180,97 +209,22 @@ public class frameAjusteWindow implements Initializable{
 		}
 	}
 	
-	
-	public void incluirLine(ActionEvent event) {
-		listOfMed.add(medVazio);
-		tableAjusteWindowTV.setItems(listOfMed);
-	}
-
-	public void autorizarUpDel() throws SQLException {
-			String query = "SET SQL_SAFE_UPDATES = 0;";
-			st = conn.prepareStatement(query);
-			int rowsAffected = st.executeUpdate();
-	}
-	
-	public Integer selectQuantity() {
-		Integer qtd = null;
-		try {
-			conn = DB.getConnection();
-			
-			String query = "SELECT quantidade FROM medicamento;";
-			
-			st = conn.prepareStatement(query);
-			qtd = rs.getInt("quantidade");
-			st.executeQuery();
-			System.out.println("Deu o select Quantity");
-			
-		}catch (SQLException e2) {
-			e2.printStackTrace();
-		}finally {
-		    if (st != null) {
-		        DB.closeStatement(st);
-		    }
-		    if (conn != null) {
-		        DB.closeConnection();
-		    }
-		}
-		return qtd;
-	}
-	
-	public void updateQuantity(medicamentos med, int id, Integer campoQuantity) {
-		try {
-			Integer newQuantity = campoQuantity + selectQuantity();
-			med.setQuantidade(newQuantity);
-			conn = DB.getConnection();
-			
-			String query = "UPDATE medicamento\r\n"
-						+ "set QUANTIDADE = ? where IDMEDICAMENTO = ?;";
-			
-			autorizarUpDel();
-			st = conn.prepareStatement(query);
-	    	st.setInt(1, newQuantity);
-	    	st.setInt(2, id);
-	    	int rowsAffected = st.executeUpdate();
-			
-	    	System.out.println("Deu o UpdateQuantity");
-	    	
-		}catch (SQLException e2) {
-			e2.printStackTrace();
-		}finally {
-		    if (st != null) {
-		        DB.closeStatement(st);
-		    }
-		    if (conn != null) {
-		        DB.closeConnection();
-		    }
-		}
-	}
-	
-	public void updateLote(int id, String newLote) {
-		try {
-			conn = DB.getConnection();
-			
-			String query = "UPDATE LOTE\r\n"
-					+ "set LOTE = ? where IDLOTE = ?;";
-			
-			autorizarUpDel();
-			st = conn.prepareStatement(query);
-	    	st.setString(1, newLote);
-	    	st.setInt(2, id);
-	    	int rowsAffected = st.executeUpdate();
-	    	
-	    	System.out.println("Deu o Update Lote");
-	    	
-		}catch (SQLException e2) {
-			e2.printStackTrace();
-		}finally {
-		    if (st != null) {
-		        DB.closeStatement(st);
-		    }
-		    if (conn != null) {
-		        DB.closeConnection();
-		    }
-		}
+	@FXML
+	public void nextTableItem() {
+		tableAjusteWindowTV.setOnKeyPressed(new EventHandler<KeyEvent>() {
+			@Override
+			public void handle(KeyEvent arg0) {
+				
+				if(arg0.getCode().equals(KeyCode.TAB)){
+					arg0.consume();
+					tableAjusteWindowTV.getSelectionModel().selectRightCell();
+					tableAjusteWindowTV.getFocusModel().getFocusedCell();
+					System.out.println("eitaa");
+					
+				}
+				
+			}//endHandler
+		});
 	}
 	
 	public void nmrAjuste() {
@@ -324,29 +278,50 @@ public class frameAjusteWindow implements Initializable{
 	}
 	
 	public void save(ActionEvent event) throws SQLException { //botao de salvar
-		  try {
-		        stage = (Stage) tableAjusteWindowTV.getScene().getWindow();
-		        quantTC.setOnEditCommit(editEvent -> {
-		            medicamentos med = editEvent.getRowValue();
-		            updateQuantity(med, med.getIdMed(), med.getQuantidade());
-		            stage.close();
-		            tableAjusteWindowTV.refresh();
-		        });
-		        loteTC.setOnEditCommit(this::onEditChargedLote);
-		        nmrAjuste();
-		        System.out.println("Deu o save");
-		        //stage.close();
-		    }catch (Exception e) {
-		        e.printStackTrace(); // Outros tipos de erro
-		        System.out.println("Erro: " + e.getMessage());
+		try {
+	        stage = (Stage) tableAjusteWindowTV.getScene().getWindow();
+	        
+	        /*
+	        conn = DB.getConnection();
+	        
+	        for(int j = 0; j < id; j++) {
+	        	String query = "UPDATE medicamento\r\n"
+	        			+ "set quantidade = ? where idmedicamento = ?;";
+	        	
+	        	st = conn.prepareStatement(query);
+	        	st.setInt(1, ajusteMed.get(j).getQuantidade());
+	        	st.setInt(2, ajusteMed.get(j).getIdMed());
+	        	int rowsAffected = st.executeUpdate();
+	        	
+	        }*/
+	        
+	        for(int j = 0; j < ajusteMed.size(); j++) {
+	  
+	        	System.out.println("ajusteMed.get(j).getQuantidade():");
+	        	System.out.println(ajusteMed.get(j).getQuantidade());
+	        	System.out.println("ajusteMed.get(j).getIdMed():");
+	        	System.out.println(ajusteMed.get(j).getIdMed());
+	        }
+	        
+	        //nmrAjuste();
+	        stage.close();
+	    }catch (Exception e) {
+	        e.printStackTrace();
+	        System.out.println("Erro: " + e.getMessage());
+	    }finally {
+		    if (st != null) {
+		        DB.closeStatement(st);
 		    }
+		    if (conn != null) {
+		        DB.closeConnection();
+		    }
+		}
 	}
 	
+	public void onEditChargedQtd(TableColumn.CellEditEvent<medicamentos, Integer> medIntegerCellEditEvent) {
+		med = tableAjusteWindowTV.getSelectionModel().getSelectedItem();
+		med.setQuantidade(medIntegerCellEditEvent.getNewValue());
+    }
     public void onEditChargedLote(TableColumn.CellEditEvent<medicamentos, String> medStringCellEditEvent) {
-		medicamentos med = tableAjusteWindowTV.getSelectionModel().getSelectedItem();
-    	Integer codIdLine = med.getIdMed();
-    	med.setLote(medStringCellEditEvent.getNewValue());
-    	updateLote(codIdLine, medStringCellEditEvent.getNewValue());
-    	tableAjusteWindowTV.refresh();
     }
 }

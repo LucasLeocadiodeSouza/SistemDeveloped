@@ -83,19 +83,9 @@ public class frameAjusteWindow implements Initializable{
    ObservableList<medicamentos> listOfMed = FXCollections.observableArrayList();
    private int numeric = 0;
    medicamentos medVazio = new medicamentos((Integer)null, "", (Integer)null, null, "", "");
-   medicamentos med;
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		
-		acaoFeita.setFocusTraversable(false);
-		hrAdd.setFocusTraversable(false);
-		nAjuste.setFocusTraversable(false);
-		descricaoTF.setFocusTraversable(false);
-		setor.setFocusTraversable(false);
-		saveButton.setFocusTraversable(false);
-		delButton.setFocusTraversable(false);
-		exitButton.setFocusTraversable(false);
 		
 		ajusteMed = new ArrayList<medicamentos>();
 		acaoFeita.getItems().addAll(vAcaoFeita);
@@ -126,9 +116,9 @@ public class frameAjusteWindow implements Initializable{
 
 			            comboBox.setOnAction(event -> {
 			                String nomeTCValueCB = comboBox.getValue();
-			                med = getTableView().getItems().get(getIndex());
+			                medicamentos med = getTableView().getItems().get(getIndex());
 			                med.setNomeMed(nomeTCValueCB);
-			                updateLine(nomeTCValueCB, med, numeric);
+			                updateLine(nomeTCValueCB, med, numeric);			                
 			                numeric++;
 			            });
 			        }
@@ -141,7 +131,6 @@ public class frameAjusteWindow implements Initializable{
 		tableAjusteWindowTV.setItems(listOfMed);//um incluir de primeiro pra nao nvolver o arraylist
 
 	}//end initialize
-
 	
 	public void carregarNomesComboBox(ComboBox<String> comboBox) {
 		try{
@@ -187,7 +176,11 @@ public class frameAjusteWindow implements Initializable{
 			String loteMedQuery = rs.getString("lote");
 			String classifMedQuery = rs.getString("classif");
 			
-			med = new medicamentos(idMedQuery, quantityQuery, validadeMedQuery, classifMedQuery, loteMedQuery);
+			med.setIdMed(idMedQuery);
+			med.setQuantidade(quantityQuery);
+			med.setValidade(validadeMedQuery);
+			med.setNomeClassificacao(classifMedQuery);
+			med.setLote(loteMedQuery);
 			
 			listOfMed.set(numeric, med);
 			
@@ -217,8 +210,8 @@ public class frameAjusteWindow implements Initializable{
 				
 				if(arg0.getCode().equals(KeyCode.TAB)){
 					arg0.consume();
-					tableAjusteWindowTV.getSelectionModel().selectRightCell();
 					tableAjusteWindowTV.getFocusModel().getFocusedCell();
+					tableAjusteWindowTV.getSelectionModel().selectRightCell();
 					System.out.println("eitaa");
 					
 				}
@@ -319,8 +312,8 @@ public class frameAjusteWindow implements Initializable{
 	}
 	
 	public void onEditChargedQtd(TableColumn.CellEditEvent<medicamentos, Integer> medIntegerCellEditEvent) {
-		med = tableAjusteWindowTV.getSelectionModel().getSelectedItem();
-		med.setQuantidade(medIntegerCellEditEvent.getNewValue());
+		//quantTC.setCellValueFactory(new PropertyValueFactory<medicamentos, Integer>());
+		
     }
     public void onEditChargedLote(TableColumn.CellEditEvent<medicamentos, String> medStringCellEditEvent) {
     }

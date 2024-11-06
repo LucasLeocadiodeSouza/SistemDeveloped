@@ -78,6 +78,10 @@ public class medicamentos {
     public String getNomeClassificacao() {
         return classificacao.getNomeClassificacao();
     }
+    public void setNomeClassificacao(String classificacao) {
+		this.classificacao = new classificacao();
+	    this.classificacao.setNomeClassificacao(classificacao);
+	}
 
     public String getNomeMarca() {
         return marca.getNomeMarca();

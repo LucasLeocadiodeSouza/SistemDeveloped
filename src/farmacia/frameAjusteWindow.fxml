@@ -19,7 +19,7 @@
         <columns>
           <TableColumn fx:id="codigoTC" prefWidth="75.0" text="Codigo " />
           <TableColumn fx:id="nomeTC" prefWidth="200.00005340576172" text="Nome do produto" />
-            <TableColumn fx:id="quantTC" prefWidth="47.99993896484375" text="Qtd." />
+            <TableColumn fx:id="quantTC" onEditCommit="#onEditChargedQtd" prefWidth="47.99993896484375" text="Qtd." />
             <TableColumn fx:id="validadeTC" prefWidth="80.800048828125" text="Validade" />
             <TableColumn fx:id="loteTC" prefWidth="82.39996337890625" text="Lote" />
             <TableColumn fx:id="classificacaoTC" prefWidth="108.00003051757812" text="Classificacao" />

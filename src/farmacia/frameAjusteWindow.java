@@ -74,7 +74,7 @@ public class frameAjusteWindow implements Initializable{
     LocalDateTime dataHoraAtual;
     String descricao;
     ArrayList<medicamentos> ajusteMed;
-    int idKey = 0;
+    medicamentos med;
     
     Connection conn = null;
     PreparedStatement st = null;
@@ -116,7 +116,7 @@ public class frameAjusteWindow implements Initializable{
 
 			            comboBox.setOnAction(event -> {
 			                String nomeTCValueCB = comboBox.getValue();
-			                medicamentos med = getTableView().getItems().get(getIndex());
+			                med = getTableView().getItems().get(getIndex());
 			                med.setNomeMed(nomeTCValueCB);
 			                updateLine(nomeTCValueCB, med, numeric);			                
 			                numeric++;
@@ -176,15 +176,13 @@ public class frameAjusteWindow implements Initializable{
 			String loteMedQuery = rs.getString("lote");
 			String classifMedQuery = rs.getString("classif");
 			
-			med.setIdMed(idMedQuery);
-			med.setQuantidade(quantityQuery);
-			med.setValidade(validadeMedQuery);
-			med.setNomeClassificacao(classifMedQuery);
-			med.setLote(loteMedQuery);
+			med = new medicamentos(idMedQuery, quantityQuery, validadeMedQuery, classifMedQuery, loteMedQuery);
 			
 			listOfMed.set(numeric, med);
+			ajusteMed.add(med);
 			
 			codigoTC.setCellValueFactory(new PropertyValueFactory<medicamentos, Integer>("idMed"));
+			quantTC.setCellValueFactory(new PropertyValueFactory<medicamentos, Integer>("quantidade"));
     		validadeTC.setCellValueFactory(new PropertyValueFactory<medicamentos, Date>("validade"));
     		loteTC.setCellValueFactory(new PropertyValueFactory<medicamentos, String>("codLote"));
     		classificacaoTC.setCellValueFactory(new PropertyValueFactory<medicamentos, String>("nomeClassificacao"));
@@ -208,12 +206,8 @@ public class frameAjusteWindow implements Initializable{
 			@Override
 			public void handle(KeyEvent arg0) {
 				
-				if(arg0.getCode().equals(KeyCode.TAB)){
-					arg0.consume();
-					tableAjusteWindowTV.getFocusModel().getFocusedCell();
-					tableAjusteWindowTV.getSelectionModel().selectRightCell();
-					System.out.println("eitaa");
-					
+				if(arg0.getCode().equals(KeyCode.E)){
+					listOfMed.add(medVazio);
 				}
 				
 			}//endHandler
@@ -312,8 +306,18 @@ public class frameAjusteWindow implements Initializable{
 	}
 	
 	public void onEditChargedQtd(TableColumn.CellEditEvent<medicamentos, Integer> medIntegerCellEditEvent) {
-		//quantTC.setCellValueFactory(new PropertyValueFactory<medicamentos, Integer>());
-		
+		 TablePosition<medicamentos, ?> pos = tableAjusteWindowTV.getFocusModel().getFocusedCell();
+         int currentRow = pos.getRow();
+		 ajusteMed.set(
+				 currentRow,
+				 new medicamentos(
+						 ajusteMed.get(currentRow).getIdMed(),
+						 medIntegerCellEditEvent.getNewValue(), 
+						 ajusteMed.get(currentRow).getValidade(), 
+						 ajusteMed.get(currentRow).getNomeClassificacao(), 
+						 ajusteMed.get(currentRow).getCodLote()
+						 ));
+		 
     }
     public void onEditChargedLote(TableColumn.CellEditEvent<medicamentos, String> medStringCellEditEvent) {
     }

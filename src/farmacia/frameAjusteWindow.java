@@ -176,13 +176,12 @@ public class frameAjusteWindow implements Initializable{
 			String loteMedQuery = rs.getString("lote");
 			String classifMedQuery = rs.getString("classif");
 			
-			med = new medicamentos(idMedQuery, quantityQuery, validadeMedQuery, classifMedQuery, loteMedQuery);
+			med = new medicamentos(idMedQuery, validadeMedQuery, classifMedQuery, loteMedQuery);
 			
 			listOfMed.set(numeric, med);
 			ajusteMed.add(med);
 			
 			codigoTC.setCellValueFactory(new PropertyValueFactory<medicamentos, Integer>("idMed"));
-			quantTC.setCellValueFactory(new PropertyValueFactory<medicamentos, Integer>("quantidade"));
     		validadeTC.setCellValueFactory(new PropertyValueFactory<medicamentos, Date>("validade"));
     		loteTC.setCellValueFactory(new PropertyValueFactory<medicamentos, String>("codLote"));
     		classificacaoTC.setCellValueFactory(new PropertyValueFactory<medicamentos, String>("nomeClassificacao"));
@@ -205,7 +204,6 @@ public class frameAjusteWindow implements Initializable{
 		tableAjusteWindowTV.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent arg0) {
-				
 				if(arg0.getCode().equals(KeyCode.E)){
 					listOfMed.add(medVazio);
 				}
@@ -264,33 +262,96 @@ public class frameAjusteWindow implements Initializable{
 		}
 	}
 	
+	public Integer selectNmrAjusteWindow() {
+		Integer id = null;
+		 
+		try {
+	        conn = DB.getConnection();
+	        
+        	String query = "select max(IDAJUSTEWINDOW) from ajustewindow;";
+        	
+        	st = conn.prepareStatement(query);
+        	rs = st.executeQuery();
+        	
+        	if(rs.next()) {
+        		id = rs.getInt("ultimoID");
+        	}
+     	      
+	    }catch (Exception e) {
+	        e.printStackTrace();
+	        System.out.println("Erro: " + e.getMessage());
+	    }finally {
+		    if (st != null) {
+		        DB.closeStatement(st);
+		    }
+		    if (conn != null) {
+		        DB.closeConnection();
+		    }
+		}
+		if(id == null) {
+			return 0;
+		}else {
+			return id;
+		}
+	}
+	
+	public Integer selectQtd(int idMed) {
+		Integer qtd = null;
+		 
+		try {
+	        conn = DB.getConnection();
+	        
+        	String query = "SELECT QUANTIDADE FROM MEDICAMENTO WHERE IDMEDICAMENTO = ?";
+        	
+        	st = conn.prepareStatement(query);
+        	st.setInt(1, idMed);
+        	rs = st.executeQuery();
+        	
+        	if(rs.next()) {
+        		qtd = rs.getInt("QUANTIDADE");
+        	}
+     	      
+	    }catch (Exception e) {
+	        e.printStackTrace();
+	        System.out.println("Erro: " + e.getMessage());
+	    }
+		if(qtd == null) {
+			return 0;
+		}else {
+			return qtd;
+		}
+	}
+	
 	public void save(ActionEvent event) throws SQLException { //botao de salvar
 		try {
 	        stage = (Stage) tableAjusteWindowTV.getScene().getWindow();
 	        
-	        /*
 	        conn = DB.getConnection();
 	        
-	        for(int j = 0; j < id; j++) {
-	        	String query = "UPDATE medicamento\r\n"
-	        			+ "set quantidade = ? where idmedicamento = ?;";
-	        	
-	        	st = conn.prepareStatement(query);
-	        	st.setInt(1, ajusteMed.get(j).getQuantidade());
-	        	st.setInt(2, ajusteMed.get(j).getIdMed());
-	        	int rowsAffected = st.executeUpdate();
-	        	
-	        }*/
-	        
-	        for(int j = 0; j < ajusteMed.size(); j++) {
-	  
-	        	System.out.println("ajusteMed.get(j).getQuantidade():");
-	        	System.out.println(ajusteMed.get(j).getQuantidade());
-	        	System.out.println("ajusteMed.get(j).getIdMed():");
-	        	System.out.println(ajusteMed.get(j).getIdMed());
+	        if(acaoFeita.getValue() == "Entrada") {
+	        	for(int j = 0; j < ajusteMed.size(); j++) {
+		        	String query = "UPDATE medicamento\r\n"
+		        			+ "set quantidade = "+ (ajusteMed.get(j).getQuantidade() + selectQtd(ajusteMed.get(j).getIdMed())) +" where idmedicamento = "+ ajusteMed.get(j).getIdMed() +";";
+		        	
+		        	st = conn.prepareStatement(query);
+		        	st.executeUpdate();
+		        	
+		        }
 	        }
+	        else if(acaoFeita.getValue() == "Saida"){
+	        	for(int j = 0; j < ajusteMed.size(); j++) {
+		        	String query = "UPDATE medicamento\r\n"
+		        			+ "set quantidade = ? where idmedicamento = ?;";
+		        	
+		        	st = conn.prepareStatement(query);
+		        	st.setInt(1, (selectQtd(ajusteMed.get(j).getIdMed())) - ajusteMed.get(j).getQuantidade());
+		        	st.setInt(2, ajusteMed.get(j).getIdMed());
+		        	int rowsAffected = st.executeUpdate();
+		        	
+		        }
+	        }	        	      
 	        
-	        //nmrAjuste();
+	        nmrAjuste();
 	        stage.close();
 	    }catch (Exception e) {
 	        e.printStackTrace();
@@ -317,7 +378,10 @@ public class frameAjusteWindow implements Initializable{
 						 ajusteMed.get(currentRow).getNomeClassificacao(), 
 						 ajusteMed.get(currentRow).getCodLote()
 						 ));
-		 
+		 medicamentos med = listOfMed.get(currentRow);
+		 med.setQuantidade(medIntegerCellEditEvent.getNewValue());
+		 tableAjusteWindowTV.refresh();
+		 quantTC.setCellValueFactory(new PropertyValueFactory<medicamentos, Integer>("quantidade"));
     }
     public void onEditChargedLote(TableColumn.CellEditEvent<medicamentos, String> medStringCellEditEvent) {
     }

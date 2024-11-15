@@ -65,8 +65,6 @@ public class frameAjusteWindow implements Initializable{
     @FXML
     private Button saveButton;
     @FXML
-    private Button delButton;
-    @FXML
     private Button exitButton;
     @FXML
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -81,7 +79,6 @@ public class frameAjusteWindow implements Initializable{
     ResultSet rs = null;
     
    ObservableList<medicamentos> listOfMed = FXCollections.observableArrayList();
-   private int numeric = 0;
    medicamentos medVazio = new medicamentos((Integer)null, "", (Integer)null, null, "", "");
 
 	@Override
@@ -90,6 +87,7 @@ public class frameAjusteWindow implements Initializable{
 		ajusteMed = new ArrayList<medicamentos>();
 		acaoFeita.getItems().addAll(vAcaoFeita);
 		setor.getItems().addAll(vSetor);
+		selectNmrAjusteWindow();
 		
 		tableAjusteWindowTV.setItems(listOfMed);
 		tableAjusteWindowTV.setEditable(true);
@@ -118,8 +116,8 @@ public class frameAjusteWindow implements Initializable{
 			                String nomeTCValueCB = comboBox.getValue();
 			                med = getTableView().getItems().get(getIndex());
 			                med.setNomeMed(nomeTCValueCB);
-			                updateLine(nomeTCValueCB, med, numeric);			                
-			                numeric++;
+			                tableAjusteWindowTV.getSelectionModel().select(getIndex());
+			                updateLine(nomeTCValueCB, med, getIndex());	            			              
 			            });
 			        }
 			    }			
@@ -128,9 +126,39 @@ public class frameAjusteWindow implements Initializable{
 		loteTC.setCellFactory(TextFieldTableCell.forTableColumn());
 		
 		listOfMed.add(medVazio);
-		tableAjusteWindowTV.setItems(listOfMed);//um incluir de primeiro pra nao nvolver o arraylist
+		tableAjusteWindowTV.setItems(listOfMed);//um incluir de primeiro pra nao envolver o arraylist
 
 	}//end initialize
+	
+	public void selectNmrAjusteWindow() {
+		Integer id = null;
+		 
+		try {
+	        conn = DB.getConnection();
+	        
+        	String query = "select max(IDAJUSTEWINDOW) as ultimoID from ajustewindow;";
+        	
+        	st = conn.prepareStatement(query);
+        	rs = st.executeQuery();
+        	
+        	if(rs.next()) {
+        		id = rs.getInt("ultimoID");
+        	}
+        	Integer nmrAjt = id + 1;
+        	nAjuste.setText(nmrAjt.toString());
+        	
+	    }catch (Exception e) {
+	        e.printStackTrace();
+	        System.out.println("Erro: " + e.getMessage());
+	    }finally {
+		    if (st != null) {
+		        DB.closeStatement(st);
+		    }
+		    if (conn != null) {
+		        DB.closeConnection();
+		    }
+		}
+	}//end selectNmrAjusteWindow
 	
 	public void carregarNomesComboBox(ComboBox<String> comboBox) {
 		try{
@@ -206,8 +234,15 @@ public class frameAjusteWindow implements Initializable{
 			public void handle(KeyEvent arg0) {
 				if(arg0.getCode().equals(KeyCode.E)){
 					listOfMed.add(medVazio);
-				}
-				
+					
+				}else if(arg0.isControlDown() && arg0.getCode().equals(KeyCode.DELETE)){
+					TablePosition<medicamentos, ?> pos = tableAjusteWindowTV.getFocusModel().getFocusedCell();
+			        int currentRow = pos.getRow();
+			        
+			        if(listOfMed.size() > 1) {
+			        	listOfMed.remove(currentRow);
+			        }			       
+				}				
 			}//endHandler
 		});
 	}
@@ -262,39 +297,6 @@ public class frameAjusteWindow implements Initializable{
 		}
 	}
 	
-	public Integer selectNmrAjusteWindow() {
-		Integer id = null;
-		 
-		try {
-	        conn = DB.getConnection();
-	        
-        	String query = "select max(IDAJUSTEWINDOW) from ajustewindow;";
-        	
-        	st = conn.prepareStatement(query);
-        	rs = st.executeQuery();
-        	
-        	if(rs.next()) {
-        		id = rs.getInt("ultimoID");
-        	}
-     	      
-	    }catch (Exception e) {
-	        e.printStackTrace();
-	        System.out.println("Erro: " + e.getMessage());
-	    }finally {
-		    if (st != null) {
-		        DB.closeStatement(st);
-		    }
-		    if (conn != null) {
-		        DB.closeConnection();
-		    }
-		}
-		if(id == null) {
-			return 0;
-		}else {
-			return id;
-		}
-	}
-	
 	public Integer selectQtd(int idMed) {
 		Integer qtd = null;
 		 
@@ -331,27 +333,22 @@ public class frameAjusteWindow implements Initializable{
 	        if(acaoFeita.getValue() == "Entrada") {
 	        	for(int j = 0; j < ajusteMed.size(); j++) {
 		        	String query = "UPDATE medicamento\r\n"
-		        			+ "set quantidade = "+ (ajusteMed.get(j).getQuantidade() + selectQtd(ajusteMed.get(j).getIdMed())) +" where idmedicamento = "+ ajusteMed.get(j).getIdMed() +";";
+		        			+ "set quantidade = " + (ajusteMed.get(j).getQuantidade() + selectQtd(ajusteMed.get(j).getIdMed())) + " where idmedicamento = " + ajusteMed.get(j).getIdMed()+ " ;";
 		        	
 		        	st = conn.prepareStatement(query);
 		        	st.executeUpdate();
-		        	
 		        }
-	        }
-	        else if(acaoFeita.getValue() == "Saida"){
+	        }else if(acaoFeita.getValue() == "Saida"){
 	        	for(int j = 0; j < ajusteMed.size(); j++) {
-		        	String query = "UPDATE medicamento\r\n"
-		        			+ "set quantidade = ? where idmedicamento = ?;";
+	        		String query = "UPDATE medicamento\r\n"
+		        			+ "set quantidade = " + (selectQtd(ajusteMed.get(j).getIdMed()) - ajusteMed.get(j).getQuantidade()) + " where idmedicamento = " + ajusteMed.get(j).getIdMed()+ " ;";
+		        	
 		        	
 		        	st = conn.prepareStatement(query);
-		        	st.setInt(1, (selectQtd(ajusteMed.get(j).getIdMed())) - ajusteMed.get(j).getQuantidade());
-		        	st.setInt(2, ajusteMed.get(j).getIdMed());
-		        	int rowsAffected = st.executeUpdate();
-		        	
+		        	int rowsAffected = st.executeUpdate();		        	
 		        }
-	        }	        	      
-	        
-	        nmrAjuste();
+	        }	        	      	        
+	        //nmrAjuste();
 	        stage.close();
 	    }catch (Exception e) {
 	        e.printStackTrace();

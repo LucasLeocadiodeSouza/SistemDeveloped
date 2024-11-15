@@ -13,8 +13,7 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="380.0" prefWidth="620.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="farmacia.frameAjusteWindow">
    <children>
       <Button fx:id="exitButton" focusTraversable="false" layoutX="568.0" layoutY="14.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="38.0" text="sair" />
-      <Button fx:id="delButton" focusTraversable="false" layoutX="522.0" layoutY="14.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="38.0" text="deletar" />
-      <Button fx:id="saveButton" focusTraversable="false" layoutX="476.0" layoutY="14.0" mnemonicParsing="false" onAction="#save" prefHeight="32.0" prefWidth="38.0" text="save" textAlignment="CENTER" />
+      <Button fx:id="saveButton" focusTraversable="false" layoutX="520.0" layoutY="14.0" mnemonicParsing="false" onAction="#save" prefHeight="32.0" prefWidth="38.0" text="save" textAlignment="CENTER" />
       <TableView fx:id="tableAjusteWindowTV" layoutX="13.0" layoutY="174.0" onKeyPressed="#nextTableItem" prefHeight="192.0" prefWidth="593.0">
         <columns>
           <TableColumn fx:id="codigoTC" prefWidth="75.0" text="Codigo " />

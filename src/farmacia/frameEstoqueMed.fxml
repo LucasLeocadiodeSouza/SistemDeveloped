@@ -20,6 +20,7 @@
           <TableColumn fx:id="codigoTC" prefWidth="52.000000953674316" text="Codigo" />
           <TableColumn fx:id="nomeTC" prefWidth="264.00002670288086" text="Nome" />
             <TableColumn fx:id="validadeTC" prefWidth="100.0" text="Validade" />
+            <TableColumn fx:id="quantiTC" prefWidth="75.0" text="Qtd" />
             <TableColumn fx:id="loteTC" prefWidth="100.80001831054688" text="Lote" />
             <TableColumn fx:id="classificacaoTC" prefWidth="133.60003662109375" text="Classificação" />
             <TableColumn fx:id="marcaTC" prefWidth="100.7999145507813" text="Marca" />

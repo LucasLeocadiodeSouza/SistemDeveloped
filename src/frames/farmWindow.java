@@ -35,7 +35,7 @@ public class farmWindow {
 		// Use o listener para ajustar a posição após o Stage ser exibido
 		Platform.runLater(() -> {
 		// Obtém o Stage a partir de qualquer nó
-		stage = (Stage) frameAnchorPane.getScene().getWindow();
+		stage = (Stage) barraIcon.getScene().getWindow();
 		stage.setMaximized(true);
 		
 		stage.setTitle("Sistem Enterpreise - Farmacia");

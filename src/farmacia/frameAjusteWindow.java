@@ -12,6 +12,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import javax.swing.JOptionPane;
+
 import connectSQL.DB;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -70,7 +72,6 @@ public class frameAjusteWindow implements Initializable{
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     private Stage stage;
     LocalDateTime dataHoraAtual;
-    String descricao;
     ArrayList<medicamentos> ajusteMed;
     medicamentos med;
     
@@ -89,7 +90,6 @@ public class frameAjusteWindow implements Initializable{
 		setor.getItems().addAll(vSetor);
 		selectNmrAjusteWindow();
 		
-		tableAjusteWindowTV.setItems(listOfMed);
 		tableAjusteWindowTV.setEditable(true);
 		dataHoraAtual = LocalDateTime.now();
 		
@@ -117,10 +117,10 @@ public class frameAjusteWindow implements Initializable{
 			                med = getTableView().getItems().get(getIndex());
 			                med.setNomeMed(nomeTCValueCB);
 			                tableAjusteWindowTV.getSelectionModel().select(getIndex());
-			                updateLine(nomeTCValueCB, med, getIndex());	            			              
+			                updateLine(nomeTCValueCB, med, getIndex());
 			            });
 			        }
-			    }			
+			    }
 		});
 		quantTC.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
 		loteTC.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -136,7 +136,7 @@ public class frameAjusteWindow implements Initializable{
 		try {
 	        conn = DB.getConnection();
 	        
-        	String query = "select max(IDAJUSTEWINDOW) as ultimoID from ajustewindow;";
+        	String query = "select max(IDAJUSTE) as ultimoID from ajuste;";
         	
         	st = conn.prepareStatement(query);
         	rs = st.executeQuery();
@@ -148,8 +148,7 @@ public class frameAjusteWindow implements Initializable{
         	nAjuste.setText(nmrAjt.toString());
         	
 	    }catch (Exception e) {
-	        e.printStackTrace();
-	        System.out.println("Erro: " + e.getMessage());
+	    	 JOptionPane.showMessageDialog(null, e.getMessage());
 	    }finally {
 		    if (st != null) {
 		        DB.closeStatement(st);
@@ -171,7 +170,7 @@ public class frameAjusteWindow implements Initializable{
 	    		comboBox.getItems().add(rs.getString("nome"));	
 	    	}//end while
 		} catch (SQLException e2) {
-			e2.printStackTrace();
+			JOptionPane.showMessageDialog(null, e2.getMessage());
 		}finally {
 		    if (st != null) {
 		        DB.closeStatement(st);
@@ -216,7 +215,7 @@ public class frameAjusteWindow implements Initializable{
 			
 			tableAjusteWindowTV.refresh();
     	}}catch (SQLException e2) {
-			e2.printStackTrace();
+    		JOptionPane.showMessageDialog(null, e2.getMessage());
 		}finally {
 		    if (st != null) {
 		        DB.closeStatement(st);
@@ -256,7 +255,7 @@ public class frameAjusteWindow implements Initializable{
 					" (?,?);", Statement.RETURN_GENERATED_KEYS
 					);
 			
-			st.setString(1, descricao);
+			st.setString(1, descricaoTF.getText());
 			st.setString(2, acaoFeita.getValue());
 			
 			int rowsAffected = st.executeUpdate();
@@ -284,9 +283,9 @@ public class frameAjusteWindow implements Initializable{
 			st.executeUpdate();
 			
 		}catch (SQLException e2) {
-			e2.printStackTrace();
+			JOptionPane.showMessageDialog(null, e2.getMessage());
 		} catch (ParseException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, e.getMessage());
 		}finally {
 		    if (st != null) {
 		        DB.closeStatement(st);
@@ -314,8 +313,7 @@ public class frameAjusteWindow implements Initializable{
         	}
      	      
 	    }catch (Exception e) {
-	        e.printStackTrace();
-	        System.out.println("Erro: " + e.getMessage());
+	    	JOptionPane.showMessageDialog(null, e.getMessage());
 	    }
 		if(qtd == null) {
 			return 0;
@@ -338,21 +336,22 @@ public class frameAjusteWindow implements Initializable{
 		        	st = conn.prepareStatement(query);
 		        	st.executeUpdate();
 		        }
+	        	nmrAjuste();
+		        stage.close();
 	        }else if(acaoFeita.getValue() == "Saida"){
 	        	for(int j = 0; j < ajusteMed.size(); j++) {
 	        		String query = "UPDATE medicamento\r\n"
 		        			+ "set quantidade = " + (selectQtd(ajusteMed.get(j).getIdMed()) - ajusteMed.get(j).getQuantidade()) + " where idmedicamento = " + ajusteMed.get(j).getIdMed()+ " ;";
-		        	
-		        	
 		        	st = conn.prepareStatement(query);
 		        	int rowsAffected = st.executeUpdate();		        	
 		        }
-	        }	        	      	        
-	        //nmrAjuste();
-	        stage.close();
+	        	nmrAjuste();
+			    stage.close();
+	        }else {
+	        	JOptionPane.showMessageDialog(null, "Campo ACAO não inserido", "Erro!!", JOptionPane.ERROR_MESSAGE);
+	        }
 	    }catch (Exception e) {
-	        e.printStackTrace();
-	        System.out.println("Erro: " + e.getMessage());
+	    	JOptionPane.showMessageDialog(null, e.getMessage());
 	    }finally {
 		    if (st != null) {
 		        DB.closeStatement(st);

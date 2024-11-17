@@ -16,8 +16,8 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/farmacia/frameAjusteWindow.fxml"));
-			//Parent root = FXMLLoader.load(getClass().getResource("/frames/desktopSistem.fxml"));
-			Parent root = loader.load();
+			Parent root = FXMLLoader.load(getClass().getResource("/frames/desktopSistem.fxml"));
+			//Parent root = loader.load();
 			frameAjusteWindow AW = loader.getController();
 			Scene scene = new Scene(root);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());

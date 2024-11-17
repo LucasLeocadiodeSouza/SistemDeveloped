@@ -20,13 +20,13 @@
             <TableColumn fx:id="acaoTC" prefWidth="136.00001831054692" text="Ação" />
         </columns>
       </TableView>
-      <TextField layoutX="21.0" layoutY="118.0" prefHeight="26.0" prefWidth="193.0" />
-      <Label layoutX="21.0" layoutY="95.0" text="Numero do Ajuste:">
+      <TextField fx:id="nAjusteTF" layoutX="26.0" layoutY="37.0" prefHeight="26.0" prefWidth="118.0" />
+      <Label layoutX="26.0" layoutY="14.0" text="Numero do Ajuste:">
          <font>
             <Font size="13.0" />
          </font>
       </Label>
-      <Button layoutX="476.0" layoutY="117.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="99.0" text="Pesquisar">
+      <Button fx:id="pesquisarB" layoutX="476.0" layoutY="117.0" mnemonicParsing="false" onAction="#pesquisar" prefHeight="26.0" prefWidth="99.0" text="Pesquisar">
          <font>
             <Font size="13.0" />
          </font>
@@ -35,5 +35,11 @@
       <Line endX="582.9999389648438" endY="-19.000003814697266" fill="#3058f7" layoutX="27.0" layoutY="19.0" startX="582.9999389648438" startY="371.0" stroke="#303fe7" strokeWidth="12.0" />
       <Line endX="-17.999988555908203" endY="350.0000305175781" fill="#3058f7" layoutX="18.0" layoutY="40.0" startX="-14.800005912780762" startY="-40.384769439697266" stroke="#303fe7" strokeWidth="13.0" />
       <Line endX="494.0" endY="-107.99996948242188" fill="#3058f7" layoutX="116.0" layoutY="498.0" startX="-115.99998474121094" startY="-108.00003051757812" stroke="#303fe7" strokeWidth="13.0" />
+      <TextField fx:id="descricaoTF" layoutX="26.0" layoutY="97.0" prefHeight="26.0" prefWidth="156.0" />
+      <Label layoutX="26.0" layoutY="74.0" text="Descrição:">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

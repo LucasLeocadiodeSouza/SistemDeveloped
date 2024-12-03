@@ -12,9 +12,9 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="510.0" prefWidth="780.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="farmacia.frameEstoqueMed">
    <children>
-      <Button layoutX="723.0" layoutY="14.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="42.0" />
-      <Button layoutX="672.0" layoutY="14.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="42.0" />
-      <Button layoutX="623.0" layoutY="14.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="42.0" />
+      <Button layoutX="723.0" layoutY="14.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="42.0" text="sair" />
+      <Button layoutX="672.0" layoutY="14.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="42.0" text="excluir" />
+      <Button fx:id="editB" layoutX="623.0" layoutY="14.0" mnemonicParsing="false" onAction="#editarMed" prefHeight="34.0" prefWidth="42.0" text="editar" />
       <TableView fx:id="tableMedEstTV" layoutX="11.0" layoutY="191.0" prefHeight="306.0" prefWidth="755.0">
         <columns>
           <TableColumn fx:id="codigoTC" prefWidth="52.000000953674316" text="Codigo" />

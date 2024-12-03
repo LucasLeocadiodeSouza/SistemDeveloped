@@ -12,9 +12,10 @@ public class medicamentos {
     private lote lote;
     private marca marca;
 	
-	public medicamentos(Integer idMed, String nomeMed, Date validade, String nomeClassificacao, String codLote, String nomeMarca) {
+	public medicamentos(Integer idMed, Integer quantidade, String nomeMed, Date validade, String nomeClassificacao, String codLote, String nomeMarca) {
 
 		this.idMed = idMed;
+		this.quantidade = quantidade;
 		this.nomeMed = nomeMed;
 		this.validade = validade;
 		

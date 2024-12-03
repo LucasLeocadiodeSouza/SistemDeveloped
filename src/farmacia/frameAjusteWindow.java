@@ -322,7 +322,7 @@ public class frameAjusteWindow implements Initializable{
 		}
 	}
 	
-	public void save(ActionEvent event) throws SQLException { //botao de salvar
+	public void save(ActionEvent event) throws SQLException { 
 		try {
 	        stage = (Stage) tableAjusteWindowTV.getScene().getWindow();
 	        

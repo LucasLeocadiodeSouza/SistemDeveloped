@@ -16,7 +16,7 @@
             <Font name="Arial Bold" size="12.0" />
          </font>
       </Label>
-      <TextField layoutX="104.0" layoutY="30.0" prefHeight="26.0" prefWidth="135.0" text="\@Usuario">
+      <TextField fx:id="addUserTF" layoutX="104.0" layoutY="30.0" prefHeight="26.0" prefWidth="135.0" text="\@Usuario">
          <font>
             <Font size="14.0" />
          </font>
@@ -79,13 +79,11 @@
          </font>
       </Label>
       <TextField fx:id="obsTF" layoutX="95.0" layoutY="252.0" prefHeight="26.0" prefWidth="266.0" />
-      <CheckBox layoutX="35.0" layoutY="316.0" mnemonicParsing="false" text="Estoque" />
-      <CheckBox layoutX="35.0" layoutY="349.0" mnemonicParsing="false" text="Inventario" />
-      <CheckBox layoutX="35.0" layoutY="380.0" mnemonicParsing="false" text="Prescrição Medica" />
-      <CheckBox layoutX="176.0" layoutY="316.0" mnemonicParsing="false" text="Devolução" />
-      <CheckBox layoutX="177.0" layoutY="349.0" mnemonicParsing="false" text="Inventario" />
-      <CheckBox layoutX="311.0" layoutY="349.0" mnemonicParsing="false" text="Requisição por Prestrador" />
-      <CheckBox layoutX="311.0" layoutY="316.0" mnemonicParsing="false" text="Requisição por Setor" />
+      <CheckBox fx:id="permEstCB" layoutX="35.0" layoutY="316.0" mnemonicParsing="false" text="Estoque" />
+      <CheckBox fx:id="permInvCB" layoutX="35.0" layoutY="349.0" mnemonicParsing="false" text="Inventario" />
+      <CheckBox fx:id="permDevCB" layoutX="172.0" layoutY="316.0" mnemonicParsing="false" text="Devolução" />
+      <CheckBox fx:id="permReqPrestCB" layoutX="170.0" layoutY="358.0" mnemonicParsing="false" text="Requisição por Prestrador" />
+      <CheckBox fx:id="permReqSetCB" layoutX="311.0" layoutY="316.0" mnemonicParsing="false" text="Requisição por Setor" />
       <Button fx:id="cadastrarButton" layoutX="500.0" layoutY="425.0" mnemonicParsing="false" onAction="#save" prefHeight="30.0" prefWidth="76.0" text="Cadastrar" />
       <Button fx:id="cancelButton" layoutX="127.0" layoutY="425.0" mnemonicParsing="false" onAction="#logOut" prefHeight="30.0" prefWidth="76.0" text="Cancelar" />
       <Line endX="596.021728515625" endY="-10.485282897949219" fill="#3058f7" layoutX="17.0" layoutY="10.0" startX="-99.8088150024414" startY="-10.000005722045898" stroke="#303fe7" strokeWidth="13.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
@@ -98,5 +96,11 @@
          </font>
       </Label>
       <TextField fx:id="nomeTF" layoutX="72.0" layoutY="143.0" prefHeight="26.0" prefWidth="159.0" />
+      <Label layoutX="477.0" layoutY="250.0" text="Medida:">
+         <font>
+            <Font name="Arial Bold" size="12.0" />
+         </font>
+      </Label>
+      <ChoiceBox fx:id="medidaCB" layoutX="525.0" layoutY="245.0" prefWidth="150.0" />
    </children>
 </AnchorPane>

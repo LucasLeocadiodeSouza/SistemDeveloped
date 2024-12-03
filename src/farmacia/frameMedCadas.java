@@ -10,8 +10,8 @@ import connectSQL.DB;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -23,12 +23,30 @@ public class frameMedCadas implements Initializable{
 	private AnchorPane frameAnchorPane;
 	@FXML
 	private TextField dataSistem;
+	/* tem que adicionar isso, qual usuario adicionou, a logica para ativar ele e o horario de add
+	@FXML
+	private ChoiceBox<String> medidaCB;
+    private String[] vMedidaCB = {"Und.", "Cx.","Pct.", "Par"};
+    */
 	@FXML
 	private TextField loteTF;
 	@FXML
 	private TextField validadeTF;
 	@FXML
 	private TextField marcaTF;
+    @FXML
+    private ChoiceBox<String> medidaCB;
+    private String[] vMedidaCB = {"Und.", "Cx.","Pct.", "Par"};
+	@FXML
+    private CheckBox permDevCB;
+    @FXML
+    private CheckBox permEstCB;
+    @FXML
+    private CheckBox permInvCB;
+    @FXML
+    private CheckBox permReqPrestCB;
+    @FXML
+    private CheckBox permReqSetCB;
 	@FXML
 	private TextField nomeTF;
 	@FXML
@@ -58,7 +76,7 @@ public class frameMedCadas implements Initializable{
 	
 	@Override
 	public void initialize(java.net.URL arg0, ResourceBundle arg1) {
-	
+		medidaCB.getItems().addAll(vMedidaCB); 
 		classCB.getItems().addAll(vClassCB);
 		tipoCB.getItems().addAll(vTipoCB);
 		fornCB.getItems().addAll(vFornCB);
@@ -66,11 +84,10 @@ public class frameMedCadas implements Initializable{
 	
 	@FXML
 	public void save(ActionEvent event) {
-		stage = (Stage) frameAnchorPane.getScene().getWindow();
-		
+		stage = (Stage) frameAnchorPane.getScene().getWindow();		
 		try {
 			cadasMedQuery cmQuery = new cadasMedQuery();
-			cmQuery.insertCadasQuery(conn, st, rs, nomeTF, quantidadeTF, validadeTF, loteTF, classCB, fornCB, marcaTF);
+			cmQuery.insertCadasQuery(conn, st, rs, nomeTF, quantidadeTF, validadeTF, dataSistem, medidaCB,  loteTF, permDevCB, permEstCB, permInvCB, permReqPrestCB, permReqSetCB, classCB, fornCB, marcaTF);
 		}finally {
 		    if (st != null) {
 		        DB.closeStatement(st);

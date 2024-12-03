@@ -98,8 +98,7 @@ public class frameEstoqueMed implements Initializable{
 	    	}
 	    	
 	    	tableMedEstTV.setItems(listOfMed);
-	    	
-	    	
+	    		    	
 	    } catch (SQLException e2) {
 			e2.printStackTrace();
 		}finally {

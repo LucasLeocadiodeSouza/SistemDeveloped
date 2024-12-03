@@ -21,7 +21,7 @@
                <items>
                   <MenuItem mnemonicParsing="false" onAction="#fWAjuste" text="Ajuste" />
                   <MenuItem mnemonicParsing="false" onAction="#fWEstoqueMed" text="Estoque Medicamento" />
-                  <MenuItem mnemonicParsing="false" text="Req. por Setor" />
+                  <MenuItem mnemonicParsing="false" onAction="#fWReqSetor" text="Req. por Setor" />
                   <MenuItem mnemonicParsing="false" text="Req. por Prestador" />
                   <MenuItem mnemonicParsing="false" text="Inventario" />
                </items>

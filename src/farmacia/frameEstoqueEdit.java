@@ -99,7 +99,7 @@ public class frameEstoqueEdit implements Initializable{
 				+ "on med.IDMEDICAMENTO = mar.ID_MEDICAMENTO\r\n"
 				+ "inner join permdemovimentacao perm\r\n"
 				+ "on med.IDMEDICAMENTO = perm.ID_MEDICAMENTO\r\n"
-				+ "where IDMEDICAMENTO = ?;"; //nao vai retornar nada ate que tenha referencias a tabela de permissao que no caso nao fiz p_q
+				+ "where IDMEDICAMENTO = ?;";
     	
     	st = conn.prepareStatement(query);
     	st.setInt(1, frameEstoqueMed.idCode);
@@ -111,7 +111,7 @@ public class frameEstoqueEdit implements Initializable{
     		String nomeMedQuery = rs.getString("nome");    		
 			Date validadeMedQuery = rs.getDate("validade");
 			String medidaMedQuery = rs.getString("medida");
-			//Date addUserQuery = rs.getDate("addHours");
+			Date addUserQuery = rs.getDate("addHours");
 			String loteMedQuery = rs.getString("lote");
 			String classifMedQuery = rs.getString("classif");
 			String fornMedQuery = rs.getString("forn");
@@ -129,9 +129,9 @@ public class frameEstoqueEdit implements Initializable{
 			nameTF.setText(nomeMedQuery);
 			ativCB.setSelected(ativoMedQuery);
 			medidaCB.setValue(medidaMedQuery);
-			//userAddTF.setText(addUserQuery.toString());
+			userAddTF.setText(sdf.format(addUserQuery));
 			classifTF.setText(classifMedQuery);
-			//validadeTF.setText(validadeMedQuery);
+			validadeTF.setText(sdf.format(validadeMedQuery));
 			permDevCB.setSelected(permDevMedQuery);
 			permEstCB.setSelected(permEstMedQuery);
 			permInvCB.setSelected(permInvMedQuery);

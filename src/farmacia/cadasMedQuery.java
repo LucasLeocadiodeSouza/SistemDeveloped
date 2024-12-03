@@ -45,7 +45,7 @@ public class cadasMedQuery {
 			st.setDate(3, new java.sql.Date(sdf.parse(validadeTF.getText()).getTime()));
 			st.setString(4, medidaCB.getValue());
 			st.setBoolean(5, true);
-			st.setDate(6, new java.sql.Date(sdf.parse(validadeTF.getText()).getTime()));
+			st.setDate(6, new java.sql.Date(sdf.parse(dataSistem.getText()).getTime()));
 			
 			int rowsAffected = st.executeUpdate();
 			int generatedId = 0;

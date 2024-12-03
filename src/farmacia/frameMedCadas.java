@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 import connectSQL.DB;
@@ -80,6 +82,9 @@ public class frameMedCadas implements Initializable{
 		classCB.getItems().addAll(vClassCB);
 		tipoCB.getItems().addAll(vTipoCB);
 		fornCB.getItems().addAll(vFornCB);
+		
+		DateTimeFormatter horasNow = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+		dataSistem.setText(LocalDateTime.now().format(horasNow)); 
 	}
 	
 	@FXML

@@ -20,6 +20,7 @@
           <Menu mnemonicParsing="false" text="Movimentações">
                <items>
                   <MenuItem mnemonicParsing="false" onAction="#fWAjuste" text="Ajuste" />
+                  <MenuItem mnemonicParsing="false" text="Consolidacao" />
                   <MenuItem mnemonicParsing="false" onAction="#fWEstoqueMed" text="Estoque Medicamento" />
                   <MenuItem mnemonicParsing="false" onAction="#fWReqSetor" text="Req. por Setor" />
                   <MenuItem mnemonicParsing="false" text="Req. por Prestador" />

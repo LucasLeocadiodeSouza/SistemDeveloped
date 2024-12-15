@@ -10,6 +10,7 @@ desc ajustewindow;
 desc permdemovimentacao;
 desc USUARIOS;
 desc reqsetormed;
+desc reqprestmed;
 
 select * from medicamento;
 select * from classificacao;
@@ -21,8 +22,8 @@ select * from ajustewindow;
 select * from estabelecimento;
 select * from setores;
 select * from permdemovimentacao;
-select * from USUARIOS;
-select * from reqsetormed;
+select * from usuarios;
+select * from reqprestmed;
 
 UPDATE medicamento
 set quantidade = 3, nome = "testando dnv" where idmedicamento = 18 ;
@@ -32,9 +33,9 @@ UPDATE medicamento
 set quantidade = 3 where idmedicamento = 18 ;
 UPDATE medicamento
 set quantidade = 3 where idmedicamento = 18 ;
+insert into prestador values (null, "CLINICA WEBER", "14123467000194", "Joana DArc, Jardim Liberdade, Maringa, Parana", "44997067494", true, DATA.NOW() );
 
-
-
+insert into usuarios values (null, "", true, true, true, true, true, 21, 1);
 /* query pra puxar os registros do estoque || view relatorio_cadastro */
 select med.idmedicamento, med.nome, med.validade, med.quantidade, l.lote, c.classif, mar.nomemarca
 from medicamento med 

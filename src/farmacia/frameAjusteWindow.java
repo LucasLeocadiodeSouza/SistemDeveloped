@@ -184,7 +184,7 @@ public class frameAjusteWindow implements Initializable{
 	public void updateLine(String nomeProd, medicamentos med, int numeric) {
 		try {
 		conn = DB.getConnection();
-		String query = "select med.idmedicamento, med.quantidade, med.nome, med.validade, l.lote, c.classif\r\n"
+		String query = "select med.idmedicamento, med.nome, med.validade, l.lote, c.classif\r\n"
     			+ "from medicamento med \r\n"
     			+ "inner join lote l\r\n"
     			+ "on med.IDMEDICAMENTO = l.ID_MEDICAMENTO\r\n"
@@ -198,12 +198,11 @@ public class frameAjusteWindow implements Initializable{
     	
     	if(rs.next()) {
     		Integer idMedQuery = rs.getInt("idmedicamento");
-    		Integer quantityQuery = rs.getInt("quantidade");
 			Date validadeMedQuery = rs.getDate("validade");
 			String loteMedQuery = rs.getString("lote");
 			String classifMedQuery = rs.getString("classif");
 			
-			med = new medicamentos(idMedQuery, validadeMedQuery, classifMedQuery, loteMedQuery);
+			med = new medicamentos(idMedQuery, null, validadeMedQuery, classifMedQuery, loteMedQuery);
 			
 			listOfMed.set(numeric, med);
 			ajusteMed.add(med);
@@ -271,15 +270,14 @@ public class frameAjusteWindow implements Initializable{
 			
 			//INSERT INTO AJUSTEWINDOW
 		    st = conn.prepareStatement("INSERT INTO AJUSTEWINDOW "
-		    		+ "(NOMEPROD, ACAO, HR_ADICIONADA, SETOR, ID_AJUSTE) VALUES" + 
-					" (?, ?, ?, ?, ?);"
+		    		+ "(ACAO, HR_ADICIONADA, SETOR, ID_AJUSTE) VALUES" + 
+					" (?, ?, ?, ?);"
 					);
 
-			st.setString(1, nomeTC.getText());
-			st.setString(2, acaoFeita.getValue());
-			st.setDate(3,new java.sql.Date(sdf.parse(hrAdd.getText()).getTime()));
-			st.setString(4, setor.getValue());
-			st.setInt(5, generatedId);
+			st.setString(1, acaoFeita.getValue());
+			st.setDate(2,new java.sql.Date(sdf.parse(hrAdd.getText()).getTime()));
+			st.setString(3, setor.getValue());
+			st.setInt(4, generatedId);
 			st.executeUpdate();
 			
 		}catch (SQLException e2) {
@@ -378,7 +376,5 @@ public class frameAjusteWindow implements Initializable{
 		 med.setQuantidade(medIntegerCellEditEvent.getNewValue());
 		 tableAjusteWindowTV.refresh();
 		 quantTC.setCellValueFactory(new PropertyValueFactory<medicamentos, Integer>("quantidade"));
-    }
-    public void onEditChargedLote(TableColumn.CellEditEvent<medicamentos, String> medStringCellEditEvent) {
     }
 }

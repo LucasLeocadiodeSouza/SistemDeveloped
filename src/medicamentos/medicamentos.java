@@ -6,6 +6,7 @@ public class medicamentos {
 	
 	private Integer idMed;
 	private String nomeMed;
+	private String medida;
 	private Integer quantidade;
 	private Date validade;
     private classificacao classificacao;
@@ -53,21 +54,16 @@ public class medicamentos {
 	    this.lote = new lote();
 	    this.lote.setCodLote(codLote);
 	}
-	public medicamentos(Integer idMed, Date validade, String nomeClassificacao, String codLote) {
+	public medicamentos(String nomeMed, Integer quantidade, String medida, Integer idMed, String nomeClassificacao) {
 
+		this.nomeMed = nomeMed;
 		this.idMed = idMed;
-		this.validade = validade;
+		this.quantidade = quantidade;
+		this.medida = medida;
 		
 	    this.classificacao = new classificacao();
 	    this.classificacao.setNomeClassificacao(nomeClassificacao);
-	    
-	    this.lote = new lote();
-	    this.lote.setCodLote(codLote);
 	}
-	
-	public String getCodLote() {
-        return lote.getCodLote();
-    }
 
     public String getNomeClassificacao() {
         return classificacao.getNomeClassificacao();
@@ -87,6 +83,12 @@ public class medicamentos {
 	public void setNomeMed(String nomeMed) {
 		this.nomeMed = nomeMed;
 	}
+	public String getMedida() {
+		return medida;
+	}
+	public void setMedida(String medida) {
+		this.medida = medida;
+	}
 	public Integer getQuantidade() {
 		return quantidade;
 	}
@@ -99,6 +101,9 @@ public class medicamentos {
 	public void setValidade(Date validade) {
 		this.validade = validade;
 	}
+	public String getCodLote() {
+        return lote.getCodLote();
+    }
 	public void setLote(String codLote) {
 		this.lote = new lote();
 	    this.lote.setCodLote(codLote);

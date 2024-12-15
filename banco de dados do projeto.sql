@@ -7,6 +7,9 @@ desc lote;
 desc marca;
 desc ajuste;
 desc ajustewindow;
+desc permdemovimentacao;
+desc USUARIOS;
+desc reqsetormed;
 
 select * from medicamento;
 select * from classificacao;
@@ -17,6 +20,9 @@ select * from ajuste;
 select * from ajustewindow;
 select * from estabelecimento;
 select * from setores;
+select * from permdemovimentacao;
+select * from USUARIOS;
+select * from reqsetormed;
 
 UPDATE medicamento
 set quantidade = 3, nome = "testando dnv" where idmedicamento = 18 ;
@@ -26,6 +32,7 @@ UPDATE medicamento
 set quantidade = 3 where idmedicamento = 18 ;
 UPDATE medicamento
 set quantidade = 3 where idmedicamento = 18 ;
+
 
 
 /* query pra puxar os registros do estoque || view relatorio_cadastro */
@@ -59,7 +66,7 @@ inner join marca mar
 on med.IDMEDICAMENTO = mar.ID_MEDICAMENTO
 inner join permdemovimentacao perm
 on med.IDMEDICAMENTO = perm.ID_MEDICAMENTO
-where IDMEDICAMENTO = ?;
+where IDMEDICAMENTO = 41;
 
 UPDATE medicamento
 set quantidade = 0 where nome = "teste17";
@@ -74,6 +81,7 @@ DELETE FROM marca;
 DELETE FROM ajuste;
 DELETE FROM ajustewindow;
 DELETE FROM setores;
+DELETE FROM permdemovimentacao;
 
 ALTER TABLE AJUSTE MODIFY COLUMN ACAO VARCHAR(15);
 /*adicionar duas coluna para o medicamentos, uma de ativo(boolean) e data de adicao no estoque */

@@ -16,3 +16,11 @@
     -fx-background-color: white; /* Ajuste para a cor de fundo desejada */
     -fx-text-fill: black;
 }
+
+.choice-box {
+    -fx-background-color: lightgray;
+    -fx-padding: 0;
+    -fx-border-width: 0;
+    -fx-border-color: transparent;
+    -fx-font-size: 14px; /* Ajuste conforme necessário */
+}

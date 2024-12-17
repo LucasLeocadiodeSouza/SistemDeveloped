@@ -71,7 +71,7 @@ public class frameReqPrest implements Initializable{
     @FXML
     private Button salvarB;
     @FXML
-    private ComboBox PrestCB;
+    private ComboBox<String> prestCB;
     @FXML
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     medicamentos med;
@@ -95,7 +95,8 @@ public class frameReqPrest implements Initializable{
     
     	dataTF.setText(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")));
     	
-    	selectNmrReqWindow();    	
+    	selectNmrReqWindow(); 
+    	carregarPrestadores(prestCB);
     	
     	choiceTC.setCellFactory(column -> new TableCell<medicamentos, String>(){
 			private final ChoiceBox<String> setaCB = new ChoiceBox<>();
@@ -128,7 +129,7 @@ public class frameReqPrest implements Initializable{
     	medidaTC.setCellFactory(TextFieldTableCell.forTableColumn());    
     	classifTC.setCellFactory(TextFieldTableCell.forTableColumn());
     	
-    	reqPresTV.setItems(listOfMed);    	
+    	reqPresTV.setItems(listOfMed);
     }
     
     public void carregarNomesChoiceBox(ChoiceBox<String> choiceBox) {
@@ -150,6 +151,30 @@ public class frameReqPrest implements Initializable{
 		        DB.closeConnection();
 		    }
 		}    
+    }
+    
+    public void carregarPrestadores(ComboBox<String> prestadores) {
+    	try{
+	    	conn = DB.getConnection();
+	    	String query = "select nomeprest from PRESTADOR;";
+	    	st = conn.prepareStatement(query);
+	    	rs = st.executeQuery();
+	    	
+	    	prestadores.getItems().clear();
+	    
+	    	while(rs.next()) {
+	    		prestadores.getItems().add(rs.getString("nomeprest"));	
+	    	}//end while
+		} catch (SQLException e2) {
+			JOptionPane.showMessageDialog(null, "Erro ao carregar Prestadores" + e2.getMessage());
+		}finally {
+		    if (st != null) {
+		        DB.closeStatement(st);
+		    }
+		    if (conn != null) {
+		        DB.closeConnection();
+		    }
+		} 
     }
     
     public void selectNmrReqWindow() {
@@ -256,7 +281,7 @@ public class frameReqPrest implements Initializable{
 			st.setDate(1, new java.sql.Date(sdf.parse(dataTF.getText()).getTime()));
 			st.setString(2, listProdutos.toString());
 			st.setString(3, listQuant.toString());
-			st.setInt(4, 1 /* PrestTF.getText() */);
+			st.setInt(4, prestCB.getSelectionModel().getSelectedIndex() + 1);
 			//st.setString(5, "FAZER UM ESTATICO NO FRAME DE LOGIN");
 			st.setInt(5, 2);
 			st.executeUpdate();

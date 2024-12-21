@@ -8,6 +8,10 @@ public class Setores {
 		this.nomeSetor = nomeSetor;
 		this.codSetor = codSetor;
 	}
+	public Setores(String nomeSetor) {
+		this.nomeSetor = nomeSetor;
+	}
+
 	public String getNomeSetor() {
 		return nomeSetor;
 	}

@@ -113,6 +113,7 @@ public class frameEstoqueMed implements Initializable{
 
     
 	public void editarMed(ActionEvent e) throws IOException {
+		@SuppressWarnings("unchecked")
 		TablePosition<medicamentos, ?> pos = tableMedEstTV.getFocusModel().getFocusedCell();
         int currentRow = pos.getRow();
         

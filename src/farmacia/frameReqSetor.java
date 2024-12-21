@@ -43,7 +43,7 @@ import medicamentos.medicamentos;
 public class frameReqSetor implements Initializable{
 
     @FXML
-    private ChoiceBox centEstocadoTC;
+    private ChoiceBox<String> centEstocadoTC;
     private String[] vCentEstocadorTC = {"Farmacia"};
     @FXML
     private TableColumn<medicamentos, String> classifTC;
@@ -231,6 +231,7 @@ public class frameReqSetor implements Initializable{
 					listOfMed.add(new medicamentos((Integer)null, "", (Integer)null, null, "", ""));
 					
 				}else if(arg0.isControlDown() && arg0.getCode().equals(KeyCode.DELETE)){
+					@SuppressWarnings("unchecked")
 					TablePosition<medicamentos, ?> pos = reqSetorTV.getFocusModel().getFocusedCell();
 			        int currentRow = pos.getRow();
 			        
@@ -248,8 +249,8 @@ public class frameReqSetor implements Initializable{
 
 			//INSERT INTO REQSETORMED
 		    st = conn.prepareStatement("INSERT INTO reqSetorMed "
-		    		+ "(DATAREQ, ID_USUARIOS, listMed, listQtd, ID_SETOR) VALUES" + 
-					  " (?, ?, ?, ?, ?);"
+		    		+ "(DATAREQ, ID_USUARIOS, listMed, listQtd, ID_SETOR, consolidado) VALUES" + 
+					  " (?, ?, ?, ?, ?, ?);"
 					);
 
 			st.setDate(1, new java.sql.Date(sdf.parse(dataTF.getText()).getTime()));
@@ -258,6 +259,7 @@ public class frameReqSetor implements Initializable{
 			st.setString(3, listProdutos.toString());
 			st.setString(4, listQuant.toString());
 			st.setInt(5, 21 /* setorTF.getText() */);
+			st.setString(6, "nao");
 			st.executeUpdate();
 			
 		}catch (SQLException e2) {
@@ -314,7 +316,8 @@ public class frameReqSetor implements Initializable{
 	}
 	
 	public void onEditChargedQtd(TableColumn.CellEditEvent<medicamentos, Integer> medIntegerCellEditEvent) {
-		 TablePosition<medicamentos, ?> pos = reqSetorTV.getFocusModel().getFocusedCell();
+		 @SuppressWarnings("unchecked")
+		TablePosition<medicamentos, ?> pos = reqSetorTV.getFocusModel().getFocusedCell();
          int currentRow = pos.getRow();
 		 ajusteMed.set(
 				 currentRow,

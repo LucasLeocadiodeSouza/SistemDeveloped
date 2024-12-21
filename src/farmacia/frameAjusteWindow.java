@@ -11,9 +11,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-
 import javax.swing.JOptionPane;
-
 import connectSQL.DB;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -234,6 +232,7 @@ public class frameAjusteWindow implements Initializable{
 					listOfMed.add(medVazio);
 					
 				}else if(arg0.isControlDown() && arg0.getCode().equals(KeyCode.DELETE)){
+					@SuppressWarnings("unchecked")
 					TablePosition<medicamentos, ?> pos = tableAjusteWindowTV.getFocusModel().getFocusedCell();
 			        int currentRow = pos.getRow();
 			        
@@ -341,7 +340,8 @@ public class frameAjusteWindow implements Initializable{
 	        		String query = "UPDATE medicamento\r\n"
 		        			+ "set quantidade = " + (selectQtd(ajusteMed.get(j).getIdMed()) - ajusteMed.get(j).getQuantidade()) + " where idmedicamento = " + ajusteMed.get(j).getIdMed()+ " ;";
 		        	st = conn.prepareStatement(query);
-		        	int rowsAffected = st.executeUpdate();		        	
+		        	@SuppressWarnings("unused")
+					int rowsAffected = st.executeUpdate();		        	
 		        }
 	        	nmrAjuste();
 			    stage.close();
@@ -361,7 +361,8 @@ public class frameAjusteWindow implements Initializable{
 	}
 	
 	public void onEditChargedQtd(TableColumn.CellEditEvent<medicamentos, Integer> medIntegerCellEditEvent) {
-		 TablePosition<medicamentos, ?> pos = tableAjusteWindowTV.getFocusModel().getFocusedCell();
+		 @SuppressWarnings("unchecked")
+		TablePosition<medicamentos, ?> pos = tableAjusteWindowTV.getFocusModel().getFocusedCell();
          int currentRow = pos.getRow();
 		 ajusteMed.set(
 				 currentRow,

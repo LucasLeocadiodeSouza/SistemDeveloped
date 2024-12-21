@@ -20,10 +20,10 @@
           <Menu mnemonicParsing="false" text="Movimentações">
                <items>
                   <MenuItem mnemonicParsing="false" onAction="#fWAjuste" text="Ajuste" />
-                  <MenuItem mnemonicParsing="false" text="Consolidacao" />
+                  <MenuItem mnemonicParsing="false" onAction="#fWConsol" text="Consolidacao" />
                   <MenuItem mnemonicParsing="false" onAction="#fWEstoqueMed" text="Estoque Medicamento" />
                   <MenuItem mnemonicParsing="false" onAction="#fWReqSetor" text="Req. por Setor" />
-                  <MenuItem mnemonicParsing="false" text="Req. por Prestador" />
+                  <MenuItem mnemonicParsing="false" onAction="#fWReqPrest" text="Req. por Prestador" />
                   <MenuItem mnemonicParsing="false" text="Inventario" />
                </items>
           </Menu>
@@ -35,7 +35,7 @@
             <Menu mnemonicParsing="false" text="Consultas">
                <items>
                   <MenuItem mnemonicParsing="false" text="Solicitação de Med." />
-                  <MenuItem mnemonicParsing="false" text="Relatorio de Kardeks" />
+                  <MenuItem mnemonicParsing="false" onAction="#fWKardexMed" text="Kardex de Medicamentos" />
                </items>
             </Menu>
         </menus>

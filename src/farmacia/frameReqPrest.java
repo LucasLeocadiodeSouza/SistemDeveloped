@@ -44,7 +44,7 @@ import medicamentos.medicamentos;
 public class frameReqPrest implements Initializable{
 
     @FXML
-    private ChoiceBox centEstocadoTC;
+    private ChoiceBox<String> centEstocadoTC;
     private String[] vCentEstocadorTC = {"Farmacia"};
     @FXML
     private TableColumn<medicamentos, String> classifTC;
@@ -257,6 +257,7 @@ public class frameReqPrest implements Initializable{
 					listOfMed.add(new medicamentos((Integer)null, "", (Integer)null, null, "", ""));
 					
 				}else if(arg0.isControlDown() && arg0.getCode().equals(KeyCode.DELETE)){
+					@SuppressWarnings("unchecked")
 					TablePosition<medicamentos, ?> pos = reqPresTV.getFocusModel().getFocusedCell();
 			        int currentRow = pos.getRow();
 			        
@@ -274,8 +275,8 @@ public class frameReqPrest implements Initializable{
 
 			//INSERT INTO REQSETORMED
 		    st = conn.prepareStatement("INSERT INTO reqPrestMed "
-		    		+ "(DATAREQ, LISTMED, LISTQTD, ID_PRESTADOR, ID_USUARIOS) VALUES" + 
-					  " (?, ?, ?, ?, ?);"
+		    		+ "(DATAREQ, LISTMED, LISTQTD, ID_PRESTADOR, ID_USUARIOS, Consolidado) VALUES" + 
+					  " (?, ?, ?, ?, ?, ?);"
 					);
 
 			st.setDate(1, new java.sql.Date(sdf.parse(dataTF.getText()).getTime()));
@@ -284,6 +285,7 @@ public class frameReqPrest implements Initializable{
 			st.setInt(4, prestCB.getSelectionModel().getSelectedIndex() + 1);
 			//st.setString(5, "FAZER UM ESTATICO NO FRAME DE LOGIN");
 			st.setInt(5, 2);
+			st.setString(6, "nao");
 			st.executeUpdate();
 			
 		}catch (SQLException e2) {
@@ -340,7 +342,8 @@ public class frameReqPrest implements Initializable{
 	}
 	
 	public void onEditChargedQtd(TableColumn.CellEditEvent<medicamentos, Integer> medIntegerCellEditEvent) {
-		 TablePosition<medicamentos, ?> pos = reqPresTV.getFocusModel().getFocusedCell();
+		 @SuppressWarnings("unchecked")
+		TablePosition<medicamentos, ?> pos = reqPresTV.getFocusModel().getFocusedCell();
          int currentRow = pos.getRow();
 		 ajusteMed.set(
 				 currentRow,

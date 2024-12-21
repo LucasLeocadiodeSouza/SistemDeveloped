@@ -1,12 +1,12 @@
 package application;
 import farmacia.frameAjusteWindow;
 import javafx.application.Application;
-import javafx.event.EventHandler;
+
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyEvent;
+
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -16,7 +16,7 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/farmacia/frameAjusteWindow.fxml"));
-			Parent root = FXMLLoader.load(getClass().getResource("/farmacia/frameReqPrest.fxml"));
+			Parent root = FXMLLoader.load(getClass().getResource("/frames/desktopSistem.fxml"));
 			//Parent root = loader.load();
 			frameAjusteWindow AW = loader.getController();
 			Scene scene = new Scene(root);

@@ -15,9 +15,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-
 import javax.swing.JOptionPane;
-
 import connectSQL.DB;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -46,6 +44,7 @@ public class frameReqPrest implements Initializable{
     @FXML
     private ChoiceBox<String> centEstocadoTC;
     private String[] vCentEstocadorTC = {"Farmacia"};
+
     @FXML
     private TableColumn<medicamentos, String> classifTC;
     @FXML
@@ -72,18 +71,18 @@ public class frameReqPrest implements Initializable{
     private Button salvarB;
     @FXML
     private ComboBox<String> prestCB;
-    @FXML
-    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-    medicamentos med;
+
+    private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    private medicamentos med;
     private Stage stage;
 
-    Connection conn = null;
-    PreparedStatement st = null;
-    ResultSet rs = null;
+    private Connection conn = null;
+    private PreparedStatement st = null;
+    private ResultSet rs = null;
     
-    ArrayList<medicamentos> ajusteMed;
-    ObservableList<medicamentos> listOfMed = FXCollections.observableArrayList();
-    Integer generatedId = 0;
+    private ArrayList<medicamentos> ajusteMed;
+    private ObservableList<medicamentos> listOfMed = FXCollections.observableArrayList();
+    private Integer generatedId = 0;
         
 
     @Override
@@ -123,10 +122,10 @@ public class frameReqPrest implements Initializable{
 			        }
 			    }
 		});
-    	codTC.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
-    	nomeTC.setCellFactory(TextFieldTableCell.forTableColumn());
-		quantTC.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter())); 
-    	medidaTC.setCellFactory(TextFieldTableCell.forTableColumn());    
+    	codTC.setCellFactory    (TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+    	nomeTC.setCellFactory   (TextFieldTableCell.forTableColumn());
+		quantTC.setCellFactory  (TextFieldTableCell.forTableColumn(new IntegerStringConverter())); 
+    	medidaTC.setCellFactory (TextFieldTableCell.forTableColumn());    
     	classifTC.setCellFactory(TextFieldTableCell.forTableColumn());
     	
     	reqPresTV.setItems(listOfMed);
@@ -135,12 +134,16 @@ public class frameReqPrest implements Initializable{
     public void carregarNomesChoiceBox(ChoiceBox<String> choiceBox) {
 		try{
 	    	conn = DB.getConnection();
+
 	    	String query = "select nome from medicamento;";
+
 	    	st = conn.prepareStatement(query);
 	    	rs = st.executeQuery();
+
 	    	while(rs.next()) {
 	    		choiceBox.getItems().add(rs.getString("nome"));	
 	    	}//end while
+
 		} catch (SQLException e2) {
 			JOptionPane.showMessageDialog(null, e2.getMessage());
 		}finally {
@@ -156,7 +159,9 @@ public class frameReqPrest implements Initializable{
     public void carregarPrestadores(ComboBox<String> prestadores) {
     	try{
 	    	conn = DB.getConnection();
+
 	    	String query = "select nomeprest from PRESTADOR;";
+
 	    	st = conn.prepareStatement(query);
 	    	rs = st.executeQuery();
 	    	
@@ -165,6 +170,7 @@ public class frameReqPrest implements Initializable{
 	    	while(rs.next()) {
 	    		prestadores.getItems().add(rs.getString("nomeprest"));	
 	    	}//end while
+			
 		} catch (SQLException e2) {
 			JOptionPane.showMessageDialog(null, "Erro ao carregar Prestadores" + e2.getMessage());
 		}finally {
@@ -209,6 +215,7 @@ public class frameReqPrest implements Initializable{
     public void updateLine(String nomeProd, medicamentos med, int numeric) {
 		try {
 		conn = DB.getConnection();
+
 		String query = "select med.idmedicamento, med.quantidade, med.nome, med.medida, med.validade, c.classif\r\n"
     			+ "from medicamento med \r\n"
     			+ "inner join classificacao c\r\n"
@@ -220,22 +227,27 @@ public class frameReqPrest implements Initializable{
     	rs = st.executeQuery();
     	
     	if(rs.next()) {
-    		Integer idMedQuery = rs.getInt("idmedicamento");
-    		String nomeMedQuery = rs.getString("nome");
-    		String medidaQuery = rs.getString("medida");
+    		Integer idMedQuery     = rs.getInt   ("idmedicamento");
+    		String nomeMedQuery    = rs.getString("nome");
+    		String medidaQuery 	   = rs.getString("medida");
 			String classifMedQuery = rs.getString("classif");
 			
-			med = new medicamentos(nomeMedQuery, null, medidaQuery, idMedQuery, classifMedQuery);
+			med = new medicamentos(nomeMedQuery, 
+								   null, 
+								   medidaQuery, 
+								   idMedQuery, 
+								   classifMedQuery);
 			
 			listOfMed.set(numeric, med);
 			ajusteMed.add(med);			
 			
-			codTC.setCellValueFactory(new PropertyValueFactory<medicamentos, Integer>("idMed"));
-			nomeTC .setCellValueFactory(new PropertyValueFactory<medicamentos, String>("nomeMed"));
+			codTC.setCellValueFactory	 (new PropertyValueFactory<medicamentos, Integer>("idMed"));
+			nomeTC .setCellValueFactory	 (new PropertyValueFactory<medicamentos, String>("nomeMed"));
 			classifTC.setCellValueFactory(new PropertyValueFactory<medicamentos, String>("nomeClassificacao"));
-			medidaTC.setCellValueFactory(new PropertyValueFactory<medicamentos, String>("medida"));
+			medidaTC.setCellValueFactory (new PropertyValueFactory<medicamentos, String>("medida"));
 			
 			reqPresTV.refresh();
+
     	}}catch (SQLException e2) {
     		JOptionPane.showMessageDialog(null, e2.getMessage());
 		}finally {
@@ -279,13 +291,14 @@ public class frameReqPrest implements Initializable{
 					  " (?, ?, ?, ?, ?, ?);"
 					);
 
-			st.setDate(1, new java.sql.Date(sdf.parse(dataTF.getText()).getTime()));
-			st.setString(2, listProdutos.toString());
-			st.setString(3, listQuant.toString());
-			st.setInt(4, prestCB.getSelectionModel().getSelectedIndex() + 1);
+			st.setDate   (1, new java.sql.Date(sdf.parse(dataTF.getText()).getTime()));
+			st.setString (2, listProdutos.toString());
+			st.setString (3, listQuant.toString());
+			st.setInt    (4, prestCB.getSelectionModel().getSelectedIndex() + 1);
 			//st.setString(5, "FAZER UM ESTATICO NO FRAME DE LOGIN");
-			st.setInt(5, 2);
-			st.setString(6, "nao");
+			st.setInt    (5, 2);
+			st.setString (6, "nao");
+
 			st.executeUpdate();
 			
 		}catch (SQLException e2) {
@@ -306,8 +319,9 @@ public class frameReqPrest implements Initializable{
 		try {
 	        stage = (Stage) reqPresTV.getScene().getWindow();	        
 	        conn = DB.getConnection();	        
+
 	        StringBuilder listProd = new StringBuilder();
-	        StringBuilder  listQtd = new StringBuilder();
+	        StringBuilder listQtd  = new StringBuilder();
 	        
 	        for(int j = 0; j < listOfMed.size(); j++) {
         		medicamentos mds = new medicamentos(reqPresTV.getItems().get(j).getNomeMed() ,
@@ -342,9 +356,11 @@ public class frameReqPrest implements Initializable{
 	}
 	
 	public void onEditChargedQtd(TableColumn.CellEditEvent<medicamentos, Integer> medIntegerCellEditEvent) {
+
 		 @SuppressWarnings("unchecked")
-		TablePosition<medicamentos, ?> pos = reqPresTV.getFocusModel().getFocusedCell();
+		 TablePosition<medicamentos, ?> pos = reqPresTV.getFocusModel().getFocusedCell();
          int currentRow = pos.getRow();
+
 		 ajusteMed.set(
 				 currentRow,
 				 new medicamentos(
@@ -354,8 +370,10 @@ public class frameReqPrest implements Initializable{
 						 ajusteMed.get(currentRow).getIdMed(),
 						 ajusteMed.get(currentRow).getNomeClassificacao() 
 						 ));
+
 		 medicamentos med = listOfMed.get(currentRow);
 		 med.setQuantidade(medIntegerCellEditEvent.getNewValue());
+		 
 		 reqPresTV.refresh();
 		 quantTC.setCellValueFactory(new PropertyValueFactory<medicamentos, Integer>("quantidade"));
    }	

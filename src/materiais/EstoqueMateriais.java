@@ -8,7 +8,7 @@ public final class EstoqueMateriais {
 	private ArrayList<SolicitacaoMaterial> solicitacoes;
     
 	public EstoqueMateriais() {
-		materiais = new ArrayList<Material>();
+		materiais    = new ArrayList<Material>();
 		solicitacoes = new ArrayList<SolicitacaoMaterial>();
 	}
 	

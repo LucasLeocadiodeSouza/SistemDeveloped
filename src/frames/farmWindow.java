@@ -1,7 +1,6 @@
 package frames;
 
 import java.io.IOException;
-
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -29,23 +28,21 @@ public class farmWindow {
 	
 	private Stage stage;
 
-	// Método chamado automaticamente após o carregamento do FXML
 	@FXML
 	public void initialize() {
 		// Use o listener para ajustar a posição após o Stage ser exibido
 		Platform.runLater(() -> {
-		// Obtém o Stage a partir de qualquer nó
-		stage = (Stage) barraIcon.getScene().getWindow();
-		stage.setMaximized(true);
-		
-		stage.setTitle("Sistem Enterpreise - Farmacia");
-		
-		//ajustando a barraIcon e barraDeMenu para tamanho total da tela e a posicao do LogOut
-		Rectangle2D screenSize = Screen.getPrimary().getVisualBounds();
-        double x = screenSize.getWidth(); 
-        double y = screenSize.getHeight(); 
-        barraIcon.setWidth(x);
-        barraDeMenu.setPrefWidth(x);
+			stage = (Stage) barraIcon.getScene().getWindow();
+			stage.setMaximized(true);
+			
+			stage.setTitle("Sistem Enterpreise - Farmacia");
+			
+			//ajustando a barraIcon e barraDeMenu para tamanho total da tela e a posicao do LogOut
+			Rectangle2D screenSize = Screen.getPrimary().getVisualBounds();
+			double x = screenSize.getWidth(); 
+			double y = screenSize.getHeight(); 
+			barraIcon.setWidth(x);
+			barraDeMenu.setPrefWidth(x);
 		});
 	}
 	
@@ -63,10 +60,6 @@ public class farmWindow {
 	    // Configura a cena no novo Stage pq se vc usar os nó s que nem os anteriores ele vai usar o "palco" anterior
 	    stageMedCadas.setScene(scene);
 	    
-		/* stageMedCadas = (Stage) frameAnchorPane.getScene().getWindow(); isso seria o palco anterior, e que por
-		   conta da linha 63 nao precisamos pq criamos um novo */
-	    
-		stageMedCadas.setScene(scene);
 		stageMedCadas.show();
 		stageMedCadas.centerOnScreen();
 	}
@@ -75,13 +68,8 @@ public class farmWindow {
 		Stage stageMedCadas = new Stage();
 		Parent root = FXMLLoader.load(getClass().getResource("/farmacia/frameAjuste.fxml"));
 		Scene scene = new Scene(root);
-	    // Configura a cena no novo Stage pq se vc usar os nó s que nem os anteriores ele vai usar o "palco" anterior
+
 	    stageMedCadas.setScene(scene);
-	    
-		/* stageMedCadas = (Stage) frameAnchorPane.getScene().getWindow(); isso seria o palco anterior, e que por
-		   conta da linha 63 nao precisamos pq criamos um novo */
-	    
-		stageMedCadas.setScene(scene);
 		stageMedCadas.show();
 		stageMedCadas.centerOnScreen();
 	}
@@ -90,13 +78,8 @@ public class farmWindow {
 		Stage stageMedCadas = new Stage();
 		Parent root = FXMLLoader.load(getClass().getResource("/farmacia/frameConsol.fxml"));
 		Scene scene = new Scene(root);
-	    // Configura a cena no novo Stage pq se vc usar os nó s que nem os anteriores ele vai usar o "palco" anterior
+
 	    stageMedCadas.setScene(scene);
-	    
-		/* stageMedCadas = (Stage) frameAnchorPane.getScene().getWindow(); isso seria o palco anterior, e que por
-		   conta da linha 63 nao precisamos pq criamos um novo */
-	    
-		stageMedCadas.setScene(scene);
 		stageMedCadas.show();
 		stageMedCadas.centerOnScreen();
 	}
@@ -105,13 +88,8 @@ public class farmWindow {
 		Stage stageMedCadas = new Stage();
 		Parent root = FXMLLoader.load(getClass().getResource("/farmacia/frameEstoqueMed.fxml"));
 		Scene scene = new Scene(root);
-	    // Configura a cena no novo Stage pq se vc usar os nó s que nem os anteriores ele vai usar o "palco" anterior
+
 	    stageMedCadas.setScene(scene);
-	    
-		/* stageMedCadas = (Stage) frameAnchorPane.getScene().getWindow(); isso seria o palco anterior, e que por
-		   conta da linha 63 nao precisamos pq criamos um novo */
-	    
-		stageMedCadas.setScene(scene);
 		stageMedCadas.show();
 		stageMedCadas.centerOnScreen();
 	}
@@ -120,13 +98,8 @@ public class farmWindow {
 		Stage stageMedCadas = new Stage();
 		Parent root = FXMLLoader.load(getClass().getResource("/farmacia/frameReqSetor.fxml"));
 		Scene scene = new Scene(root);
-	    // Configura a cena no novo Stage pq se vc usar os nó s que nem os anteriores ele vai usar o "palco" anterior
+
 	    stageMedCadas.setScene(scene);
-	    
-		/* stageMedCadas = (Stage) frameAnchorPane.getScene().getWindow(); isso seria o palco anterior, e que por
-		   conta da linha 63 nao precisamos pq criamos um novo */
-	    
-    	stageMedCadas.setScene(scene);
 		stageMedCadas.show();
 		stageMedCadas.centerOnScreen();
 	}
@@ -135,13 +108,8 @@ public class farmWindow {
 		Stage stageMedCadas = new Stage();
 		Parent root = FXMLLoader.load(getClass().getResource("/farmacia/frameReqPrest.fxml"));
 		Scene scene = new Scene(root);
-	    // Configura a cena no novo Stage pq se vc usar os nó s que nem os anteriores ele vai usar o "palco" anterior
+
 	    stageMedCadas.setScene(scene);
-	    
-		/* stageMedCadas = (Stage) frameAnchorPane.getScene().getWindow(); isso seria o palco anterior, e que por
-		   conta da linha 63 nao precisamos pq criamos um novo */
-	    
-    	stageMedCadas.setScene(scene);
 		stageMedCadas.show();
 		stageMedCadas.centerOnScreen();
 	}
@@ -150,13 +118,8 @@ public class farmWindow {
 		Stage stageMedCadas = new Stage();
 		Parent root = FXMLLoader.load(getClass().getResource("/farmacia/frameKardexMed.fxml"));
 		Scene scene = new Scene(root);
-	    // Configura a cena no novo Stage pq se vc usar os nó s que nem os anteriores ele vai usar o "palco" anterior
+		
 	    stageMedCadas.setScene(scene);
-	    
-		/* stageMedCadas = (Stage) frameAnchorPane.getScene().getWindow(); isso seria o palco anterior, e que por
-		   conta da linha 63 nao precisamos pq criamos um novo */
-	    
-    	stageMedCadas.setScene(scene);
 		stageMedCadas.show();
 		stageMedCadas.centerOnScreen();
 	}

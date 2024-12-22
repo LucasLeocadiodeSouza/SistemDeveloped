@@ -7,7 +7,6 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
-
 import connectSQL.DB;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -26,9 +25,6 @@ public class frameMedCadas implements Initializable{
 	@FXML
 	private TextField dataSistem;
 	/* tem que adicionar isso, qual usuario adicionou, a logica para ativar ele e o horario de add
-	@FXML
-	private ChoiceBox<String> medidaCB;
-    private String[] vMedidaCB = {"Und.", "Cx.","Pct.", "Par"};
     */
 	@FXML
 	private TextField loteTF;
@@ -36,9 +32,11 @@ public class frameMedCadas implements Initializable{
 	private TextField validadeTF;
 	@FXML
 	private TextField marcaTF;
+
     @FXML
     private ChoiceBox<String> medidaCB;
     private String[] vMedidaCB = {"Und.", "Cx.","Pct.", "Par"};
+
 	@FXML
     private CheckBox permDevCB;
     @FXML
@@ -71,13 +69,13 @@ public class frameMedCadas implements Initializable{
 	
 	private Stage stage;
 	
-	Connection conn = null;
-	PreparedStatement st = null;
-	ResultSet rs = null;
-	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+	private Connection conn = null;
+	private PreparedStatement st = null;
+	private ResultSet rs = null;
 	
 	@Override
 	public void initialize(java.net.URL arg0, ResourceBundle arg1) {
+
 		medidaCB.getItems().addAll(vMedidaCB); 
 		classCB.getItems().addAll(vClassCB);
 		tipoCB.getItems().addAll(vTipoCB);
@@ -90,9 +88,27 @@ public class frameMedCadas implements Initializable{
 	@FXML
 	public void save(ActionEvent event) {
 		stage = (Stage) frameAnchorPane.getScene().getWindow();		
+
 		try {
 			cadasMedQuery cmQuery = new cadasMedQuery();
-			cmQuery.insertCadasQuery(conn, st, rs, nomeTF, quantidadeTF, validadeTF, dataSistem, medidaCB,  loteTF, permDevCB, permEstCB, permInvCB, permReqPrestCB, permReqSetCB, classCB, fornCB, marcaTF);
+			cmQuery.insertCadasQuery(conn,
+									 st, 
+									 rs,
+									 nomeTF, 
+									 quantidadeTF, 
+									 validadeTF, 
+									 dataSistem, 
+									 medidaCB,  
+									 loteTF,
+									 permDevCB, 
+									 permEstCB,
+									 permInvCB,
+									 permReqPrestCB,
+									 permReqSetCB, 
+									 classCB,
+									 fornCB, 
+									 marcaTF);
+
 		}finally {
 		    if (st != null) {
 		        DB.closeStatement(st);

@@ -39,6 +39,7 @@ public class almoWindow {
 			Rectangle2D screenSize = Screen.getPrimary().getVisualBounds();
 	        double x = screenSize.getWidth(); 
 	        double y = screenSize.getHeight(); 
+			
 	        barraIcon.setWidth(x);
 	        barraDeMenu.setPrefWidth(x);
 		});

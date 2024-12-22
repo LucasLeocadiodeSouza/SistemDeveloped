@@ -20,7 +20,7 @@
          <columns>
             <TableColumn fx:id="codTC" prefWidth="59.99999809265137" text="Cod." />
             <TableColumn fx:id="descTC" prefWidth="235.20001983642578" text="Descricão" />
-            <TableColumn fx:id="setorTC" prefWidth="104.79998779296875" text="Setor" />
+            <TableColumn fx:id="solicitanteTC" prefWidth="104.79998779296875" text="Solicitante" />
             <TableColumn fx:id="consolTC" prefWidth="82.39996337890625" text="Consolidado" />
             <TableColumn fx:id="dtAberturaTC" prefWidth="100.80001831054688" text="Aberto" />
          </columns>
@@ -45,7 +45,7 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <Button fx:id="pesqB" layoutX="480.0" layoutY="168.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="86.0" text="Pesquisar">
+      <Button fx:id="pesqB" layoutX="480.0" layoutY="168.0" mnemonicParsing="false" onAction="#pesquisar" prefHeight="26.0" prefWidth="86.0" text="Pesquisar">
          <font>
             <Font size="14.0" />
          </font>
@@ -56,18 +56,18 @@
          </font>
       </Label>
       <TextField fx:id="codTF" layoutX="120.0" layoutY="169.0" prefHeight="26.0" prefWidth="166.0" />
-      <ChoiceBox fx:id="setorCB" layoutX="120.0" layoutY="85.0" prefHeight="26.0" prefWidth="166.0" />
-      <Label layoutX="16.0" layoutY="88.0" text="Filtro Por Setor:">
+      <ChoiceBox fx:id="solicitanteCB" layoutX="120.0" layoutY="85.0" prefHeight="26.0" prefWidth="166.0" />
+      <Label fx:id="setorL" layoutX="16.0" layoutY="88.0" text="Filtro Por Setor:">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <CheckBox layoutX="363.0" layoutY="90.0" mnemonicParsing="false" text="Prestador">
+      <CheckBox fx:id="prestadorCB" layoutX="363.0" layoutY="90.0" mnemonicParsing="false" text="Prestador">
          <font>
             <Font size="14.0" />
          </font>
       </CheckBox>
-      <CheckBox layoutX="470.0" layoutY="90.0" mnemonicParsing="false" text="Setor">
+      <CheckBox fx:id="setorCB" layoutX="470.0" layoutY="90.0" mnemonicParsing="false" text="Setor">
          <font>
             <Font size="14.0" />
          </font>

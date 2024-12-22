@@ -14,11 +14,12 @@ public class DB {
 	 * DriverManager, informar a url e o objeto properties que esta armazenando o acesso */
 	private static Connection conn = null;
 	public static Connection getConnection() {
-		if(conn==null || isConnectionClosed()) {
+		if(conn == null || isConnectionClosed()) {
 			try {
 				Properties props = loadProperties();
 				String url = props.getProperty("dburl");
 				conn = DriverManager.getConnection(url, props);
+
 			}catch(SQLException e) {
 				throw new dbException(e.getMessage());
 			}
@@ -36,8 +37,7 @@ public class DB {
     }
 	//e uma operacao pra fechar a conexao
 	public static void closeConnection() {
-		if (conn != null)
-		{
+		if (conn != null){
 			try {
 				conn.close();
 			}catch(SQLException e) {
@@ -47,8 +47,7 @@ public class DB {
 	}
 	//uma operacao pra fechar a statement
 		public static void closeStatement(Statement st) {
-			if (st != null)
-			{
+			if (st != null){
 				try {
 					st.close();
 				}catch(SQLException e) {
@@ -58,8 +57,7 @@ public class DB {
 		}
 		//uma operacao pra fechar o resultSet
 		public static void closeResultSet(ResultSet rs) {
-			if (rs != null)
-			{
+			if (rs != null){
 				try {
 					rs.close();
 				}catch(SQLException e) {
@@ -70,7 +68,6 @@ public class DB {
 	
 	/* cria um objeto fileInputStream e armazena o db.properties, apos isso ele 
 	cria um objeto properties pra ler e armazenar o objeto fileInputStream */
-	
 	private static Properties loadProperties() {
 		try(FileInputStream fs = new FileInputStream("src/connectSQL/db.properties")){
 			Properties props = new Properties();

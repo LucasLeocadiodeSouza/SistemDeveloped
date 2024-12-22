@@ -6,7 +6,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ResourceBundle;
-
 import ajuste.ajuste;
 import connectSQL.DB;
 import javafx.collections.FXCollections;
@@ -47,24 +46,25 @@ public class frameAjuste implements Initializable{
     private TextField nAjusteTF;
     @FXML
     private TableView<ajuste> tableAjusteTV;
+
     private Stage stage;
     private Scene scene;
-    ajuste ajt;
+
+    private ajuste ajt;
     
-    Connection conn = null;
-    PreparedStatement st = null;
-    ResultSet rs = null;
+    private Connection conn = null;
+    private PreparedStatement st = null;
+    private ResultSet rs = null;
     
     ObservableList<ajuste> listOfAjt = FXCollections.observableArrayList();
-    ajuste ajtVazio = new ajuste(null, null, null);
     
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		tableAjusteTV.setItems(listOfAjt);
 		
-		acaoTC.setCellFactory(TextFieldTableCell.forTableColumn());
-		codAjusteTC.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
-		descTC.setCellFactory(TextFieldTableCell.forTableColumn());
+		acaoTC.setCellFactory	   (TextFieldTableCell.forTableColumn());
+		codAjusteTC.setCellFactory (TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+		descTC.setCellFactory	   (TextFieldTableCell.forTableColumn());
 		
 		selectItems();
 	}
@@ -79,16 +79,16 @@ public class frameAjuste implements Initializable{
         	rs = st.executeQuery();
         	
         	while(rs.next()) {
-        		Integer id = rs.getInt("IDAJUSTE");
+        		Integer id  = rs.getInt   ("IDAJUSTE");
         		String acao = rs.getString("ACAO");
         		String desc = rs.getString("DESCRICAO");
         		        		
         		ajt = new ajuste(id, acao, desc);
         		listOfAjt.add(ajt);
         		
-        		codAjusteTC.setCellValueFactory(new PropertyValueFactory<ajuste, Integer>("id"));
-        		acaoTC.setCellValueFactory(new PropertyValueFactory<ajuste, String>("acao"));
-        		descTC.setCellValueFactory(new PropertyValueFactory<ajuste, String>("descricao"));        		
+        		codAjusteTC.setCellValueFactory (new PropertyValueFactory<ajuste, Integer>("id"));
+        		acaoTC.setCellValueFactory      (new PropertyValueFactory<ajuste, String>("acao"));
+        		descTC.setCellValueFactory      (new PropertyValueFactory<ajuste, String>("descricao"));        		
         		
         		tableAjusteTV.refresh();
         	}
@@ -106,8 +106,10 @@ public class frameAjuste implements Initializable{
 	}
 	
 	public void selectFilter(String txt, int nmr) {
+
 		listOfAjt.clear();
 		String query = null;
+
 		try {
 	        conn = DB.getConnection();
 	        
@@ -118,12 +120,14 @@ public class frameAjuste implements Initializable{
 	        }
 	        
         	st = conn.prepareStatement(query);	
+
         	st.setString(1, "%" + txt + "%");
-        	st.setInt(2, nmr);
+        	st.setInt   (2, nmr);
+
         	rs = st.executeQuery();
         	
         	while(rs.next()) {
-        		Integer id = rs.getInt("IDAJUSTE");
+        		Integer id = rs.getInt    ("IDAJUSTE");
         		String acao = rs.getString("ACAO");
         		String desc = rs.getString("DESCRICAO");
         		
@@ -137,8 +141,8 @@ public class frameAjuste implements Initializable{
         		       		        	
         	}
         	codAjusteTC.setCellValueFactory(new PropertyValueFactory<ajuste, Integer>("id"));
-    		acaoTC.setCellValueFactory(new PropertyValueFactory<ajuste, String>("acao"));
-    		descTC.setCellValueFactory(new PropertyValueFactory<ajuste, String>("descricao"));        		
+    		descTC.setCellValueFactory     (new PropertyValueFactory<ajuste, String>("descricao"));        		
+    		acaoTC.setCellValueFactory     (new PropertyValueFactory<ajuste, String>("acao"));
     		
     		tableAjusteTV.refresh();
         	

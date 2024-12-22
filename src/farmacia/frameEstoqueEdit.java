@@ -9,9 +9,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ResourceBundle;
-
 import javax.swing.JOptionPane;
-
 import connectSQL.DB;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -41,9 +39,11 @@ public class frameEstoqueEdit implements Initializable{
     private Button salvarB;
     @FXML 
     private Button excluirB;
+
     @FXML
     private ChoiceBox<String> centEstCB;
     private String[] vCentEstCB = {"Farmacia"};
+
     @FXML
     private TextField codeTF;
     @FXML
@@ -62,20 +62,22 @@ public class frameEstoqueEdit implements Initializable{
     private TextField classifTF;
     @FXML
     private TextField loteTF;
+
     @FXML
     private ChoiceBox<String> medidaCB;
     private String[] vMedidaCB = {"Und.", "Cx.","Pct.", "Par"};
+
     @FXML
     private TextField nameTF;
     @FXML
     private TextField userAddTF;
-    private Stage stage;    
-    @FXML
-    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+  
+	private Stage stage;    
+    private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
-    Connection conn = null;
-    PreparedStatement st = null;
-    ResultSet rs = null;
+    private Connection conn = null;
+    private PreparedStatement st = null;
+    private ResultSet rs = null;
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
@@ -104,39 +106,39 @@ public class frameEstoqueEdit implements Initializable{
     	st = conn.prepareStatement(query);
     	st.setInt(1, frameEstoqueMed.idCode);
     	rs = st.executeQuery();
-    	System.out.println("idCode:" + frameEstoqueMed.idCode);
+
     	if(rs.next()) {
-    		Integer idMedQuery = rs.getInt("idmedicamento");
-    		boolean ativoMedQuery = rs.getBoolean("ativo");
-    		String nomeMedQuery = rs.getString("nome");    		
-			Date validadeMedQuery = rs.getDate("validade");
-			String medidaMedQuery = rs.getString("medida");
-			Date addUserQuery = rs.getDate("addHours");
-			String loteMedQuery = rs.getString("lote");
-			String classifMedQuery = rs.getString("classif");
-			String fornMedQuery = rs.getString("forn");
-			String marcaMedQuery = rs.getString("nomemarca");
-			boolean permEstMedQuery = rs.getBoolean("PERM_ESTOQUE");
+    		Integer idMedQuery 		 	 = rs.getInt("idmedicamento");
+    		boolean ativoMedQuery 		 = rs.getBoolean("ativo");
+    		String  nomeMedQuery 		 = rs.getString("nome");    		
+			Date 	validadeMedQuery     = rs.getDate("validade");
+			String  medidaMedQuery 		 = rs.getString("medida");
+			Date    addUserQuery    	 = rs.getDate("addHours");
+			String  loteMedQuery 		 = rs.getString("lote");
+			String  classifMedQuery 	 = rs.getString("classif");
+			String  fornMedQuery 		 = rs.getString("forn");
+			String  marcaMedQuery 		 = rs.getString("nomemarca");
+			boolean permEstMedQuery 	 = rs.getBoolean("PERM_ESTOQUE");
 			boolean permReqPrestMedQuery = rs.getBoolean("PERM_REQ_PRESTAD");
-			boolean permReqSetMedQuery = rs.getBoolean("PERM_REQ_SETOR");
-			boolean permInvMedQuery = rs.getBoolean("PERM_INVENTARIO");
-			boolean permDevMedQuery = rs.getBoolean("PERM_DEVOLUCAO");
+			boolean permReqSetMedQuery	 = rs.getBoolean("PERM_REQ_SETOR");
+			boolean permInvMedQuery		 = rs.getBoolean("PERM_INVENTARIO");
+			boolean permDevMedQuery 	 = rs.getBoolean("PERM_DEVOLUCAO");
 			
-			codeTF.setText(idMedQuery.toString());
-			fornTF.setText(fornMedQuery);
-			marcaTF.setText(marcaMedQuery);
-			loteTF.setText(loteMedQuery);
-			nameTF.setText(nomeMedQuery);
-			ativCB.setSelected(ativoMedQuery);
-			medidaCB.setValue(medidaMedQuery);
-			userAddTF.setText(sdf.format(addUserQuery));
-			classifTF.setText(classifMedQuery);
-			validadeTF.setText(sdf.format(validadeMedQuery));
-			permDevCB.setSelected(permDevMedQuery);
-			permEstCB.setSelected(permEstMedQuery);
-			permInvCB.setSelected(permInvMedQuery);
+			codeTF.setText			 (idMedQuery.toString());
+			fornTF.setText			 (fornMedQuery);
+			marcaTF.setText			 (marcaMedQuery);
+			loteTF.setText			 (loteMedQuery);
+			nameTF.setText			 (nomeMedQuery);
+			ativCB.setSelected		 (ativoMedQuery);
+			medidaCB.setValue		 (medidaMedQuery);
+			userAddTF.setText		 (sdf.format(addUserQuery));
+			classifTF.setText		 (classifMedQuery);
+			validadeTF.setText		 (sdf.format(validadeMedQuery));
+			permDevCB.setSelected	 (permDevMedQuery);
+			permEstCB.setSelected	 (permEstMedQuery);
+			permInvCB.setSelected	 (permInvMedQuery);
 			permReqPresCB.setSelected(permReqPrestMedQuery);
-			permReqSetCB.setSelected(permReqSetMedQuery);
+			permReqSetCB.setSelected (permReqSetMedQuery);
 			
 
     	}}catch (SQLException e2) {
@@ -155,13 +157,16 @@ public class frameEstoqueEdit implements Initializable{
     	try {
     		conn = DB.getConnection();
     		String query = "UPDATE medicamento\r\n"
-    				+ "set nome = ?, validade = ?, medida = ?, ativo = ? where IDMEDICAMENTO = ?;";         	
+    				+ "set nome = ?, validade = ?, medida = ?, ativo = ? where IDMEDICAMENTO = ?;";    
+
         	st = conn.prepareStatement(query);
-        	st.setString(1, nameTF.getText());
-        	st.setDate(2, new java.sql.Date(sdf.parse(validadeTF.getText()).getTime()));
-        	st.setString(3, medidaCB.getValue());
+
+        	st.setString (1, nameTF.getText());
+        	st.setDate	 (2, new java.sql.Date(sdf.parse(validadeTF.getText()).getTime()));
+        	st.setString (3, medidaCB.getValue());
         	st.setBoolean(4, ativCB.isSelected());
-        	st.setInt(5, frameEstoqueMed.idCode);
+        	st.setInt	 (5, frameEstoqueMed.idCode);
+
         	st.executeUpdate();
         	}catch (SQLException e2) {
         		JOptionPane.showMessageDialog(null, e2.getMessage());
@@ -182,8 +187,10 @@ public class frameEstoqueEdit implements Initializable{
     				+ "set FORN = ? where ID_MEDICAMENTO = ?;"; 
         	
         	st = conn.prepareStatement(query);
+
         	st.setString(1, fornTF.getText());
-        	st.setInt(2, frameEstoqueMed.idCode);
+        	st.setInt	(2, frameEstoqueMed.idCode);
+			
         	st.executeUpdate();
         	}catch (SQLException e2) {
         		JOptionPane.showMessageDialog(null, e2.getMessage());
@@ -204,8 +211,10 @@ public class frameEstoqueEdit implements Initializable{
     				+ "set nomemarca = ? where ID_MEDICAMENTO = ?;"; 
         	
         	st = conn.prepareStatement(query);
+
         	st.setString(1, marcaTF.getText());
-        	st.setInt(2, frameEstoqueMed.idCode);
+        	st.setInt	(2, frameEstoqueMed.idCode);
+
         	st.executeUpdate();
         	}catch (SQLException e2) {
         		JOptionPane.showMessageDialog(null, e2.getMessage());
@@ -226,8 +235,10 @@ public class frameEstoqueEdit implements Initializable{
     				+ "set LOTE = ? where ID_MEDICAMENTO = ?;"; 
         	
         	st = conn.prepareStatement(query);
+
         	st.setString(1, loteTF.getText());
-        	st.setInt(2, frameEstoqueMed.idCode);
+        	st.setInt	(2, frameEstoqueMed.idCode);
+
         	st.executeUpdate();
         	}catch (SQLException e2) {
         		JOptionPane.showMessageDialog(null, e2.getMessage());
@@ -248,12 +259,13 @@ public class frameEstoqueEdit implements Initializable{
     				+ "set PERM_ESTOQUE = ?, PERM_REQ_PRESTAD = ?, PERM_REQ_SETOR = ?, PERM_INVENTARIO = ?, PERM_DEVOLUCAO = ? where ID_MEDICAMENTO = ?;"; 
         	
         	st = conn.prepareStatement(query);
-        	st.setBoolean(1, permEstCB.isSelected());
-        	st.setBoolean(2, permReqPresCB.isSelected());
-        	st.setBoolean(3, permReqSetCB.isSelected());
-        	st.setBoolean(4, permInvCB.isSelected());
-        	st.setBoolean(5, permDevCB.isSelected());       	
-        	st.setInt(6, frameEstoqueMed.idCode);
+        	st.setBoolean (1, permEstCB.isSelected());
+        	st.setBoolean (2, permReqPresCB.isSelected());
+        	st.setBoolean (3, permReqSetCB.isSelected());
+        	st.setBoolean (4, permInvCB.isSelected());
+        	st.setBoolean (5, permDevCB.isSelected());       	
+        	st.setInt	  (6, frameEstoqueMed.idCode);
+
         	st.executeUpdate();
         	}catch (SQLException e2) {
         		JOptionPane.showMessageDialog(null, e2.getMessage());
@@ -270,10 +282,14 @@ public class frameEstoqueEdit implements Initializable{
     public void delMed() throws ParseException{
     	try {
     		conn = DB.getConnection();
-    		String query = "DELETE FROM MEDICAMENTO where IDMEDICAMENTO = ?;";         	
+
+    		String query = "DELETE FROM MEDICAMENTO where IDMEDICAMENTO = ?;"; 
+
         	st = conn.prepareStatement(query);
         	st.setInt(1, frameEstoqueMed.idCode);
+
         	st.executeUpdate();
+
         	}catch (SQLException e2) {
         		JOptionPane.showMessageDialog(null, e2.getMessage());
     		}finally {
@@ -289,11 +305,14 @@ public class frameEstoqueEdit implements Initializable{
     public void delFor() throws ParseException{
     	try {
     		conn = DB.getConnection();
+
     		String query = "DELETE FROM FORNECEDOR where ID_MEDICAMENTO = ?;"; 
         	
         	st = conn.prepareStatement(query);
         	st.setInt(1, frameEstoqueMed.idCode);
+
         	st.executeUpdate();
+
         	}catch (SQLException e2) {
         		JOptionPane.showMessageDialog(null, e2.getMessage());
     		}finally {
@@ -309,11 +328,14 @@ public class frameEstoqueEdit implements Initializable{
     public void delMar() throws ParseException{
     	try {
     		conn = DB.getConnection();
+
     		String query = "DELETE FROM MARCA where ID_MEDICAMENTO = ?;"; 
         	
         	st = conn.prepareStatement(query);
         	st.setInt(1, frameEstoqueMed.idCode);
+
         	st.executeUpdate();
+
         	}catch (SQLException e2) {
         		JOptionPane.showMessageDialog(null, e2.getMessage());
     		}finally {
@@ -329,10 +351,12 @@ public class frameEstoqueEdit implements Initializable{
     public void delLote() throws ParseException{
     	try {
     		conn = DB.getConnection();
+
     		String query = "DELETE FROM LOTE where ID_MEDICAMENTO = ?;"; 
         	
         	st = conn.prepareStatement(query);
         	st.setInt(1, frameEstoqueMed.idCode);
+
         	st.executeUpdate();
         	}catch (SQLException e2) {
         		JOptionPane.showMessageDialog(null, e2.getMessage());
@@ -349,11 +373,14 @@ public class frameEstoqueEdit implements Initializable{
     public void delClass() throws ParseException{
     	try {
     		conn = DB.getConnection();
+
     		String query = "DELETE FROM CLASSIFICACAO where ID_MEDICAMENTO = ?;"; 
         	
         	st = conn.prepareStatement(query);
         	st.setInt(1, frameEstoqueMed.idCode);
+
         	st.executeUpdate();
+
         	}catch (SQLException e2) {
         		JOptionPane.showMessageDialog(null, e2.getMessage());
     		}finally {
@@ -369,11 +396,14 @@ public class frameEstoqueEdit implements Initializable{
     public void delPerm() throws ParseException{
     	try {
     		conn = DB.getConnection();
+
     		String query = "DELETE FROM permdemovimentacao where ID_MEDICAMENTO = ?;"; 
         	
         	st = conn.prepareStatement(query);       	
         	st.setInt(1, frameEstoqueMed.idCode);
+
         	st.executeUpdate();
+
         	}catch (SQLException e2) {
         		JOptionPane.showMessageDialog(null, e2.getMessage());
     		}finally {
@@ -395,11 +425,13 @@ public class frameEstoqueEdit implements Initializable{
     public void salvar() throws ParseException{    
     	try {
     		conn = DB.getConnection();
+
     		upMed();
     		upFor();
     		upMar();
     		upLote();
     		upPerm();
+
         	}finally {
     		    if (st != null) {
     		        DB.closeStatement(st);
@@ -413,7 +445,8 @@ public class frameEstoqueEdit implements Initializable{
     public void excluir() throws ParseException{
     	try {  
     		int x = JOptionPane.showConfirmDialog(null, "Deseja Excluir o medicamento mesmo", "Error", JOptionPane.YES_NO_OPTION); //YES é 0 NO é 1
-    		if (x == 0) {    			
+    		
+			if (x == 0) {    			
     			delFor();
     			delLote();
     			delMar();

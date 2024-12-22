@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-
 import connectSQL.DB;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
@@ -15,20 +14,23 @@ import javafx.scene.control.TextField;
 
 public class cadasMedQuery {
 	
-	public void insertCadasQuery(Connection conn, PreparedStatement st, ResultSet rs, TextField nomeTF,
-			TextField quantidadeTF, 
-			TextField validadeTF,
-			TextField dataSistem,
-			ChoiceBox<String> medidaCB,
-			TextField loteTF,
-		    CheckBox permDevCB,
-		    CheckBox permEstCB,
-		    CheckBox permInvCB,
-		    CheckBox permReqPrestCB,
-		    CheckBox permReqSetCB,
-			ChoiceBox<String> classCB, 
-			ChoiceBox<String> fornCB, 
-			TextField marcaTF) {
+	public void insertCadasQuery(Connection conn, 
+								 PreparedStatement st, 
+								 ResultSet rs, 
+								 TextField nomeTF,
+								 TextField quantidadeTF,
+								 TextField validadeTF,
+								 TextField dataSistem,
+								 ChoiceBox<String> medidaCB,
+								 TextField loteTF,
+								 CheckBox permDevCB,
+								 CheckBox permEstCB,
+								 CheckBox permInvCB,
+								 CheckBox permReqPrestCB,
+								 CheckBox permReqSetCB,
+								 ChoiceBox<String> classCB, 
+								 ChoiceBox<String> fornCB,								 
+								 TextField marcaTF) {
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		
@@ -40,12 +42,12 @@ public class cadasMedQuery {
 					" (?,?,?,?,?,?);", Statement.RETURN_GENERATED_KEYS
 					);
 			
-			st.setString(1, nomeTF.getText());
-			st.setInt(2, Integer.valueOf(quantidadeTF.getText()));
-			st.setDate(3, new java.sql.Date(sdf.parse(validadeTF.getText()).getTime()));
-			st.setString(4, medidaCB.getValue());
+			st.setString (1, nomeTF.getText());
+			st.setInt    (2, Integer.valueOf(quantidadeTF.getText()));
+			st.setDate	 (3, new java.sql.Date(sdf.parse(validadeTF.getText()).getTime()));
+			st.setString (4, medidaCB.getValue());
 			st.setBoolean(5, true);
-			st.setDate(6, new java.sql.Date(sdf.parse(dataSistem.getText()).getTime()));
+			st.setDate	 (6, new java.sql.Date(sdf.parse(dataSistem.getText()).getTime()));
 			
 			int rowsAffected = st.executeUpdate();
 			int generatedId = 0;
@@ -53,6 +55,7 @@ public class cadasMedQuery {
 			// Recuperar o ID gerado automaticamente
 		    if (rowsAffected > 0) {
 		        rs = st.getGeneratedKeys();
+
 		        if (rs.next()) {
 		            generatedId = rs.getInt(1); // Captura o ID gerado
 		        }
@@ -63,7 +66,8 @@ public class cadasMedQuery {
 					" (?,?);"
 					);
 			st.setString(1, loteTF.getText());
-			st.setInt(2, generatedId);
+			st.setInt   (2, generatedId);
+
 			st.executeUpdate();
 			
 			//INSERT INTO CLASSIFICACAO 
@@ -71,7 +75,8 @@ public class cadasMedQuery {
 					" (?,?); "
 					);
 			st.setString(1, classCB.getValue());
-			st.setInt(2, generatedId);
+			st.setInt   (2, generatedId);
+
 			st.executeUpdate();
 			
 			//INSERT INTO FORNECEDOR 
@@ -79,7 +84,8 @@ public class cadasMedQuery {
 					" (?,?); "
 					);
 			st.setString(1, fornCB.getValue());
-			st.setInt(2, generatedId);
+			st.setInt  (2, generatedId);
+
 			st.executeUpdate();
 			
 			//INSERT INTO MARCA
@@ -87,7 +93,8 @@ public class cadasMedQuery {
 					" (?,?); "
 					);
 			st.setString(1, marcaTF.getText());
-			st.setInt(2, generatedId);
+			st.setInt	(2, generatedId);
+
 			st.executeUpdate();
 			
 			//INSERT INTO PERM        	
@@ -98,7 +105,7 @@ public class cadasMedQuery {
         	st.setBoolean(3, permReqSetCB.isSelected());
         	st.setBoolean(4, permInvCB.isSelected());
         	st.setBoolean(5, permDevCB.isSelected());
-        	st.setInt(6, generatedId);
+        	st.setInt    (6, generatedId);
         	st.executeUpdate();
 			
 		} catch (SQLException e2) {

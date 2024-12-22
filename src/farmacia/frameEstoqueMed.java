@@ -8,7 +8,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
-
 import connectSQL.DB;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -47,13 +46,15 @@ public class frameEstoqueMed implements Initializable{
     private TableColumn<medicamentos, Date> validadeTC;
     @FXML
     private TableColumn<medicamentos, String> marcaTC;
+
     private Stage stage;
     private Scene scene;
+	
     public static Integer idCode; 
     
-    Connection conn = null;
-    PreparedStatement st = null;
-    ResultSet rs = null;
+    private Connection 		  conn = null;
+    private PreparedStatement st   = null;
+    private ResultSet  	 	  rs   = null;
     
     ObservableList<medicamentos> listOfMed = FXCollections.observableArrayList();
     
@@ -76,25 +77,25 @@ public class frameEstoqueMed implements Initializable{
 	    	rs = st.executeQuery();
 
 	    	while(rs.next()) {
-	    		Integer idMedQuery = rs.getInt("idmedicamento");
-	    		String nomeMedQuery = rs.getString("nome");
-	    		Date validadeMedQuery = rs.getDate("validade");
-	    		Integer quantidadeQuery = rs.getInt("quantidade");
-	    		String loteMedQuery = rs.getString("lote");
-	    		String classifMedQuery = rs.getString("classif");
+	    		Integer idMedQuery 		 = rs.getInt("idmedicamento");
+	    		String nomeMedQuery 	 = rs.getString("nome");
+	    		Date validadeMedQuery 	 = rs.getDate("validade");
+	    		Integer quantidadeQuery  = rs.getInt("quantidade");
+	    		String loteMedQuery		 = rs.getString("lote");
+	    		String classifMedQuery 	 = rs.getString("classif");
 	    		String nomeMarcaMedQuery = rs.getString("nomemarca");
 	    		
 	    		medicamentos med = new medicamentos(idMedQuery, quantidadeQuery, nomeMedQuery, validadeMedQuery, classifMedQuery, loteMedQuery, nomeMarcaMedQuery);
 	    		
 	    		listOfMed.add(med);
 	    		
-	    		codigoTC.setCellValueFactory(new PropertyValueFactory<medicamentos, Integer>("idMed"));
-	    		nomeTC.setCellValueFactory(new PropertyValueFactory<medicamentos, String>("nomeMed"));
-	    		validadeTC.setCellValueFactory(new PropertyValueFactory<medicamentos, Date>("validade"));
-	    		quantiTC.setCellValueFactory(new PropertyValueFactory<medicamentos, Integer>("quantidade"));
+	    		codigoTC.setCellValueFactory		(new PropertyValueFactory<medicamentos, Integer>("idMed"));
+	    		nomeTC.setCellValueFactory			(new PropertyValueFactory<medicamentos, String>("nomeMed"));
+	    		validadeTC.setCellValueFactory		(new PropertyValueFactory<medicamentos, Date>("validade"));
+	    		quantiTC.setCellValueFactory		(new PropertyValueFactory<medicamentos, Integer>("quantidade"));
 	    		classificacaoTC.setCellValueFactory(new PropertyValueFactory<medicamentos, String>("nomeClassificacao"));
-	    		loteTC.setCellValueFactory(new PropertyValueFactory<medicamentos, String>("codLote"));
-	    		marcaTC.setCellValueFactory(new PropertyValueFactory<medicamentos, String>("nomeMarca"));
+	    		loteTC.setCellValueFactory			(new PropertyValueFactory<medicamentos, String>("codLote"));
+	    		marcaTC.setCellValueFactory			(new PropertyValueFactory<medicamentos, String>("nomeMarca"));
 	    	}
 	    	
 	    	tableMedEstTV.setItems(listOfMed);
@@ -113,12 +114,15 @@ public class frameEstoqueMed implements Initializable{
 
     
 	public void editarMed(ActionEvent e) throws IOException {
+
 		@SuppressWarnings("unchecked")
 		TablePosition<medicamentos, ?> pos = tableMedEstTV.getFocusModel().getFocusedCell();
         int currentRow = pos.getRow();
         
         idCode = listOfMed.get(currentRow).getIdMed();
+		
         Parent root = FXMLLoader.load(getClass().getResource("/farmacia/frameEstoqueEdit.fxml"));
+
 		stage = (Stage)((Node)e.getSource()).getScene().getWindow();
 		scene = new Scene(root);
 		stage.setScene(scene);

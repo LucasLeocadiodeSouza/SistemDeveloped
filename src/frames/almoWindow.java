@@ -38,7 +38,6 @@ public class almoWindow {
 			//ajustando a barraIcon e barraDeMenu para tamanho total da tela e a posicao do LogOut
 			Rectangle2D screenSize = Screen.getPrimary().getVisualBounds();
 	        double x = screenSize.getWidth(); 
-	        double y = screenSize.getHeight(); 
 			
 	        barraIcon.setWidth(x);
 	        barraDeMenu.setPrefWidth(x);

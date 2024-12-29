@@ -12,16 +12,17 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="380.0" prefWidth="620.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="farmacia.frameAjusteWindow">
    <children>
-      <Button fx:id="exitButton" focusTraversable="false" layoutX="568.0" layoutY="14.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="38.0" text="sair" />
+      <Button fx:id="exitButton" focusTraversable="false" layoutX="568.0" layoutY="14.0" mnemonicParsing="false" onAction="#exit" prefHeight="32.0" prefWidth="38.0" text="sair" />
       <Button fx:id="saveButton" focusTraversable="false" layoutX="520.0" layoutY="14.0" mnemonicParsing="false" onAction="#save" prefHeight="32.0" prefWidth="38.0" text="save" textAlignment="CENTER" />
-      <TableView fx:id="tableAjusteWindowTV" layoutX="13.0" layoutY="174.0" onKeyPressed="#nextTableItem" prefHeight="192.0" prefWidth="593.0">
+      <TableView fx:id="tableAjusteWindowTV" layoutX="13.0" layoutY="174.0" onKeyPressed="#tableView_pressed" prefHeight="192.0" prefWidth="593.0">
         <columns>
-          <TableColumn fx:id="codigoTC" prefWidth="75.0" text="Codigo " />
-          <TableColumn fx:id="nomeTC" prefWidth="200.00005340576172" text="Nome do produto" />
-            <TableColumn fx:id="quantTC" onEditCommit="#onEditChargedQtd" prefWidth="47.99993896484375" text="Qtd." />
-            <TableColumn fx:id="validadeTC" prefWidth="80.800048828125" text="Validade" />
-            <TableColumn fx:id="loteTC" prefWidth="82.39996337890625" text="Lote" />
-            <TableColumn fx:id="classificacaoTC" prefWidth="108.00003051757812" text="Classificacao" />
+            <TableColumn fx:id="selectTC" prefWidth="26.39999485015869" />
+          <TableColumn fx:id="codigoTC" prefWidth="43.200069427490234" text="Cod." />
+          <TableColumn fx:id="nomeTC" prefWidth="190.40001678466797" text="Nome do produto" />
+            <TableColumn fx:id="quantTC" onEditCommit="#onEditChargedQtd" prefWidth="49.5999755859375" text="Qtd." />
+            <TableColumn fx:id="validadeTC" prefWidth="95.20001220703125" text="Validade" />
+            <TableColumn fx:id="loteTC" prefWidth="83.20001220703125" text="Lote" />
+            <TableColumn fx:id="classificacaoTC" prefWidth="108.80007934570312" text="Classificacao" />
         </columns>
       </TableView>
       <Label layoutX="56.0" layoutY="33.0" text="Ajuste:">
@@ -35,7 +36,7 @@
             <Font size="13.0" />
          </font>
       </Label>
-      <TextField fx:id="hrAdd" focusTraversable="false" layoutX="104.0" layoutY="64.0" />
+      <TextField fx:id="hrAdd" focusTraversable="false" layoutX="104.0" layoutY="64.0" onAction="#validacao" onInputMethodTextChanged="#validacao" />
       <Label layoutX="65.0" layoutY="99.0" text="Setor:">
          <font>
             <Font size="13.0" />

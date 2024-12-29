@@ -20,7 +20,6 @@ import connectSQL.DB;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -32,11 +31,10 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
 import medicamentos.medicamentos;
+import parametros.prm001;
 
 public class frameReqSetor implements Initializable{
 
@@ -82,6 +80,7 @@ public class frameReqSetor implements Initializable{
     private ArrayList<medicamentos> ajusteMed;
     private ObservableList<medicamentos> listOfMed = FXCollections.observableArrayList();
     private Integer generatedId = 0;
+	private String medSelected;
         
 
     @Override
@@ -95,7 +94,11 @@ public class frameReqSetor implements Initializable{
     	dataTF.setText(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")));
     	
     	selectNmrReqWindow();    	
-    	
+    	prm001.nextTableItem(reqSetorTV, 
+							 listOfMed, 
+							 new medicamentos("", null, "", null, ""));
+
+
     	choiceTC.setCellFactory(column -> new TableCell<medicamentos, String>(){
 			private final ChoiceBox<String> setaCB = new ChoiceBox<>();
 			
@@ -108,15 +111,14 @@ public class frameReqSetor implements Initializable{
 			        	setaCB.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
 			            
 			        	setaCB.getItems().clear();
-			            carregarNomesChoiceBox(setaCB);
+			            prm001.carregarNomesChoiceBox(setaCB);
 			            setGraphic(setaCB);
 
 			            setaCB.setOnAction(event -> {
-			                String nomeTCValueCB = setaCB.getValue();
+			                medSelected = setaCB.getValue();
 			                med = getTableView().getItems().get(getIndex());
-			                med.setNomeMed(nomeTCValueCB);
 			                reqSetorTV.getSelectionModel().select(getIndex());
-			                updateLine(nomeTCValueCB, med, getIndex());
+			                updateLine(medSelected, med, getIndex());
 			            });
 			        }
 			    }
@@ -129,31 +131,21 @@ public class frameReqSetor implements Initializable{
     	
     	reqSetorTV.setItems(listOfMed);    	
     }
-    
-    public void carregarNomesChoiceBox(ChoiceBox<String> choiceBox) {
-		try{
-	    	conn = DB.getConnection();
 
-	    	String query = "select nome from medicamento;";
 
-	    	st = conn.prepareStatement(query);
-	    	rs = st.executeQuery();
+	@FXML
+	public void tableView_pressed(){
+		prm001.nextTableItem(reqSetorTV,
+							 listOfMed,
+							 new medicamentos(null, 
+							 	              (Integer)null,
+										         "", 
+											  (Integer)null,
+									   ""));
 
-	    	while(rs.next()) {
-	    		choiceBox.getItems().add(rs.getString("nome"));	
-	    	}//end while
+	    reqSetorTV.refresh();
+	}
 
-		} catch (SQLException e2) {
-			JOptionPane.showMessageDialog(null, e2.getMessage());
-		}finally {
-		    if (st != null) {
-		        DB.closeStatement(st);
-		    }
-		    if (conn != null) {
-		        DB.closeConnection();
-		    }
-		}    
-    }
     
     public void selectNmrReqWindow() {
 		Integer id = null;
@@ -191,10 +183,10 @@ public class frameReqSetor implements Initializable{
     			+ "from medicamento med \r\n"
     			+ "inner join classificacao c\r\n"
     			+ "on med.IDMEDICAMENTO = c.ID_MEDICAMENTO\r\n"
-    			+ "where nome = ?;";
+    			+ "where idmedicamento = ?;";
     	
     	st = conn.prepareStatement(query);
-    	st.setString(1, nomeProd);
+    	st.setString(1, prm001.getElemento(1, medSelected));
 
     	rs = st.executeQuery();
     	
@@ -226,28 +218,6 @@ public class frameReqSetor implements Initializable{
 		        DB.closeConnection();
 		    }
 		}
-	}
-    
-	@FXML
-	public void nextTableItem() {
-		reqSetorTV.setOnKeyPressed(new EventHandler<KeyEvent>() {
-			@Override
-			public void handle(KeyEvent arg0) {
-				if(arg0.getCode().equals(KeyCode.E)){
-					listOfMed.add(new medicamentos((Integer)null, "", (Integer)null, null, "", ""));
-					
-				}else if(arg0.isControlDown() && arg0.getCode().equals(KeyCode.DELETE)){
-
-					@SuppressWarnings("unchecked")
-					TablePosition<medicamentos, ?> pos = reqSetorTV.getFocusModel().getFocusedCell();
-			        int currentRow = pos.getRow();
-			        
-			        if(listOfMed.size() > 1) {
-			        	listOfMed.remove(currentRow);
-			        }			       
-				}				
-			}//endHandler
-		});
 	}
 	
 	public void nmrReqSetorMed(StringBuilder listProdutos, StringBuilder listQuant) {

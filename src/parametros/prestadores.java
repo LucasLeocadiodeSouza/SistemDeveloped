@@ -22,7 +22,8 @@ public class prestadores {
 		this.nomePrestador = nomePrestador;
 	}
 	public prestadores(Integer codPrestador) {
-		this.codPrestador = codPrestador;		
+		this.codPrestador = codPrestador;	
+		setnomePrestador(retornarPrestador(codPrestador));	
 	}
 
 	public String getnomePrestador() {
@@ -45,7 +46,8 @@ public class prestadores {
 			String query = "SELECT NOMEPREST FROM PRESTADOR WHERE IDPRESTADOR =  ?";
 
 			st.setInt(1, id);
-			st.executeQuery(query);
+			st = conn.prepareStatement(query);
+			rs = st.executeQuery();
 			
 			setnomePrestador(rs.getString("NOMEPREST"));
 

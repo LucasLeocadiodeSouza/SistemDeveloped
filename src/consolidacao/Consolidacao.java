@@ -16,20 +16,14 @@ public class Consolidacao {
 		this.id        = id;
 		this.situacao  = situacao;
 		this.descricao = descricao;
-
 		this.setor     = new Setores(idSetor);
-		this.setor.setNomeSetor(setor.retornarSetor(idSetor));
-
-		this.dataReq    = dataReq;
+		this.dataReq   = dataReq;
 	}
 	public Consolidacao(String situacao, Integer id, String descricao, Integer idPrest, Date dataReq) {
 		this.id        = id;
 		this.situacao  = situacao;
 		this.descricao = descricao;
-
 		this.prest     = new prestadores(idPrest);
-		this.prest.setnomePrestador(prest.retornarPrestador(idPrest));
-		
 		this.dataReq   = dataReq;
 	}
 

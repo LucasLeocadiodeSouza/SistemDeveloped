@@ -14,7 +14,7 @@
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="481.0" stroke="TRANSPARENT" strokeType="INSIDE" width="611.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#eaeaea" height="467.0" layoutX="8.0" layoutY="7.0" stroke="TRANSPARENT" strokeType="INSIDE" width="596.0" />
-      <TableView fx:id="reqSetorTV" layoutX="14.0" layoutY="224.0" onKeyPressed="#nextTableItem" prefHeight="242.0" prefWidth="584.0">
+      <TableView fx:id="reqSetorTV" layoutX="14.0" layoutY="224.0" onKeyPressed="#tableView_pressed" prefHeight="242.0" prefWidth="584.0">
         <columns>
           <TableColumn fx:id="choiceTC" editable="false" prefWidth="32.80004692077637" />
             <TableColumn fx:id="codTC" editable="false" prefWidth="44.00006103515625" text="Cod." />

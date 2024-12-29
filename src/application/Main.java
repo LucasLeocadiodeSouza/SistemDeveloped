@@ -17,7 +17,7 @@ public class Main extends Application {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/farmacia/frameAjusteWindow.fxml"));
 
-			Parent root = FXMLLoader.load(getClass().getResource("/frames/desktopSistem.fxml"));
+			Parent root = FXMLLoader.load(getClass().getResource("/farmacia/frameAjusteWindow.fxml"));
 
 			//Parent root = loader.load();
 			frameAjusteWindow AW = loader.getController();

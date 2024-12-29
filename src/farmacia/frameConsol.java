@@ -6,9 +6,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ResourceBundle;
-
 import javax.swing.JOptionPane;
-
 import connectSQL.DB;
 import consolidacao.Consolidacao;
 import javafx.collections.FXCollections;
@@ -85,6 +83,75 @@ public class frameConsol implements Initializable{
 		requisicoesTV.setItems(listOfConsol);
 	}
 
+    public void carregarReqPrest(ResultSet rs){
+        try {
+            conn = DB.getConnection();
+
+            while(rs.next()){
+                Integer idprestmedQuery  = rs.getInt("IDPRESTMED");
+                String listmedQuery      = rs.getString("LISTMED");
+                Integer idprestadorQuery = rs.getInt("ID_PRESTADOR");
+                String consolidadoQuery  = rs.getString("consolidado");
+                Date datareqQuery        = rs.getDate("DATAREQ");
+
+                Consolidacao consol = new Consolidacao(consolidadoQuery, idprestmedQuery, listmedQuery, idprestadorQuery, datareqQuery);
+                listOfConsol.add(consol);
+
+                codTC.setCellValueFactory        (new PropertyValueFactory<Consolidacao, Integer>("id"));
+                consolTC.setCellValueFactory     (new PropertyValueFactory<Consolidacao, String> ("situacao"));
+                descTC.setCellValueFactory       (new PropertyValueFactory<Consolidacao, String> ("descricao"));
+                solicitanteTC.setCellValueFactory(new PropertyValueFactory<Consolidacao, String> (consol.getPrest()));
+                dtAberturaTC.setCellValueFactory (new PropertyValueFactory<Consolidacao, Date>   ("dataReq"));
+
+                requisicoesTV.refresh();
+            }
+
+        } catch (Exception e) {
+	    	JOptionPane.showMessageDialog(null, e.getMessage());
+	    }finally {
+		    if (st != null) {
+		        DB.closeStatement(st);
+		    }
+		    if (conn != null) {
+		        DB.closeConnection();
+		    }
+		}
+    }
+
+    public void carregarReqSet(ResultSet rs){
+        try {
+            conn = DB.getConnection();
+
+            while(rs.next()){
+                Integer idreqsetorQuery = rs.getInt("IDREQSETMED");
+                String listmedQuery     = rs.getString("LISTMED");
+                Integer idsetorQuery    = rs.getInt("ID_SETOR");
+                String consolidadoQuery = rs.getString("consolidado");
+                Date datareqQuery       = rs.getDate("DATAREQ");
+
+                Consolidacao consol = new Consolidacao(idreqsetorQuery, consolidadoQuery, listmedQuery, idsetorQuery, datareqQuery);
+                listOfConsol.add(consol);
+
+                codTC.setCellValueFactory        (new PropertyValueFactory<Consolidacao, Integer>("id"));
+                consolTC.setCellValueFactory     (new PropertyValueFactory<Consolidacao, String> ("situacao"));
+                descTC.setCellValueFactory       (new PropertyValueFactory<Consolidacao, String> ("descricao"));
+                solicitanteTC.setCellValueFactory(new PropertyValueFactory<Consolidacao, String> (consol.getSetor()));
+                dtAberturaTC.setCellValueFactory (new PropertyValueFactory<Consolidacao, Date>   ("dataReq"));
+
+                requisicoesTV.refresh();
+            }
+        } catch (Exception e) {
+	    	JOptionPane.showMessageDialog(null, e.getMessage());
+	    }finally {
+		    if (st != null) {
+		        DB.closeStatement(st);
+		    }
+		    if (conn != null) {
+		        DB.closeConnection();
+		    }
+		}
+    }
+
     public void filtroTipo(){
         
     }
@@ -98,7 +165,30 @@ public class frameConsol implements Initializable{
     }
 
     public void filtroCod (Integer codTF){
-        
+        try {
+            conn = DB.getConnection();
+            
+            String query = "SELECT * FROM REQPRESTMED WHERE IDPRESTMED = ?";
+
+            st.setInt(1, codTF);
+
+            st = conn.prepareStatement(query);
+            rs = st.executeQuery();
+
+            
+            
+
+
+        } catch (Exception e) {
+	    	JOptionPane.showMessageDialog(null, e.getMessage());
+	    }finally {
+		    if (st != null) {
+		        DB.closeStatement(st);
+		    }
+		    if (conn != null) {
+		        DB.closeConnection();
+		    }
+		}
     }
 
     public void filtroData(DatePicker dtInicio, DatePicker dtFinal){        
@@ -173,7 +263,7 @@ public class frameConsol implements Initializable{
 		    }
 		}
     }
-    
+
     public void carregarReq(){
         try {
             conn = DB.getConnection();
@@ -203,47 +293,14 @@ public class frameConsol implements Initializable{
                 st = conn.prepareStatement(query);              
                 rs = st.executeQuery();
 
-                while(rs.next()){
-                    Integer idprestmedQuery  = rs.getInt("IDPRESTMED");
-                    String listmedQuery      = rs.getString("LISTMED");
-                    Integer idprestadorQuery = rs.getInt("ID_PRESTADOR");
-                    String consolidadoQuery  = rs.getString("consolidado");
-                    Date datareqQuery        = rs.getDate("DATAREQ");
-
-                    Consolidacao consol = new Consolidacao(consolidadoQuery, idprestmedQuery, listmedQuery, idprestadorQuery, datareqQuery);
-                    listOfConsol.add(consol);
-
-                    codTC.setCellValueFactory        (new PropertyValueFactory<Consolidacao, Integer>("id"));
-                    consolTC.setCellValueFactory     (new PropertyValueFactory<Consolidacao, String> ("situacao"));
-                    descTC.setCellValueFactory       (new PropertyValueFactory<Consolidacao, String> ("descricao"));
-                    solicitanteTC.setCellValueFactory(new PropertyValueFactory<Consolidacao, String> ("idPrest"));
-                    dtAberturaTC.setCellValueFactory (new PropertyValueFactory<Consolidacao, Date>   ("dataReq"));
-
-                    requisicoesTV.refresh();
-                }
+                carregarReqPrest(rs);
+               
             }if(setorCB.isSelected()){
                 String query = "SELECT * FROM reqsetormed WHERE IDREQSETMED = 4";
                 st = conn.prepareStatement(query);     
                 rs = st.executeQuery();
 
-                while(rs.next()){
-                    Integer idreqsetorQuery = rs.getInt("IDREQSETMED");
-                    String listmedQuery     = rs.getString("LISTMED");
-                    Integer idsetorQuery    = rs.getInt("ID_SETOR");
-                    String consolidadoQuery = rs.getString("consolidado");
-                    Date datareqQuery       = rs.getDate("DATAREQ");
-
-                    Consolidacao consol = new Consolidacao(idreqsetorQuery, consolidadoQuery, listmedQuery, idsetorQuery, datareqQuery);
-                    listOfConsol.add(consol);
-
-                    codTC.setCellValueFactory        (new PropertyValueFactory<Consolidacao, Integer>("id"));
-                    consolTC.setCellValueFactory     (new PropertyValueFactory<Consolidacao, String> ("situacao"));
-                    descTC.setCellValueFactory       (new PropertyValueFactory<Consolidacao, String> ("descricao"));
-                    solicitanteTC.setCellValueFactory(new PropertyValueFactory<Consolidacao, String> ("idSetor"));
-                    dtAberturaTC.setCellValueFactory (new PropertyValueFactory<Consolidacao, Date>   ("dataReq"));
-
-                    requisicoesTV.refresh();
-                }
+                carregarReqSet(rs);
             }
 
         } catch (Exception e) {

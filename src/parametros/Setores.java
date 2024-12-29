@@ -22,7 +22,8 @@ public class Setores {
 		this.nomeSetor = nomeSetor;
 	}
 	public Setores(Integer codSetor) {
-		this.codSetor = codSetor;		
+		this.codSetor = codSetor;	
+		setNomeSetor(retornarSetor(codSetor));	
 	}
 
 	public String getNomeSetor() {

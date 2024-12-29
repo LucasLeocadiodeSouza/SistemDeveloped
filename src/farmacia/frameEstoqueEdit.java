@@ -18,6 +18,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import parametros.prm002;
 
 public class frameEstoqueEdit implements Initializable{
 
@@ -82,6 +83,7 @@ public class frameEstoqueEdit implements Initializable{
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
     	centEstCB.getItems().addAll(vCentEstCB);
+
     	medidaCB.getItems().addAll(vMedidaCB);    	    	    
     	updateMedByIdCode();    	
     }
@@ -152,271 +154,7 @@ public class frameEstoqueEdit implements Initializable{
 		    }
 		}
 	}
-    
-    public void upMed() throws ParseException{
-    	try {
-    		conn = DB.getConnection();
-    		String query = "UPDATE medicamento\r\n"
-    				+ "set nome = ?, validade = ?, medida = ?, ativo = ? where IDMEDICAMENTO = ?;";    
-
-        	st = conn.prepareStatement(query);
-
-        	st.setString (1, nameTF.getText());
-        	st.setDate	 (2, new java.sql.Date(sdf.parse(validadeTF.getText()).getTime()));
-        	st.setString (3, medidaCB.getValue());
-        	st.setBoolean(4, ativCB.isSelected());
-        	st.setInt	 (5, frameEstoqueMed.idCode);
-
-        	st.executeUpdate();
-        	}catch (SQLException e2) {
-        		JOptionPane.showMessageDialog(null, e2.getMessage());
-    		}finally {
-    		    if (st != null) {
-    		        DB.closeStatement(st);
-    		    }
-    		    if (conn != null) {
-    		        DB.closeConnection();
-    		    }
-    		}
-    }
-    
-    public void upFor() throws ParseException{
-    	try {
-    		conn = DB.getConnection();
-    		String query = "UPDATE fornecedor\r\n"
-    				+ "set FORN = ? where ID_MEDICAMENTO = ?;"; 
-        	
-        	st = conn.prepareStatement(query);
-
-        	st.setString(1, fornTF.getText());
-        	st.setInt	(2, frameEstoqueMed.idCode);
-			
-        	st.executeUpdate();
-        	}catch (SQLException e2) {
-        		JOptionPane.showMessageDialog(null, e2.getMessage());
-    		}finally {
-    		    if (st != null) {
-    		        DB.closeStatement(st);
-    		    }
-    		    if (conn != null) {
-    		        DB.closeConnection();
-    		    }
-    		}
-    }
-    
-    public void upMar() throws ParseException{
-    	try {
-    		conn = DB.getConnection();
-    		String query = "UPDATE marca\r\n"
-    				+ "set nomemarca = ? where ID_MEDICAMENTO = ?;"; 
-        	
-        	st = conn.prepareStatement(query);
-
-        	st.setString(1, marcaTF.getText());
-        	st.setInt	(2, frameEstoqueMed.idCode);
-
-        	st.executeUpdate();
-        	}catch (SQLException e2) {
-        		JOptionPane.showMessageDialog(null, e2.getMessage());
-    		}finally {
-    		    if (st != null) {
-    		        DB.closeStatement(st);
-    		    }
-    		    if (conn != null) {
-    		        DB.closeConnection();
-    		    }
-    		}
-    }
-    
-    public void upLote() throws ParseException{
-    	try {
-    		conn = DB.getConnection();
-    		String query = "UPDATE LOTE\r\n"
-    				+ "set LOTE = ? where ID_MEDICAMENTO = ?;"; 
-        	
-        	st = conn.prepareStatement(query);
-
-        	st.setString(1, loteTF.getText());
-        	st.setInt	(2, frameEstoqueMed.idCode);
-
-        	st.executeUpdate();
-        	}catch (SQLException e2) {
-        		JOptionPane.showMessageDialog(null, e2.getMessage());
-    		}finally {
-    		    if (st != null) {
-    		        DB.closeStatement(st);
-    		    }
-    		    if (conn != null) {
-    		        DB.closeConnection();
-    		    }
-    		}
-    }
-    
-    public void upPerm() throws ParseException{
-    	try {
-    		conn = DB.getConnection();
-    		String query = "UPDATE permdemovimentacao\r\n"
-    				+ "set PERM_ESTOQUE = ?, PERM_REQ_PRESTAD = ?, PERM_REQ_SETOR = ?, PERM_INVENTARIO = ?, PERM_DEVOLUCAO = ? where ID_MEDICAMENTO = ?;"; 
-        	
-        	st = conn.prepareStatement(query);
-        	st.setBoolean (1, permEstCB.isSelected());
-        	st.setBoolean (2, permReqPresCB.isSelected());
-        	st.setBoolean (3, permReqSetCB.isSelected());
-        	st.setBoolean (4, permInvCB.isSelected());
-        	st.setBoolean (5, permDevCB.isSelected());       	
-        	st.setInt	  (6, frameEstoqueMed.idCode);
-
-        	st.executeUpdate();
-        	}catch (SQLException e2) {
-        		JOptionPane.showMessageDialog(null, e2.getMessage());
-    		}finally {
-    		    if (st != null) {
-    		        DB.closeStatement(st);
-    		    }
-    		    if (conn != null) {
-    		        DB.closeConnection();
-    		    }
-    		}
-    }
-    
-    public void delMed() throws ParseException{
-    	try {
-    		conn = DB.getConnection();
-
-    		String query = "DELETE FROM MEDICAMENTO where IDMEDICAMENTO = ?;"; 
-
-        	st = conn.prepareStatement(query);
-        	st.setInt(1, frameEstoqueMed.idCode);
-
-        	st.executeUpdate();
-
-        	}catch (SQLException e2) {
-        		JOptionPane.showMessageDialog(null, e2.getMessage());
-    		}finally {
-    		    if (st != null) {
-    		        DB.closeStatement(st);
-    		    }
-    		    if (conn != null) {
-    		        DB.closeConnection();
-    		    }
-    		}
-    }
-    
-    public void delFor() throws ParseException{
-    	try {
-    		conn = DB.getConnection();
-
-    		String query = "DELETE FROM FORNECEDOR where ID_MEDICAMENTO = ?;"; 
-        	
-        	st = conn.prepareStatement(query);
-        	st.setInt(1, frameEstoqueMed.idCode);
-
-        	st.executeUpdate();
-
-        	}catch (SQLException e2) {
-        		JOptionPane.showMessageDialog(null, e2.getMessage());
-    		}finally {
-    		    if (st != null) {
-    		        DB.closeStatement(st);
-    		    }
-    		    if (conn != null) {
-    		        DB.closeConnection();
-    		    }
-    		}
-    }
-    
-    public void delMar() throws ParseException{
-    	try {
-    		conn = DB.getConnection();
-
-    		String query = "DELETE FROM MARCA where ID_MEDICAMENTO = ?;"; 
-        	
-        	st = conn.prepareStatement(query);
-        	st.setInt(1, frameEstoqueMed.idCode);
-
-        	st.executeUpdate();
-
-        	}catch (SQLException e2) {
-        		JOptionPane.showMessageDialog(null, e2.getMessage());
-    		}finally {
-    		    if (st != null) {
-    		        DB.closeStatement(st);
-    		    }
-    		    if (conn != null) {
-    		        DB.closeConnection();
-    		    }
-    		}
-    }
-    
-    public void delLote() throws ParseException{
-    	try {
-    		conn = DB.getConnection();
-
-    		String query = "DELETE FROM LOTE where ID_MEDICAMENTO = ?;"; 
-        	
-        	st = conn.prepareStatement(query);
-        	st.setInt(1, frameEstoqueMed.idCode);
-
-        	st.executeUpdate();
-        	}catch (SQLException e2) {
-        		JOptionPane.showMessageDialog(null, e2.getMessage());
-    		}finally {
-    		    if (st != null) {
-    		        DB.closeStatement(st);
-    		    }
-    		    if (conn != null) {
-    		        DB.closeConnection();
-    		    }
-    		}
-    }
-    
-    public void delClass() throws ParseException{
-    	try {
-    		conn = DB.getConnection();
-
-    		String query = "DELETE FROM CLASSIFICACAO where ID_MEDICAMENTO = ?;"; 
-        	
-        	st = conn.prepareStatement(query);
-        	st.setInt(1, frameEstoqueMed.idCode);
-
-        	st.executeUpdate();
-
-        	}catch (SQLException e2) {
-        		JOptionPane.showMessageDialog(null, e2.getMessage());
-    		}finally {
-    		    if (st != null) {
-    		        DB.closeStatement(st);
-    		    }
-    		    if (conn != null) {
-    		        DB.closeConnection();
-    		    }
-    		}
-    }
-    
-    public void delPerm() throws ParseException{
-    	try {
-    		conn = DB.getConnection();
-
-    		String query = "DELETE FROM permdemovimentacao where ID_MEDICAMENTO = ?;"; 
-        	
-        	st = conn.prepareStatement(query);       	
-        	st.setInt(1, frameEstoqueMed.idCode);
-
-        	st.executeUpdate();
-
-        	}catch (SQLException e2) {
-        		JOptionPane.showMessageDialog(null, e2.getMessage());
-    		}finally {
-    		    if (st != null) {
-    		        DB.closeStatement(st);
-    		    }
-    		    if (conn != null) {
-    		        DB.closeConnection();
-    		    }
-    		}
-    }
-    
-    
+        
     public void sair() {
     	stage = (Stage) nameTF.getScene().getWindow();
     	stage.close();
@@ -426,11 +164,21 @@ public class frameEstoqueEdit implements Initializable{
     	try {
     		conn = DB.getConnection();
 
-    		upMed();
-    		upFor();
-    		upMar();
-    		upLote();
-    		upPerm();
+    		prm002.editarMedBasic(nameTF.getText() ,
+								 new java.sql.Date(sdf.parse(validadeTF.getText()).getTime()),
+								  medidaCB.getValue(),
+								  ativCB.isSelected() ,
+								  frameEstoqueMed.idCode
+								  );
+    		prm002.editarMedForn(fornTF.getText(),   frameEstoqueMed.idCode);
+    		prm002.editarMedMarca(marcaTF.getText(), frameEstoqueMed.idCode);
+			prm002.editarMedLote(loteTF.getText(), 	 frameEstoqueMed.idCode);
+    		prm002.editarMedPerm(permEstCB.isSelected(), 
+                                 permReqPresCB.isSelected(), 
+                                 permReqSetCB.isSelected(), 
+                                 permInvCB.isSelected(), 
+                                 permDevCB.isSelected(),
+                                 frameEstoqueMed.idCode);
 
         	}finally {
     		    if (st != null) {
@@ -447,12 +195,7 @@ public class frameEstoqueEdit implements Initializable{
     		int x = JOptionPane.showConfirmDialog(null, "Deseja Excluir o medicamento mesmo", "Error", JOptionPane.YES_NO_OPTION); //YES é 0 NO é 1
     		
 			if (x == 0) {    			
-    			delFor();
-    			delLote();
-    			delMar();
-    			delPerm();
-    			delClass();
-    			delMed();
+    			prm002.delMedComp(frameEstoqueMed.idCode);
     		}
     		    		
         	}finally {

@@ -29,8 +29,6 @@ select * from prestador;
 select * from reqSetormed;
 select * from reqprestmed;
 
-
-UPDATE medicamento
 set quantidade = 3, nome = "testando dnv" where idmedicamento = 18 ;
 UPDATE medicamento
 set quantidade = 3 where idmedicamento = 18 ;

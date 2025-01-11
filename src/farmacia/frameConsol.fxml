@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
@@ -25,16 +26,15 @@
             <TableColumn fx:id="dtAberturaTC" prefWidth="100.80001831054688" text="Aberto" />
          </columns>
       </TableView>
-      <Button fx:id="sairB" layoutX="552.0" layoutY="25.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="36.0" text="Sair" />
-      <Button fx:id="salvarB" layoutX="506.0" layoutY="25.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="36.0" text="Salvar" />
+      <Button fx:id="sairB" layoutX="552.0" layoutY="25.0" mnemonicParsing="false" onAction="#exit" prefHeight="26.0" prefWidth="36.0" text="Sair" />
       <Label layoutX="16.0" layoutY="48.0" text="Filtro Por Data:  ">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <DatePicker fx:id="dtInicioDP" layoutX="120.0" layoutY="45.0" prefHeight="20.0" prefWidth="50.0" />
-      <DatePicker fx:id="dtFinalDB" layoutX="230.0" layoutY="45.0" prefHeight="20.0" prefWidth="50.0" />
-      <Label layoutX="193.0" layoutY="48.0" text="até">
+      <DatePicker fx:id="dtInicioDP" layoutX="120.0" layoutY="45.0" prefHeight="26.0" prefWidth="108.0" />
+      <DatePicker fx:id="dtFinalDP" layoutX="297.0" layoutY="45.0" prefHeight="26.0" prefWidth="108.0" />
+      <Label layoutX="254.0" layoutY="48.0" text="até">
          <font>
             <Font size="14.0" />
          </font>
@@ -55,22 +55,25 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="codTF" layoutX="120.0" layoutY="169.0" prefHeight="26.0" prefWidth="166.0" />
+      <TextField fx:id="codTF" layoutX="120.0" layoutY="169.0" prefHeight="26.0" prefWidth="166.0" text="0" />
       <ChoiceBox fx:id="solicitanteCB" layoutX="120.0" layoutY="85.0" prefHeight="26.0" prefWidth="166.0" />
       <Label fx:id="setorL" layoutX="16.0" layoutY="88.0" text="Filtro Por Setor:">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <CheckBox fx:id="prestadorCB" layoutX="363.0" layoutY="90.0" mnemonicParsing="false" text="Prestador">
+      <RadioButton fx:id="setorRB" layoutX="470.0" layoutY="92.0" mnemonicParsing="false" onAction="#atualizarPrestOuSetor" text="Setor">
          <font>
             <Font size="14.0" />
          </font>
-      </CheckBox>
-      <CheckBox fx:id="setorCB" layoutX="470.0" layoutY="90.0" mnemonicParsing="false" text="Setor">
+         <toggleGroup>
+            <ToggleGroup fx:id="dgrupo" />
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton fx:id="prestadorRB" layoutX="362.0" layoutY="92.0" mnemonicParsing="false" onAction="#atualizarPrestOuSetor" text="Prestador" toggleGroup="$dgrupo">
          <font>
             <Font size="14.0" />
          </font>
-      </CheckBox>
+      </RadioButton>
    </children>
 </AnchorPane>

@@ -4,6 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import javax.swing.JOptionPane;
 import connectSQL.DB;
 import javafx.collections.ObservableList;
@@ -107,6 +111,60 @@ public class prm001 {
 		}    
     }
 
+	public static void carregarPrestadorCB(ChoiceBox<String> choiceBox) {
+		try{
+	    	conn = DB.getConnection();
+
+			String wcodnome;
+	    	String query = "select IDPRESTADOR, NOMEPREST from PRESTADOR;";
+
+	    	st = conn.prepareStatement(query);
+	    	rs = st.executeQuery();
+
+	    	while(rs.next()) {
+				wcodnome = rs.getString("IDPRESTADOR") + ", " + rs.getString("NOMEPREST");
+	    		choiceBox.getItems().add(wcodnome);
+	    	}//end while
+
+		} catch (SQLException e2) {
+			JOptionPane.showMessageDialog(null, e2.getMessage());
+		}finally {
+		    if (st != null) {
+		        DB.closeStatement(st);
+		    }
+		    if (conn != null) {
+		        DB.closeConnection();
+		    }
+		}    
+    }
+
+	public static void carregarSetorCB(ChoiceBox<String> choiceBox) {
+		try{
+	    	conn = DB.getConnection();
+
+			String wcodnome;
+	    	String query = "select IDSETORES, NOMESETORES from SETORES;";
+
+	    	st = conn.prepareStatement(query);
+	    	rs = st.executeQuery();
+
+	    	while(rs.next()) {
+				wcodnome = rs.getString("IDSETORES") + ", " + rs.getString("NOMESETORES");
+	    		choiceBox.getItems().add(wcodnome);
+	    	}//end while
+
+		} catch (SQLException e2) {
+			JOptionPane.showMessageDialog(null, e2.getMessage());
+		}finally {
+		    if (st != null) {
+		        DB.closeStatement(st);
+		    }
+		    if (conn != null) {
+		        DB.closeConnection();
+		    }
+		}    
+    }
+
 	public static void nextTableItem(TableView<medicamentos> TV, ObservableList<medicamentos> ObV, medicamentos med) {
 		TV.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			@Override
@@ -157,6 +215,74 @@ public class prm001 {
  		return fcorpo.substring(index, pp);		
 	}	
 
+	public static String getNomeSetor(Integer id){
+		try{
+	    	conn = DB.getConnection();
 
+	    	String query = "select NOMESETORES from SETORES WHERE IDSETORES = " + id + ";";
 
+	    	st = conn.prepareStatement(query);
+	    	rs = st.executeQuery();
+
+			return  rs.getString("NOMESETORES");
+
+		} catch (SQLException e2) {
+			JOptionPane.showMessageDialog(null, e2.getMessage());
+		}finally {
+		    if (st != null) {
+		        DB.closeStatement(st);
+		    }
+		    if (conn != null) {
+		        DB.closeConnection();
+		    }			
+		}   
+		return "";
+	}
+
+	public static String getNomePrestador(Integer id){
+		try{
+	    	conn = DB.getConnection();
+
+	    	String query = "select NOMEPREST from PRESTADOR WHERE IDPRESTADOR = " + id + ";";
+
+	    	st = conn.prepareStatement(query);
+	    	rs = st.executeQuery();
+
+			return  rs.getString("NOMEPREST");
+
+		} catch (SQLException e2) {
+			JOptionPane.showMessageDialog(null, e2.getMessage());
+		}finally {
+		    if (st != null) {
+		        DB.closeStatement(st);
+		    }
+		    if (conn != null) {
+		        DB.closeConnection();
+		    }			
+		}   
+		return "";
+	}
+
+	public static String fmtDataSQL(java.util.Date periodoIni, java.util.Date periodoFim, String periodoIniFormat, String periodoFimFormat){
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); 
+		periodoIniFormat = sdf.format(periodoIni);
+        periodoFimFormat = sdf.format(periodoFim);	
+		return (periodoIniFormat + "," + periodoFimFormat);	
+	}
+
+	public static String fmtDataBr(java.util.Date periodoIni, java.util.Date periodoFim, String periodoIniFormat, String periodoFimFormat){
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); 
+		periodoIniFormat = sdf.format(periodoIni);
+        periodoFimFormat = sdf.format(periodoFim);	
+		
+		return (periodoIniFormat + "," + periodoFimFormat);
+	}
+
+	public static String getDataNow(){		
+		return LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+	}
+
+	public static String getDataHoraNow(){
+		return LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+	}
 }

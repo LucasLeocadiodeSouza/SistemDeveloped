@@ -10,7 +10,6 @@ import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javax.swing.JOptionPane;
@@ -98,7 +97,7 @@ public class frameAjusteWindow implements Initializable{
 		acaoFeita.getItems().addAll(vAcaoFeita);
 		setor.getItems().addAll(vSetor);
 
-		hrAdd.setText(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+		hrAdd.setText(prm001.getDataNow());
 		selectNmrAjusteWindow();
 		
 		tableAjusteWindowTV.setEditable(true);

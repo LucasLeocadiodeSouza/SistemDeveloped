@@ -10,21 +10,38 @@ public class Consolidacao {
 	private Setores setor;
 	private Date dataReq;
 	private prestadores prest;
-
 	
-	public Consolidacao(Integer id, String situacao, String descricao, Integer idSetor, Date dataReq) {
+	public Consolidacao(Integer id, String situacao, String descricao, String nomeSetor, Date dataReq) {
 		this.id        = id;
 		this.situacao  = situacao;
 		this.descricao = descricao;
-		this.setor     = new Setores(idSetor);
+		this.setor     = new Setores();
+		setNomeSetor(nomeSetor);
 		this.dataReq   = dataReq;
 	}
-	public Consolidacao(String situacao, Integer id, String descricao, Integer idPrest, Date dataReq) {
+	public Consolidacao(String situacao, Integer id, String descricao, String nomePrest, Date dataReq) {
 		this.id        = id;
 		this.situacao  = situacao;
 		this.descricao = descricao;
-		this.prest     = new prestadores(idPrest);
+		this.prest = new prestadores();
+		setNomePrest(nomePrest);
 		this.dataReq   = dataReq;
+	}
+
+	public String getNomeSetor() {
+		return this.setor.getNomeSetor();
+	}
+	
+	public void setNomeSetor(String setor) {
+	    this.setor.setNomeSetor(setor);
+	}
+
+	public String getNomePrest() {
+		return this.prest.getnomePrestador();
+	}
+
+    public void setNomePrest(String prestador){
+		this.prest.setnomePrestador(prestador);
 	}
 
 	public Integer getId() {
@@ -58,21 +75,5 @@ public class Consolidacao {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-
-	public String getSetor() {
-		return setor.getNomeSetor();
-	}
 	
-    public void setSetores(String Setores) {
-		this.setor = new Setores(Setores);
-	    this.setor.setNomeSetor(Setores);
-	}
-	public String getPrest() {
-		return prest.getnomePrestador();
-	}
-	
-    public void setPrestador(String prestadores) {
-		this.prest = new prestadores(prestadores);
-	    this.prest.setnomePrestador(prestadores);
-	}
 }

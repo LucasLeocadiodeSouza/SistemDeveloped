@@ -1,0 +1,26 @@
+.combo-box .arrow-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-shape: null;
+}
+
+.combo-box {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-border-width: 0;
+    -fx-border-color: transparent;
+    -fx-font-size: 14px; /* Ajuste conforme necessário */
+}
+
+.combo-box .list-cell {
+    -fx-background-color: white; /* Ajuste para a cor de fundo desejada */
+    -fx-text-fill: black;
+}
+
+.choice-box {
+    -fx-background-color: lightgray;
+    -fx-padding: 0;
+    -fx-border-width: 0;
+    -fx-border-color: transparent;
+    -fx-font-size: 14px; /* Ajuste conforme necessário */
+}

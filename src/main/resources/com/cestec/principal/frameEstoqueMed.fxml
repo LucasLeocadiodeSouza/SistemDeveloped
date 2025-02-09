@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="510.0" prefWidth="780.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cestec.farmacia.frameEstoqueMed">
+   <children>
+      <Button layoutX="723.0" layoutY="14.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="42.0" text="sair" />
+      <Button layoutX="672.0" layoutY="14.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="42.0" text="excluir" />
+      <Button fx:id="editB" layoutX="623.0" layoutY="14.0" mnemonicParsing="false" onAction="#editarMed" prefHeight="34.0" prefWidth="42.0" text="editar" />
+      <TableView fx:id="tableMedEstTV" layoutX="11.0" layoutY="191.0" prefHeight="306.0" prefWidth="755.0">
+        <columns>
+          <TableColumn fx:id="codigoTC" prefWidth="52.000000953674316" text="Codigo" />
+          <TableColumn fx:id="nomeTC" prefWidth="264.00002670288086" text="Nome" />
+            <TableColumn fx:id="validadeTC" prefWidth="100.0" text="Validade" />
+            <TableColumn fx:id="quantiTC" prefWidth="75.0" text="Qtd" />
+            <TableColumn fx:id="loteTC" prefWidth="100.80001831054688" text="Lote" />
+            <TableColumn fx:id="classificacaoTC" prefWidth="133.60003662109375" text="Classificação" />
+            <TableColumn fx:id="marcaTC" prefWidth="100.7999145507813" text="Marca" />
+        </columns>
+      </TableView>
+      <TextField layoutX="99.0" layoutY="157.0" prefHeight="26.0" prefWidth="230.0" />
+      <Label layoutX="30.0" layoutY="160.0" text="Produto:">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Button layoutX="626.0" layoutY="158.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="128.0" text="Pesquisar" />
+      <ComboBox layoutX="45.0" layoutY="31.0" prefHeight="26.0" prefWidth="165.0" promptText="Filtrar por Tipo" />
+      <ComboBox layoutX="227.0" layoutY="30.0" prefHeight="26.0" prefWidth="178.0" promptText="Filtrar por Classificação" />
+      <Line endX="707.3988037109375" endY="-33.70000076293945" fill="#3058f7" layoutX="65.0" layoutY="34.0" startX="-65.00000762939453" startY="-34.000003814697266" stroke="#303fe7" strokeWidth="13.0" />
+      <Line endX="713.3988037109375" endY="-26.700000762939453" fill="#3058f7" layoutX="65.0" layoutY="33.0" startX="713.3988037109375" startY="465.29998779296875" stroke="#303fe7" strokeWidth="12.0" />
+      <Line endX="-55.999996185302734" endY="449.4999694824219" fill="#3058f7" layoutX="56.0" layoutY="54.0" startX="-55.999996185302734" startY="-44.50761795043945" stroke="#303fe7" strokeWidth="13.0" />
+      <Line endX="640.0" endY="-28.0" fill="#3058f7" layoutX="140.0" layoutY="538.0" startX="-140.00001525878906" startY="-28.0" stroke="#303fe7" strokeWidth="13.0" />
+   </children>
+</AnchorPane>

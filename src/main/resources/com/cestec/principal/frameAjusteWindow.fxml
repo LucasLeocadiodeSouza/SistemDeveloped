@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="380.0" prefWidth="620.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cestec.farmacia.frameAjusteWindow">
+   <children>
+      <Button fx:id="exitButton" focusTraversable="false" layoutX="568.0" layoutY="14.0" mnemonicParsing="false" onAction="#exit" prefHeight="32.0" prefWidth="38.0" text="sair" />
+      <Button fx:id="saveButton" focusTraversable="false" layoutX="520.0" layoutY="14.0" mnemonicParsing="false" onAction="#save" prefHeight="32.0" prefWidth="38.0" text="save" textAlignment="CENTER" />
+      <TableView fx:id="tableAjusteWindowTV" layoutX="13.0" layoutY="174.0" onKeyPressed="#tableView_pressed" prefHeight="192.0" prefWidth="593.0">
+        <columns>
+            <TableColumn fx:id="selectTC" prefWidth="26.39999485015869" />
+          <TableColumn fx:id="codigoTC" prefWidth="43.200069427490234" text="Cod." />
+          <TableColumn fx:id="nomeTC" prefWidth="190.40001678466797" text="Nome do produto" />
+            <TableColumn fx:id="quantTC" onEditCommit="#onEditChargedQtd" prefWidth="49.5999755859375" text="Qtd." />
+            <TableColumn fx:id="validadeTC" prefWidth="95.20001220703125" text="Validade" />
+            <TableColumn fx:id="loteTC" prefWidth="83.20001220703125" text="Lote" />
+            <TableColumn fx:id="classificacaoTC" prefWidth="108.80007934570312" text="Classificacao" />
+        </columns>
+      </TableView>
+      <Label layoutX="56.0" layoutY="33.0" text="Ajuste:">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <TextField fx:id="nAjuste" editable="false" focusTraversable="false" layoutX="105.0" layoutY="33.0" />
+      <Label layoutX="65.0" layoutY="67.0" text="Data:">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <TextField fx:id="hrAdd" focusTraversable="false" layoutX="104.0" layoutY="64.0" onAction="#validacao" onInputMethodTextChanged="#validacao" />
+      <Label layoutX="65.0" layoutY="99.0" text="Setor:">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="setor" focusTraversable="false" layoutX="105.0" layoutY="96.0" prefWidth="150.0" promptText="----" />
+      <Label layoutX="41.0" layoutY="131.0" text="Descrição:   ">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <TextField fx:id="descricaoTF" focusTraversable="false" layoutX="105.0" layoutY="128.0" prefHeight="26.0" prefWidth="227.0" />
+      <Label layoutX="343.0" layoutY="67.0" text="Ação:">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="acaoFeita" focusTraversable="false" layoutX="379.0" layoutY="64.0" prefWidth="150.0" promptText="----" />
+      <Line endX="531.0" endY="63.3076171875" fill="#3058f7" layoutX="83.0" layoutY="-62.0" startX="-82.19241333007812" startY="62.8076171875" stroke="#303fe7" strokeWidth="13.0" />
+      <Line endX="626.9999389648438" endY="53.307621002197266" fill="#3058f7" layoutX="-7.0" layoutY="-46.0" startX="626.9999389648438" startY="425.9999694824219" stroke="#303fe7" strokeWidth="12.0" />
+      <Line endX="-17.999998092651367" endY="340.0000305175781" fill="#3058f7" layoutX="18.0" layoutY="40.0" startX="-18.000001907348633" startY="-29.499984741210938" stroke="#303fe7" strokeWidth="13.0" />
+      <Line endX="503.99993896484375" endY="-118.00003051757812" fill="#3058f7" layoutX="116.0" layoutY="498.0" startX="-116.00001525878906" startY="-118.00003051757812" stroke="#303fe7" strokeWidth="13.0" />
+   </children>
+</AnchorPane>

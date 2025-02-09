@@ -1,22 +1,3 @@
 {
-    "java.project.referencedLibraries": [
-        "C:/javaFX SDK/openjfx-22.0.2_windows-x64_bin-sdk/javafx-sdk-22.0.2/lib/javafx.base.jar",
-        "C:/javaFX SDK/openjfx-22.0.2_windows-x64_bin-sdk/javafx-sdk-22.0.2/lib/javafx.controls.jar",
-        "C:/javaFX SDK/openjfx-22.0.2_windows-x64_bin-sdk/javafx-sdk-22.0.2/lib/javafx.fxml.jar",
-        "C:/javaFX SDK/openjfx-22.0.2_windows-x64_bin-sdk/javafx-sdk-22.0.2/lib/javafx.graphics.jar",
-        "C:/javaFX SDK/openjfx-22.0.2_windows-x64_bin-sdk/javafx-sdk-22.0.2/lib/javafx.media.jar",
-        "C:/javaFX SDK/openjfx-22.0.2_windows-x64_bin-sdk/javafx-sdk-22.0.2/lib/javafx.properties",
-        "C:/javaFX SDK/openjfx-22.0.2_windows-x64_bin-sdk/javafx-sdk-22.0.2/lib/javafx.swing.jar",
-        "C:/javaFX SDK/openjfx-22.0.2_windows-x64_bin-sdk/javafx-sdk-22.0.2/lib/javafx.web.jar",
-        "C:/javaFX SDK/openjfx-22.0.2_windows-x64_bin-sdk/javafx-sdk-22.0.2/lib/javafx-swt.jar",
-        "c:\\javaFX SDK\\openjfx-22.0.2_windows-x64_bin-sdk\\javafx-sdk-22.0.2\\lib\\javafx.base.jar",
-        "c:\\javaFX SDK\\openjfx-22.0.2_windows-x64_bin-sdk\\javafx-sdk-22.0.2\\lib\\javafx.controls.jar",
-        "c:\\javaFX SDK\\openjfx-22.0.2_windows-x64_bin-sdk\\javafx-sdk-22.0.2\\lib\\javafx.fxml.jar",
-        "c:\\javaFX SDK\\openjfx-22.0.2_windows-x64_bin-sdk\\javafx-sdk-22.0.2\\lib\\javafx.graphics.jar",
-        "c:\\javaFX SDK\\openjfx-22.0.2_windows-x64_bin-sdk\\javafx-sdk-22.0.2\\lib\\javafx.media.jar",
-        "c:\\javaFX SDK\\openjfx-22.0.2_windows-x64_bin-sdk\\javafx-sdk-22.0.2\\lib\\javafx.swing.jar",
-        "c:\\javaFX SDK\\openjfx-22.0.2_windows-x64_bin-sdk\\javafx-sdk-22.0.2\\lib\\javafx.web.jar",
-        "c:\\javaFX SDK\\openjfx-22.0.2_windows-x64_bin-sdk\\javafx-sdk-22.0.2\\lib\\javafx-swt.jar",
-        "c:\\jdbc-lbs\\mysql-connector-j-9.0.0.jar"
-    ]
+    "java.configuration.updateBuildConfiguration": "interactive"
 }
